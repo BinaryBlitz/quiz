@@ -3,8 +3,9 @@ class Player < ActiveRecord::Base
   after_create :create_api_key
 
   has_secure_password
-  validates :email, presence: true, uniqueness: true
   validates :password_digest, presence: true, on: :create
+  validates :email, presence: true, uniqueness: true,
+    format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
 
   private
 
