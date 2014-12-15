@@ -3,15 +3,13 @@ class PlayersController < ApplicationController
   # GET /players.json
   def index
     @players = Player.all
-
-    render json: @players
   end
 
   # GET /players/1
   # GET /players/1.json
   def show
     @player = Player.find(params[:id])
-    render formats: :json
+    # render formats: :json
   end
 
   # POST /players
