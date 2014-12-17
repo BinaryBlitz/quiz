@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141217143115) do
+ActiveRecord::Schema.define(version: 20141217144634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,18 @@ ActiveRecord::Schema.define(version: 20141217143115) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "session_questions", force: true do |t|
+    t.integer  "session_id"
+    t.integer  "question_id"
+    t.integer  "player_points",   default: 0
+    t.integer  "opponent_points", default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "session_questions", ["question_id"], name: "index_session_questions_on_question_id", using: :btree
+  add_index "session_questions", ["session_id"], name: "index_session_questions_on_session_id", using: :btree
+
   create_table "sessions", force: true do |t|
     t.integer  "player_id"
     t.integer  "opponent_id"
@@ -54,5 +66,7 @@ ActiveRecord::Schema.define(version: 20141217143115) do
   add_index "sessions", ["player_id"], name: "index_sessions_on_player_id", using: :btree
 
   add_foreign_key "api_keys", "players"
+  add_foreign_key "session_questions", "questions"
+  add_foreign_key "session_questions", "sessions"
   add_foreign_key "sessions", "players"
 end

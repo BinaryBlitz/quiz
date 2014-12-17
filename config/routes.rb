@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :session_questions, only: [:show, :update], defaults: { format: :json }
   resources :sessions, except: [:new, :edit], defaults: { format: :json }
   resources :questions, except: [:new, :edit], defaults: { format: :json }
   resources :players, except: [:new, :edit], defaults: { format: :json }
