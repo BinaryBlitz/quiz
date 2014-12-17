@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :questions, except: [:new, :edit], defaults: { format: :json }
   resources :players, except: [:new, :edit], defaults: { format: :json }
 
   # The priority is based upon order of creation: first created -> highest priority.

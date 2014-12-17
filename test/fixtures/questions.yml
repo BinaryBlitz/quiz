@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  text: What is the capital of the UK
+  answers: ['London', 'Paris', 'New York', 'Sydney']
+  correct_answer: London
+
+two:
+  text: Who is the one of the founders of Microsoft?
+  answers: ['Steve Ballmer', 'Steve Wozniak', 'Sergey Brin', 'Paul Allen']
+  correct_answer: Paul Allen

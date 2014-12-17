@@ -1,19 +1,17 @@
 class PlayersController < ApplicationController
   # GET /players
-  # GET /players.json
   def index
     @players = Player.all
+    render formats: :json
   end
 
   # GET /players/1
-  # GET /players/1.json
   def show
     @player = Player.find(params[:id])
-    # render formats: :json
+    render formats: :json
   end
 
   # POST /players
-  # POST /players.json
   def create
     @player = Player.new(player_params)
 
@@ -25,7 +23,6 @@ class PlayersController < ApplicationController
   end
 
   # PATCH/PUT /players/1
-  # PATCH/PUT /players/1.json
   def update
     @player = Player.find(params[:id])
 
@@ -37,7 +34,6 @@ class PlayersController < ApplicationController
   end
 
   # DELETE /players/1
-  # DELETE /players/1.json
   def destroy
     @player = Player.find(params[:id])
     @player.destroy

@@ -5,11 +5,11 @@ class PlayersControllerTest < ActionController::TestCase
     @player = players(:one)
   end
 
-  # test "should get index" do
-  #   get :index
-  #   assert_response :success
-  #   assert_not_nil assigns(:players)
-  # end
+  test "should get index" do
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:players)
+  end
 
   test "should create player" do
     assert_difference('Player.count') do
