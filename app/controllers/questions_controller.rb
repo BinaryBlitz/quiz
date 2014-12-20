@@ -11,39 +11,39 @@ class QuestionsController < ApplicationController
     render json: @question
   end
 
-  # POST /questions
-  def create
-    @question = Question.new(question_params)
+  # # POST /questions
+  # def create
+  #   @question = Question.new(question_params)
 
-    if @question.save
-      render json: @question, status: :created, location: @player
-    else
-      render json: @question.errors, status: :unprocessable_entity
-    end
-  end
+  #   if @question.save
+  #     render json: @question, status: :created, location: @player
+  #   else
+  #     render json: @question.errors, status: :unprocessable_entity
+  #   end
+  # end
 
-  # PATCH /questions/1
-  def update
-    @question = Question.find(params[:id])
+  # # PATCH /questions/1
+  # def update
+  #   @question = Question.find(params[:id])
 
-    if @question.update(question_params)
-      head :no_content
-    else
-      render json: @question.errors, status: :unprocessable_entity
-    end
-  end
+  #   if @question.update(question_params)
+  #     head :no_content
+  #   else
+  #     render json: @question.errors, status: :unprocessable_entity
+  #   end
+  # end
 
-  # DELETE /questions/1
-  def destroy
-    @question = Question.find(params[:id])
-    @question.destroy
+  # # DELETE /questions/1
+  # def destroy
+  #   @question = Question.find(params[:id])
+  #   @question.destroy
 
-    head :no_content
-  end
+  #   head :no_content
+  # end
 
-  private
+  # private
 
-  def question_params
-    params.require(:question).permit(:text, :correct_answer, answers: [])
-  end
+  # def question_params
+  #   params.require(:question).permit(:text, :correct_answer, answers: [])
+  # end
 end
