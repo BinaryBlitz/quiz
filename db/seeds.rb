@@ -9,8 +9,11 @@
 host = Player.create(name: 'Foo', email: 'foo@bar.com', password_digest: BCrypt::Password.create('foobar'))
 opponent = Player.create(name: 'Bar', email: 'bar@foo.com', password_digest: BCrypt::Password.create('barfoo'))
 
-question_1 = Question.create(content: 'Capital of the UK')
-question_2 = Question.create(content: 'Test question')
+category = Category.create(name: 'General')
+topic = Topic.create(name: 'Geography', category: category)
+
+question_1 = Question.create(content: 'Capital of the UK', topic: topic)
+question_2 = Question.create(content: 'Test question', topic: topic)
 
 answer_1 = Answer.create(content: 'London', correct: true, question: question_1)
 answer_2 = Answer.create(content: 'New York', question: question_1)

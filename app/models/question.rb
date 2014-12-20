@@ -12,7 +12,8 @@
 
 class Question < ActiveRecord::Base
   has_many :answers
+  belongs_to :topic
 
   validates :content, presence: true
-  # validates :answers, presence: true
+  validates :topic, presence: true
 end
