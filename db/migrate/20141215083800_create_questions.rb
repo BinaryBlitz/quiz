@@ -1,7 +1,7 @@
 class CreateQuestions < ActiveRecord::Migration
   def change
     create_table :questions do |t|
-      t.string :text
+      t.text :content
       t.string :answers, array: true, default: []
       t.string :correct_answer
 

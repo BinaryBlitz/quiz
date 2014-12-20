@@ -3,8 +3,10 @@ class CreateSessionQuestions < ActiveRecord::Migration
     create_table :session_questions do |t|
       t.references :session, index: true
       t.references :question, index: true
-      t.integer :player_points, default: 0
-      t.integer :opponent_points, default: 0
+      t.integer :host_answer_id
+      t.integer :opponent_answer
+      t.integer :host_time, default: 0
+      t.integer :opponent_time, default: 0
 
       t.timestamps null: false
     end

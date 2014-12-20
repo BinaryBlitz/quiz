@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141217144634) do
+ActiveRecord::Schema.define(version: 20141220225634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "question_id"
+    t.boolean  "correct"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
 
   create_table "api_keys", force: :cascade do |t|
     t.string   "token"
@@ -32,12 +42,13 @@ ActiveRecord::Schema.define(version: 20141217144634) do
     t.integer  "points",          default: 0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.string   "imei"
   end
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "text"
+    t.text     "content"
     t.string   "answers",        default: [],              array: true
     t.string   "correct_answer"
     t.datetime "created_at",                  null: false
@@ -47,8 +58,10 @@ ActiveRecord::Schema.define(version: 20141217144634) do
   create_table "session_questions", force: :cascade do |t|
     t.integer  "session_id"
     t.integer  "question_id"
-    t.integer  "player_points",   default: 0
-    t.integer  "opponent_points", default: 0
+    t.integer  "host_answer_id"
+    t.integer  "opponent_answer"
+    t.integer  "host_time",       default: 0
+    t.integer  "opponent_time",   default: 0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
@@ -57,16 +70,18 @@ ActiveRecord::Schema.define(version: 20141217144634) do
   add_index "session_questions", ["session_id"], name: "index_session_questions_on_session_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
-    t.integer  "player_id"
+    t.integer  "host_id"
     t.integer  "opponent_id"
+    t.boolean  "online"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  add_index "sessions", ["player_id"], name: "index_sessions_on_player_id", using: :btree
+  add_index "sessions", ["host_id"], name: "index_sessions_on_host_id", using: :btree
+  add_index "sessions", ["opponent_id"], name: "index_sessions_on_opponent_id", using: :btree
 
+  add_foreign_key "answers", "questions"
   add_foreign_key "api_keys", "players"
   add_foreign_key "session_questions", "questions"
   add_foreign_key "session_questions", "sessions"
-  add_foreign_key "sessions", "players"
 end

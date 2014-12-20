@@ -11,5 +11,8 @@
 #
 
 class Question < ActiveRecord::Base
-  validates :text, presence: true
+  has_many :answers
+
+  validates :content, presence: true
+  # validates :answers, presence: true
 end

@@ -1,11 +1,11 @@
 class CreateSessions < ActiveRecord::Migration
   def change
     create_table :sessions do |t|
-      t.references :player, index: true
-      t.integer :opponent_id
+      t.integer :host_id, index: true
+      t.integer :opponent_id, index: true
+      t.boolean :online, default: false
 
       t.timestamps null: false
     end
-    add_foreign_key :sessions, :players
   end
 end
