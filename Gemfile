@@ -35,12 +35,15 @@ gem 'bcrypt', '~> 3.1.7'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # Use RSpec for testing
   gem 'rspec-rails'
+  # Use FactoryGirl for factories
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  # Improved error pages
   gem 'better_errors'
   gem 'pry-byebug'
   gem 'shoulda-matchers'
   gem 'annotate', '~> 2.6.5'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
