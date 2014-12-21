@@ -4,7 +4,7 @@ class CreateSessionQuestions < ActiveRecord::Migration
       t.references :session, index: true
       t.references :question, index: true
       t.integer :host_answer_id
-      t.integer :opponent_answer
+      t.integer :opponent_answer_id
       t.integer :host_time, default: 0
       t.integer :opponent_time, default: 0
 

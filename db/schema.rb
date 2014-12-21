@@ -67,11 +67,11 @@ ActiveRecord::Schema.define(version: 20141220233603) do
     t.integer  "session_id"
     t.integer  "question_id"
     t.integer  "host_answer_id"
-    t.integer  "opponent_answer"
-    t.integer  "host_time",       default: 0
-    t.integer  "opponent_time",   default: 0
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.integer  "opponent_answer_id"
+    t.integer  "host_time",          default: 0
+    t.integer  "opponent_time",      default: 0
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "session_questions", ["question_id"], name: "index_session_questions_on_question_id", using: :btree

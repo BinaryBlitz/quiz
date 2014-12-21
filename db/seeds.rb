@@ -21,5 +21,7 @@ answer_3 = Answer.create(content: 'Paris', question: question_1)
 answer_4 = Answer.create(content: 'Berlin', question: question_1)
 
 session = Session.create(host: host, opponent: opponent)
-sq_1 = SessionQuestion.create(session: session, question: question_1)
-sq_2 = SessionQuestion.create(session: session, question: question_2)
+sq_1 = SessionQuestion.create(session: session, question: question_1,
+  host_answer: answer_1, opponent_answer: answer_2)
+sq_2 = SessionQuestion.create(session: session, question: question_2,
+  host_answer: answer_3, opponent_answer: answer_4)
