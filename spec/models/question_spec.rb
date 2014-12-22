@@ -28,8 +28,12 @@ RSpec.describe Question, :type => :model do
     expect(@question).not_to be_valid
   end
 
-  it "should noy be valid without topic" do
+  it "should not be valid without topic" do
     @question.topic = nil
     expect(@question).not_to be_valid
+  end
+
+  it "should not be valid with wrong answer" do
+    # Stub
   end
 end
