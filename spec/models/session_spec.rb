@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: sessions
+#
+#  id          :integer          not null, primary key
+#  host_id     :integer
+#  opponent_id :integer
+#  online      :boolean          default("false")
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Session, :type => :model do

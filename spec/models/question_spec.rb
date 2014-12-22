@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id         :integer          not null, primary key
+#  content    :text
+#  image_url  :string
+#  bounty     :integer          default("1")
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  topic_id   :integer
+#
+
 require 'rails_helper'
 
 RSpec.describe Question, :type => :model do

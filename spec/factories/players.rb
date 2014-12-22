@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: players
+#
+#  id              :integer          not null, primary key
+#  name            :string
+#  email           :string
+#  password_digest :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  imei            :string
+#
+
 FactoryGirl.define do
   factory :player, aliases: [:host] do
     name "Host Player"
