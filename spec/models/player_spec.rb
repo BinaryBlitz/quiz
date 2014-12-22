@@ -29,6 +29,11 @@ RSpec.describe Player, :type => :model do
     expect(@host).not_to be_valid
   end
 
+  it "should not be valid with already existing email" do
+    @opponent.email = @host.email.upcase
+    expect(@opponent).not_to be_valid
+  end
+
   it "should not be valid when email format is incorrect" do
     invalid_emails = %w(foobar foo@bar.1com email.com @.email@bar.com)
     invalid_emails.each do |email|
