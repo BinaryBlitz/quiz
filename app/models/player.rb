@@ -13,7 +13,7 @@
 
 class Player < ActiveRecord::Base
   has_one :api_key, dependent: :destroy
-  after_create :create_api_key
+  after_create :create_key
 
   has_secure_password
   validates :name, presence: true
@@ -23,7 +23,7 @@ class Player < ActiveRecord::Base
 
   private
 
-  def create_api_key
-    ApiKey.create(player: self)
+  def create_key
+    self.create_api_key
   end
 end
