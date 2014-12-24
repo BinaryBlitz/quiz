@@ -34,6 +34,6 @@ RSpec.describe Question, :type => :model do
   end
 
   it "should not be valid with wrong answer" do
-    # Stub
+    pending "validate"
   end
 end
