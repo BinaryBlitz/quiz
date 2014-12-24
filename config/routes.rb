@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :admins, path: 'admin'
+  root 'admin/dashboard#index'
+
   namespace :admin do
     get '/', to: 'dashboard#index', as: 'admin'
   end
