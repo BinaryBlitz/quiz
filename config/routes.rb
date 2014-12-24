@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get '/', to: 'dashboard#index', as: 'admin'
+  end
+
   resources :topics, only: [:index, :show], defaults: { format: :json }
   resources :categories, only: [:index, :show], defaults: { format: :json }
   resources :session_questions, only: [:show, :update], defaults: { format: :json }
