@@ -30,6 +30,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use Devise for authentication
 gem 'devise'
+# Use Bootstrap as a CSS framework
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
