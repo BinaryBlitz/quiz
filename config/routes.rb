@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :topics, only: [:index, :show], defaults: { format: :json }
+  resources :categories, only: [:index, :show], defaults: { format: :json }
   resources :session_questions, only: [:show, :update], defaults: { format: :json }
   resources :sessions, except: [:new, :edit], defaults: { format: :json }
   resources :questions, except: [:new, :edit], defaults: { format: :json }
