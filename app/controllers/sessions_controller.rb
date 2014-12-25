@@ -17,7 +17,8 @@ class SessionsController < ApplicationController
     generate_session
 
     if @session.save
-      render json: @session.to_json(include: :session_questions), status: :created, location: @session
+      render json: @session.to_json(
+        include: { session_questions: { include: { question: { include: :answers }} }}), status: :created, location: @session
     else
       render json: @session.errors, status: :unprocessable_entity
     end
