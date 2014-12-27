@@ -1,11 +1,11 @@
 class TopicsController < ApplicationController
   def index
     @topics = Topic.all
-    render json: @topics
+    render formats: :json
   end
 
   def show
     @topic = Topic.find(params[:id])
-    render json: @topic
+    render formats: :json
   end
 end
