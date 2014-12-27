@@ -20,4 +20,23 @@ class Session < ActiveRecord::Base
 
   validates :host, presence: true
   validates :topic, presence: true
+
+  def generate
+    # Offline only for now
+    self.offline = true
+
+    6.times do
+      # Avoid repetitions
+      begin
+        sq = SessionQuestion.new(question: Question.where(topic: topic).sample)
+      end while questions.include?(sq.question)
+      # Random answer and time
+      sq.opponent_answer = sq.question.answers.sample
+      sq.opponent_time = (2..6).to_a.sample
+      sq.session = self
+      sq.save
+
+      self.session_questions << sq
+    end
+  end
 end

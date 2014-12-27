@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
   # POST /sessions
   def create
     @session = Session.new(session_params)
-    generate_session
+    @session.generate
 
     if @session.save
       render json: @session.to_json(
@@ -47,22 +47,5 @@ class SessionsController < ApplicationController
 
   def session_params
     params.require(:session).permit(:host_id, :opponent_id, :topic_id)
-  end
-
-  def generate_session
-    # Offline only for now
-    @session.offline = true
-
-    6.times do
-      # Avoid repetitions
-      begin
-        sq = SessionQuestion.create(question: Question.where(topic: @session.topic).sample)
-      end while @session.questions.include?(sq.question)
-      # Random answer and time
-      sq.opponent_answer = sq.question.answers.sample
-      sq.opponent_time = (2..6).to_a.sample
-
-      @session.session_questions << sq
-    end
   end
 end
