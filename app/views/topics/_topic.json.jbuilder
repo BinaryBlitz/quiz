@@ -1,0 +1,1 @@
+json.extract! topic, :id, :name, :expires_at, :price, :played_count, :category_id
