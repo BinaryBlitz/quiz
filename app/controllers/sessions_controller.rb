@@ -2,13 +2,13 @@ class SessionsController < ApplicationController
   # GET /sessions
   def index
     @sessions = Session.all
-    render json: @sessions
+    render formats: :json
   end
 
   # GET /sessions/1
   def show
     @session = Session.find(params[:id])
-    render json: @session
+    render formats: :json
   end
 
   # POST /sessions
@@ -17,8 +17,9 @@ class SessionsController < ApplicationController
     @session.generate
 
     if @session.save
-      render json: @session.to_json(
-        include: { session_questions: { include: { question: { include: :answers }} }}), status: :created, location: @session
+      render :show, formats: :json, status: :created, location: @session
+      # render json: @session.to_json(
+        # include: { session_questions: { include: { question: { include: :answers }} }}), status: :created, location: @session
     else
       render json: @session.errors, status: :unprocessable_entity
     end
