@@ -1,15 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :admins, path: 'admin'
   root 'admin/dashboard#index'
 
+  devise_for :admins, path: 'admin'
+
   namespace :admin do
-    get '/', to: 'dashboard#index', as: 'admin'
+    get '/', to: 'dashboard#index'
   end
 
   resources :topics, only: [:index, :show], defaults: { format: :json }
   resources :categories, only: [:index, :show], defaults: { format: :json }
   resources :session_questions, only: [:show, :update], defaults: { format: :json }
-  resources :sessions, except: [:new, :edit], defaults: { format: :json }
+  resources :sessions, as: :game_sessions, except: [:new, :edit], defaults: { format: :json }
   resources :questions, except: [:new, :edit], defaults: { format: :json }
   resources :players, except: [:new, :edit], defaults: { format: :json }
 

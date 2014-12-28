@@ -80,3 +80,6 @@ offline_session.session_questions << SessionQuestion.create(question: q3, oppone
 offline_session.session_questions << SessionQuestion.create(question: q4, opponent_answer: q1.answers.second)
 offline_session.session_questions << SessionQuestion.create(question: q5, opponent_answer: q1.answers.first)
 offline_session.session_questions << SessionQuestion.create(question: q6, opponent_answer: q1.answers.second)
+
+# Admins
+admin = Admin.create(email: 'foo@bar.com', password: 'qwerty123', password_confirmation: 'qwerty123')
