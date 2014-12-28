@@ -1,5 +1,5 @@
 class Admin::DashboardController < ApplicationController
   def index
-    render text: 'Hello'
+    @categories = Category.all
   end
 end

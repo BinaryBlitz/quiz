@@ -1,0 +1,6 @@
+= form_for @category, url: admin_category_path do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, placeholder: 'Category name', class: 'form-control'
+
+  = f.submit 'Submit', class: 'btn btn-default'
