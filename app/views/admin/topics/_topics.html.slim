@@ -1,8 +1,4 @@
-h2 Topics
-
-= link_to 'New topic', new_admin_topic_path, class: 'btn btn-default'
-
-- unless @topics.empty?
+- unless topics.empty?
   table.table
     thead
       tr
@@ -14,7 +10,7 @@ h2 Topics
         td Played count
         td Category
         td Actions
-    - for topic in @topics
+    - for topic in topics
       tr
         td = topic.id
         td = link_to topic.name, admin_topic_path(topic)

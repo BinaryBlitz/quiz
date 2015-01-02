@@ -1,15 +1,11 @@
-h2 Categories
-
-= link_to 'New category', new_admin_category_path, class: 'btn btn-default'
-
-- unless @categories.empty?
+- unless categories.empty?
   table.table
     thead
       tr
         td ID
         td Name
         td Actions
-    - for category in @categories
+    - for category in categories
       tr
         td = category.id
         td = link_to category.name, admin_category_path(category)

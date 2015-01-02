@@ -1,5 +1,9 @@
 h1 QuizUp Dashboard
 
-= render 'categories'
+h2 = link_to 'Categories', admin_categories_path
+= link_to 'New category', new_admin_category_path, class: 'btn btn-default'
+= render 'admin/categories/categories', categories: @categories
 
-= render 'topics'
+h2 = link_to 'Topics', admin_topics_path
+= link_to 'New topic', new_admin_topic_path, class: 'btn btn-default'
+= render 'admin/topics/topics', topics: @topics

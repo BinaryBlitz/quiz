@@ -1,4 +1,7 @@
-h3 = 'Category: ' + @category.name
+h2 = 'Category: ' + @category.name
 
 / Render topics partial here
 = link_to 'Edit', edit_admin_category_path(@category), class: 'btn btn-default'
+
+h3 Topics
+= render 'admin/topics/topics', topics: @category.topics

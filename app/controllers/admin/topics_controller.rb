@@ -2,6 +2,7 @@ class Admin::TopicsController < ApplicationController
   before_action :find_topic, only: [:show, :edit, :update, :destroy]
 
   def index
+    @topics = Topic.all
   end
 
   def show
