@@ -1,4 +1,5 @@
 = form_for [:admin, @question] do |f|
+  = render 'shared/error_messages', object: @question
   .form-group
     = f.label :content
     = f.text_field :content, placeholder: 'Question', class: 'form-control'
