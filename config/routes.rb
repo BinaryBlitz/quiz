@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get '/', to: 'dashboard#index'
     resources :categories
     resources :topics
+    resources :questions
   end
 
   resources :topics, only: [:index, :show], defaults: { format: :json }

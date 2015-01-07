@@ -1,5 +1,7 @@
 h2 = 'Topic: ' + @topic.name
-p Topic description
+strong Questions:
+= ' ' + @topic.questions.count.to_s
 
 h3 Questions
-p List of questions
+= link_to 'New question', new_admin_question_path(topic_id: @topic.id), class: 'btn btn-default'
+= render 'admin/questions/questions', questions: @questions

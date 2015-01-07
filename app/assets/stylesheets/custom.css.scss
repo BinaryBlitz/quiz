@@ -1,0 +1,9 @@
+.remove_nested_fields_link {
+	margin-left: 7.5px;
+}
+
+.answers-form {
+	fieldset:first-child li .form-group::before {
+		content: "(Correct) "
+	}
+}

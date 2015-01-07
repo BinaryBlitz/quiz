@@ -6,6 +6,7 @@ class Admin::TopicsController < ApplicationController
   end
 
   def show
+    @questions = Question.where(topic: @topic)
   end
 
   def new
@@ -14,7 +15,10 @@ class Admin::TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(topic_params)
-    @topic.expires_at = Date.new(topic_params['expires_at(1i)'].to_i, topic_params['expires_at(2i)'].to_i, topic_params['expires_at(3i)'].to_i)
+    @topic.expires_at = Date.new(
+      topic_params['expires_at(1i)'].to_i,
+      topic_params['expires_at(2i)'].to_i,
+      topic_params['expires_at(3i)'].to_i) if topic_params['expires_at(1i)']
 
     if @topic.save
       redirect_to admin_topic_path(@topic)

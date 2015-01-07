@@ -1,0 +1,24 @@
+= form_for [:admin, @question] do |f|
+  .form-group
+    = f.label :content
+    = f.text_field :content, placeholder: 'Question', class: 'form-control'
+
+  - if params[:topic_id]
+    = f.hidden_field :topic_id, value: params[:topic_id]
+  - else
+    .form-group
+      = label_tag :topic
+      div
+        = collection_select(:question, :topic_id, Topic.all, :id, :name, prompt: 'Select topic')
+
+  h3 Answers
+  ol.answers-form
+    = f.nested_fields_for :answers do |answers_form|
+      li
+        .form-group
+          = answers_form.label :content, 'Answer'
+          = answers_form.remove_nested_fields_link 'Remove'
+          = answers_form.text_field :content, class: 'form-control'
+    = f.add_nested_fields_link :answers
+
+  = f.submit 'Submit', class: 'btn btn-default'

@@ -35,6 +35,8 @@ gem 'devise'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
+gem 'nested_form_fields'
+
 # Use Unicorn as the app server
 gem 'unicorn'
 
