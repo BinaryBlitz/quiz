@@ -59,6 +59,33 @@ ActiveRecord::Schema.define(version: 20141224152008) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "game_session_questions", force: :cascade do |t|
+    t.integer  "game_session_id"
+    t.integer  "question_id"
+    t.integer  "host_answer_id"
+    t.integer  "opponent_answer_id"
+    t.integer  "host_time",          default: 0
+    t.integer  "opponent_time",      default: 0
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "game_session_questions", ["game_session_id"], name: "index_game_session_questions_on_game_session_id", using: :btree
+  add_index "game_session_questions", ["question_id"], name: "index_game_session_questions_on_question_id", using: :btree
+
+  create_table "game_sessions", force: :cascade do |t|
+    t.integer  "host_id"
+    t.integer  "opponent_id"
+    t.boolean  "offline",     default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "topic_id"
+  end
+
+  add_index "game_sessions", ["host_id"], name: "index_game_sessions_on_host_id", using: :btree
+  add_index "game_sessions", ["opponent_id"], name: "index_game_sessions_on_opponent_id", using: :btree
+  add_index "game_sessions", ["topic_id"], name: "index_game_sessions_on_topic_id", using: :btree
+
   create_table "players", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -81,34 +108,6 @@ ActiveRecord::Schema.define(version: 20141224152008) do
 
   add_index "questions", ["topic_id"], name: "index_questions_on_topic_id", using: :btree
 
-  create_table "session_questions", force: :cascade do |t|
-    t.integer  "session_id"
-    t.integer  "question_id"
-    t.integer  "host_answer_id"
-    t.integer  "opponent_answer_id"
-    t.integer  "host_time",          default: 0
-    t.integer  "opponent_time",      default: 0
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-  end
-
-  add_index "session_questions", ["question_id"], name: "index_session_questions_on_question_id", using: :btree
-  add_index "session_questions", ["session_id"], name: "index_session_questions_on_session_id", using: :btree
-
-  create_table "sessions", force: :cascade do |t|
-    t.integer  "host_id"
-    t.integer  "opponent_id"
-    t.boolean  "online",      default: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.boolean  "offline",     default: false
-    t.integer  "topic_id"
-  end
-
-  add_index "sessions", ["host_id"], name: "index_sessions_on_host_id", using: :btree
-  add_index "sessions", ["opponent_id"], name: "index_sessions_on_opponent_id", using: :btree
-  add_index "sessions", ["topic_id"], name: "index_sessions_on_topic_id", using: :btree
-
   create_table "topics", force: :cascade do |t|
     t.string   "name"
     t.boolean  "visible",      default: false
@@ -124,9 +123,9 @@ ActiveRecord::Schema.define(version: 20141224152008) do
 
   add_foreign_key "answers", "questions"
   add_foreign_key "api_keys", "players"
+  add_foreign_key "game_session_questions", "game_sessions"
+  add_foreign_key "game_session_questions", "questions"
+  add_foreign_key "game_sessions", "topics"
   add_foreign_key "questions", "topics"
-  add_foreign_key "session_questions", "questions"
-  add_foreign_key "session_questions", "sessions"
-  add_foreign_key "sessions", "topics"
   add_foreign_key "topics", "categories"
 end

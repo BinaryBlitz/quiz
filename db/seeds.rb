@@ -58,28 +58,28 @@ q7.answers << Answer.create(content: 'India')
 q7.answers << Answer.create(content: 'Japan')
 
 # Online session
-session = Session.create(host: host, opponent: opponent)
-sq1 = SessionQuestion.create(session: session, question: q1,
+session = GameSession.create(host: host, opponent: opponent)
+sq1 = GameSessionQuestion.create(game_session: session, question: q1,
   host_answer: q1.answers.first, opponent_answer: q1.answers.second)
-sq2 = SessionQuestion.create(session: session, question: q2,
+sq2 = GameSessionQuestion.create(game_session: session, question: q2,
   host_answer: q2.answers.second, opponent_answer: q2.answers.first)
-sq3 = SessionQuestion.create(session: session, question: q1,
+sq3 = GameSessionQuestion.create(game_session: session, question: q1,
   host_answer: q1.answers.first, opponent_answer: q1.answers.second)
-sq4 = SessionQuestion.create(session: session, question: q2,
+sq4 = GameSessionQuestion.create(game_session: session, question: q2,
   host_answer: q2.answers.second, opponent_answer: q2.answers.first)
-sq5 = SessionQuestion.create(session: session, question: q1,
+sq5 = GameSessionQuestion.create(game_session: session, question: q1,
   host_answer: q1.answers.first, opponent_answer: q1.answers.second)
-sq6 = SessionQuestion.create(session: session, question: q2,
+sq6 = GameSessionQuestion.create(game_session: session, question: q2,
   host_answer: q2.answers.second, opponent_answer: q2.answers.first)
 
 # OfflineSession
-offline_session = Session.create(host: host, opponent: opponent, offline: true)
-offline_session.session_questions << SessionQuestion.create(question: q1, opponent_answer: q1.answers.first)
-offline_session.session_questions << SessionQuestion.create(question: q2, opponent_answer: q1.answers.second)
-offline_session.session_questions << SessionQuestion.create(question: q3, opponent_answer: q1.answers.first)
-offline_session.session_questions << SessionQuestion.create(question: q4, opponent_answer: q1.answers.second)
-offline_session.session_questions << SessionQuestion.create(question: q5, opponent_answer: q1.answers.first)
-offline_session.session_questions << SessionQuestion.create(question: q6, opponent_answer: q1.answers.second)
+offline_session = GameSession.create(host: host, opponent: opponent, offline: true, topic: topic)
+offline_session.game_session_questions << GameSessionQuestion.create(question: q1, opponent_answer: q1.answers.first)
+offline_session.game_session_questions << GameSessionQuestion.create(question: q2, opponent_answer: q1.answers.second)
+offline_session.game_session_questions << GameSessionQuestion.create(question: q3, opponent_answer: q1.answers.first)
+offline_session.game_session_questions << GameSessionQuestion.create(question: q4, opponent_answer: q1.answers.second)
+offline_session.game_session_questions << GameSessionQuestion.create(question: q5, opponent_answer: q1.answers.first)
+offline_session.game_session_questions << GameSessionQuestion.create(question: q6, opponent_answer: q1.answers.second)
 
 # Admins
 admin = Admin.create(email: 'foo@bar.com', password: 'qwerty123', password_confirmation: 'qwerty123')
