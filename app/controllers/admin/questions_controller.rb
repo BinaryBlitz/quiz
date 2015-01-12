@@ -18,7 +18,7 @@ class Admin::QuestionsController < ApplicationController
     @question.set_correct_answer
 
     if @question.save
-      redirect_to admin_topic_path(@question.topic)
+      redirect_to [:admin, @question.topic], notice: 'Question was successfully created.'
     else
       puts @question.errors.full_messages
       render :new
@@ -31,7 +31,7 @@ class Admin::QuestionsController < ApplicationController
   def update
     if @question.update(question_params)
       @question.set_correct_answer
-      redirect_to admin_topic_path(@question.topic)
+      redirect_to [:admin, @question.topic], notice: 'Question was successfully updated.'
     else
       render :edit
     end

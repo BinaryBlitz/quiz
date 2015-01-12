@@ -21,7 +21,7 @@ class Admin::TopicsController < ApplicationController
       topic_params['expires_at(3i)'].to_i) if topic_params['expires_at(1i)']
 
     if @topic.save
-      redirect_to admin_topic_path(@topic)
+      redirect_to [:admin, @topic], notice: 'Topic was successfully created.'
     else
       puts params
       puts @topic.errors.full_messages
@@ -34,7 +34,7 @@ class Admin::TopicsController < ApplicationController
 
   def update
     if @topic.update(topic_params)
-      redirect_to admin_topic_path
+      redirect_to [:admin, @topic], notice: 'Topic was successfully updated.'
     else
       render :new
     end

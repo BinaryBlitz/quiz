@@ -11,3 +11,7 @@
 .panel ul {
 	margin-bottom: 0;
 }
+
+.alert-notice {
+	@extend .alert-info;
+}
