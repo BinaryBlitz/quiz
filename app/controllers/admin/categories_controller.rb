@@ -34,8 +34,12 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def destroy
-    @category.destroy
-    redirect_to admin_path, notice: 'Category was successfully destroyed.'
+    if @category == Category.first
+      redirect_to admin_categories_path, alert: 'You cannot delete the first category.'
+    else
+      @category.destroy
+      redirect_to admin_path, notice: 'Category was successfully destroyed.'
+    end
   end
 
   private
