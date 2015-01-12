@@ -1,22 +1,23 @@
 # == Schema Information
 #
-# Table name: sessions
+# Table name: game_sessions
 #
 #  id          :integer          not null, primary key
 #  host_id     :integer
 #  opponent_id :integer
-#  online      :boolean          default("false")
+#  offline     :boolean          default("false")
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  topic_id    :integer
 #
 
-class Session < ActiveRecord::Base
+class GameSession < ActiveRecord::Base
   belongs_to :host, class_name: 'Player', foreign_key: 'host_id'
   belongs_to :opponent, class_name: 'Player', foreign_key: 'opponent_id'
   belongs_to :topic
 
-  has_many :session_questions, dependent: :destroy
-  has_many :questions, through: :session_questions
+  has_many :game_session_questions, dependent: :destroy
+  has_many :questions, through: :game_session_questions
 
   validates :host, presence: true
   validates :topic, presence: true
@@ -28,15 +29,15 @@ class Session < ActiveRecord::Base
     6.times do
       # Avoid repetitions
       begin
-        sq = SessionQuestion.new(question: Question.where(topic: topic).sample)
+        sq = GameSessionQuestion.new(question: Question.where(topic: topic).sample)
       end while questions.include?(sq.question)
       # Random answer and time
       sq.opponent_answer = sq.question.answers.sample
       sq.opponent_time = (2..6).to_a.sample
-      sq.session = self
+      sq.game_session = self
       sq.save
 
-      self.session_questions << sq
+      self.game_session_questions << sq
     end
   end
 end
