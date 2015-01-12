@@ -40,6 +40,11 @@ class Admin::TopicsController < ApplicationController
     end
   end
 
+  def destroy
+    @topic.destroy
+    redirect_to admin_topics_path, notice: 'Topic was successfully destroyed.'
+  end
+
   private
 
   def find_topic
