@@ -13,6 +13,7 @@
 
 class Question < ActiveRecord::Base
   has_many :answers, -> { order(id: :asc) }, dependent: :destroy
+  has_many :game_session_questions, dependent: :destroy
   belongs_to :topic
 
   validates :content, presence: true

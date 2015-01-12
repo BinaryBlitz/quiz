@@ -38,7 +38,8 @@ class Admin::QuestionsController < ApplicationController
   end
 
   def destroy
-    #
+    @question.destroy
+    redirect_to [:admin, @question.topic], notice: 'Question was successfully destroyed.'
   end
 
   private
