@@ -13,9 +13,9 @@
 }
 
 .alert-notice {
-	@extend .alert-info;
+	@extend .alert-info !optional;
 }
 
 .alert-alert {
-	@extend .alert-danger;
+	@extend .alert-danger !optional;
 }
