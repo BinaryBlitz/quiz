@@ -1,4 +1,4 @@
-class Admin::QuestionsController < ApplicationController
+class Admin::QuestionsController < Admin::AdminController
   before_action :find_question, only: [:edit, :update, :destroy]
 
   def index

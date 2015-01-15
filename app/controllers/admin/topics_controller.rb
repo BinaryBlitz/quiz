@@ -1,4 +1,4 @@
-class Admin::TopicsController < ApplicationController
+class Admin::TopicsController < Admin::AdminController
   before_action :find_topic, only: [:show, :edit, :update, :destroy]
 
   def index
