@@ -16,7 +16,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      render json: @player, status: :created, location: @player
+      render :show, formats: :json, status: :created, location: @player
     else
       render json: @player.errors, status: :unprocessable_entity
     end

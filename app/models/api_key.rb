@@ -13,6 +13,10 @@ class ApiKey < ActiveRecord::Base
   before_create :generate_token
   belongs_to :player
 
+  def to_s
+    token
+  end
+
   private
 
   def generate_token
