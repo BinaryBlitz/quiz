@@ -31,8 +31,12 @@ class Admin::AdminsController < Admin::AdminController
   end
 
   def destroy
-    @admin.destroy
-    redirect_to admin_admins_path, notice: 'Admin was successfully destroyed.'
+    if @admin == Admin.first
+      redirect_to admin_admins_path, alert: 'Unauthorized'
+    else
+      @admin.destroy
+      redirect_to admin_admins_path, notice: 'Admin was successfully destroyed.'
+    end
   end
 
   private
