@@ -3,4 +3,8 @@ class Admin::DashboardController < Admin::AdminController
     @categories = Category.all
     @topics = Topic.all
   end
+
+  def manage
+    @admins = Admin.all
+  end
 end

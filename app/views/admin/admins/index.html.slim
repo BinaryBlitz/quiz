@@ -1,0 +1,21 @@
+h2 Manage admins
+
+= link_to 'New admin', new_admin_admin_path, class: 'btn btn-default'
+
+table.table
+  thead
+    tr
+      td ID
+      td Name
+      td Email
+      td Actions
+  tbody
+    - @admins.each do |admin|
+      tr
+        td = admin.id
+        td Lal
+        td = admin.email
+        td
+          = link_to 'Edit', edit_admin_admin_path(admin), class: 'btn btn-default'
+          = ' '
+          = link_to 'Delete', [:admin, admin], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
