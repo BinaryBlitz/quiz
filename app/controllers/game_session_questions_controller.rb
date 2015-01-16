@@ -1,4 +1,6 @@
 class GameSessionQuestionsController < ApplicationController
+  before_action :restrict_access
+
   def show
     @game_session_question = GameSessionQuestion.find(params[:id])
     render json: @game_session_question

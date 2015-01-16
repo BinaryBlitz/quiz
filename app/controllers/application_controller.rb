@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def restrict_access
     unless restrict_access_by_params || restrict_access_by_header
-      render json: {message: 'Invalid API Token'}, status: 401
+      render json: { message: 'Invalid API Token' }, status: 401
       return
     end
 

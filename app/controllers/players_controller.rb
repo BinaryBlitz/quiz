@@ -1,4 +1,5 @@
 class PlayersController < ApplicationController
+  before_action :restrict_access, except: [:create]
   # GET /players
   def index
     @players = Player.all

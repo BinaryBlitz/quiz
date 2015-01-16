@@ -1,4 +1,6 @@
 class TopicsController < ApplicationController
+  before_action :restrict_access
+
   def index
     @topics = Topic.all
     render formats: :json
