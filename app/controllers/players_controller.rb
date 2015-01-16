@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  before_action :restrict_access, except: [:create]
+  before_action :restrict_access, except: [:create, :authenticate]
   # GET /players
   def index
     @players = Player.all
@@ -40,6 +40,17 @@ class PlayersController < ApplicationController
     @player.destroy
 
     head :no_content
+  end
+
+  # POST /players/authenticate
+  def authenticate
+    @player = Player.find_by(email: params[:email])
+
+    if @player && @player.password_digest == params[:password_digest]
+      render json: @player.api_key, only: :token
+    else
+      render json: { error: 'Invalid email/password combination' }
+    end
   end
 
   private
