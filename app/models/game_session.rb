@@ -32,11 +32,7 @@ class GameSession < ActiveRecord::Base
         sq = GameSessionQuestion.new(question: Question.where(topic: topic).sample)
       end while questions.include?(sq.question)
       # Random answer and time
-      sq.opponent_answer = sq.question.answers.sample
-      sq.opponent_time = (2..6).to_a.sample
-      sq.game_session = self
-      sq.save
-
+      sq.generate(self) if offline
       self.game_session_questions << sq
     end
   end

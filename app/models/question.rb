@@ -32,6 +32,20 @@ class Question < ActiveRecord::Base
     end
   end
 
+  # Get correct answer
+  def correct_answer
+    if answers.any?
+      answers.find_by(correct: true)
+    end
+  end
+
+  # Get random incorrect answer
+  def random_incorrect_answer
+    if answers.any?
+      answers.where(correct: false).sample
+    end
+  end
+
   private
 
   # Finds and updates correct answers to incorrect
