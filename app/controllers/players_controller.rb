@@ -47,9 +47,9 @@ class PlayersController < ApplicationController
     @player = Player.find_by(email: params[:email])
 
     if @player && @player.password_digest == params[:password_digest]
-      render json: @player.api_key, only: :token
+      render formats: :json
     else
-      render json: { error: 'Invalid email/password combination' }
+      render json: { error: 'Invalid email/password combination' }, status: :unauthorized
     end
   end
 
