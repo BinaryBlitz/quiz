@@ -26,16 +26,14 @@ class GameSessionQuestion < ActiveRecord::Base
   validates :host_time, numericality: { greater_than_or_equal_to: 0 }, on: :update
   validates :opponent_time, numericality: { greater_than_or_equal_to: 0 }, on: :update
 
+  CORRECT_ANSWER_PROBABILITY = 0.7
+
   # Generates offline session question
-  def generate(session)
-    if answer = online_answer
-      update(opponent_answer: answer[0], opponent_time: answer[1],
-        game_session: session)
-    else
-      update(opponent_answer: generate_answer,
-        opponent_time: random_time,
-        game_session: session)
-    end
+  def generate_for_offline(session)
+    opponent_answer, opponent_time = load_or_generate_answer
+
+    update(opponent_answer: opponent_answer, opponent_time: opponent_time,
+      game_session: session)
   end
 
   private
@@ -47,23 +45,37 @@ class GameSessionQuestion < ActiveRecord::Base
 
   # Generates correct answers with the probability of 0.7
   def opponent_correct?
-    rand() <= 0.7 ? true : false
+    rand() <= CORRECT_ANSWER_PROBABILITY
   end
 
   # Get random time in seconds
   def random_time
-    (1..6).to_a.sample
+    rand(6) + 1
+  end
+
+  # Find sessions with the same question
+  def has_online_answers?
+    # Find session questions with the same question
+    sq = question.game_session_questions.sample
+    sq && sq.host_answer && sq.host_time
   end
 
   # Get answer from already played sessions
   def online_answer
-    # Find session questions with the same question
-    sq = question.game_session_questions.sample
     # In offline sessions real players are hosts
-    if sq && sq.host_answer && sq.host_time
+    if has_online_answers?
       [sq.host_answer, sq.host_time]
     else
       false
+    end
+  end
+
+  # Find online answer, generate if not found
+  def load_or_generate_answer
+    if has_online_answers?
+      online_answer
+    else
+      [generate_answer, random_time]
     end
   end
 end

@@ -34,9 +34,7 @@ class Question < ActiveRecord::Base
 
   # Get correct answer
   def correct_answer
-    if answers.any?
-      answers.find_by(correct: true)
-    end
+    answers.find_by(correct: true)
   end
 
   # Get random incorrect answer

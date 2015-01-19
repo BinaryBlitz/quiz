@@ -28,11 +28,14 @@ class GameSession < ActiveRecord::Base
 
     6.times do
       # Avoid repetitions
-      begin
+      sq = nil
+      loop do
         sq = GameSessionQuestion.new(question: Question.where(topic: topic).sample)
-      end while questions.include?(sq.question)
+        break unless questions.include?(sq.question)
+      end
+
       # Random answer and time
-      sq.generate(self) if offline
+      sq.generate_for_offline(self) if offline
       self.game_session_questions << sq
     end
   end
