@@ -12,7 +12,7 @@ require 'rails_helper'
 
 RSpec.describe Category, :type => :model do
   before do
-    @category = FactoryGirl.create(:category)
+    @category = build(:category)
   end
 
   it "should not be valid without name" do

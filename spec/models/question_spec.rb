@@ -15,7 +15,7 @@ require 'rails_helper'
 
 RSpec.describe Question, :type => :model do
   before do
-    @question = FactoryGirl.create(:question)
+    @question = build(:question)
   end
 
   it "should not be valid without content" do
@@ -33,7 +33,8 @@ RSpec.describe Question, :type => :model do
     expect(@question).not_to be_valid
   end
 
-  it "should not be valid with wrong answer" do
-    pending "validate"
+  it "should not be valid with invalid image url" do
+    @question.image_url = 'invalid url'
+    expect(@question).not_to be_valid
   end
 end
