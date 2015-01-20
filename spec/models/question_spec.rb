@@ -15,7 +15,7 @@ require 'rails_helper'
 
 RSpec.describe Question, :type => :model do
   before do
-    @question = build(:question)
+    @question = create(:question)
   end
 
   it "should not be valid without content" do

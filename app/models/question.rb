@@ -19,7 +19,7 @@ class Question < ActiveRecord::Base
   validates :content, presence: true
   validates :topic, presence: true
   validates :bounty, numericality: { greater_than_or_equal_to: 0 }
-  validates :image_url, format: { with: URI.regexp }
+  validates :image_url, format: { with: URI.regexp }, allow_blank: true
 
   accepts_nested_attributes_for :answers, allow_destroy: true, reject_if: lambda { |a| a[:content].blank? }
 
