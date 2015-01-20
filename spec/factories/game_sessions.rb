@@ -1,20 +1,28 @@
 # == Schema Information
 #
-# Table name: sessions
+# Table name: game_sessions
 #
 #  id          :integer          not null, primary key
 #  host_id     :integer
 #  opponent_id :integer
-#  online      :boolean          default("false")
+#  offline     :boolean          default("false")
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  topic_id    :integer
 #
 
 FactoryGirl.define do
-  factory :session do
+  factory :game_session do
     host
     opponent
     topic
-    online false
+    offline true
+  end
+
+  factory :online_session do
+    host
+    opponent
+    topic
+    offline false
   end
 end

@@ -21,5 +21,13 @@ FactoryGirl.define do
     price 1
     played_count 1
     category
+
+    transient do
+      question_count 6
+    end
+
+    after(:create) do |topic, evaluator|
+      create_list(:question, evaluator.question_count, topic: topic)
+    end
   end
 end

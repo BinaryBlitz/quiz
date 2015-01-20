@@ -1,21 +1,21 @@
 # == Schema Information
 #
-# Table name: session_questions
+# Table name: game_session_questions
 #
 #  id                 :integer          not null, primary key
-#  session_id         :integer
+#  game_session_id    :integer
 #  question_id        :integer
 #  host_answer_id     :integer
 #  opponent_answer_id :integer
-#  host_time          :integer          default("0")
-#  opponent_time      :integer          default("0")
+#  host_time          :integer
+#  opponent_time      :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
 
 FactoryGirl.define do
-  factory :session_question do
-    session
+  factory :game_session_question do
+    game_session
     question
     association :host_answer, factory: :host_answer
     association :opponent_answer, factory: :opponent_answer
