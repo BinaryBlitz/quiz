@@ -38,22 +38,15 @@ class GameSessionQuestion < ActiveRecord::Base
 
   private
 
-  # Generates random answer
-  def generate_answer
-    opponent_correct? ? question.correct_answer : question.random_incorrect_answer
+  # Find online answer, generate if not found
+  def load_or_generate_answer
+    if has_online_answers?
+      online_answer
+    else
+      [generate_answer, random_time]
+    end
   end
 
-  # Generates correct answers with the probability of 0.7
-  def opponent_correct?
-    rand() <= CORRECT_ANSWER_PROBABILITY
-  end
-
-  # Get random time in seconds
-  def random_time
-    rand(6) + 1
-  end
-
-  # Find sessions with the same question
   def has_online_answers?
     # Find session questions with the same question
     sq = question.game_session_questions.sample
@@ -63,19 +56,19 @@ class GameSessionQuestion < ActiveRecord::Base
   # Get answer from already played sessions
   def online_answer
     # In offline sessions real players are hosts
-    if has_online_answers?
-      [sq.host_answer, sq.host_time]
-    else
-      false
-    end
+    [sq.host_answer, sq.host_time]
   end
 
-  # Find online answer, generate if not found
-  def load_or_generate_answer
-    if has_online_answers?
-      online_answer
-    else
-      [generate_answer, random_time]
-    end
+  def generate_answer
+    opponent_correct? ? question.correct_answer : question.random_incorrect_answer
+  end
+
+  def random_time
+    rand(6) + 1
+  end
+
+  # Generates correct answers with the probability of 0.7
+  def opponent_correct?
+    rand() <= CORRECT_ANSWER_PROBABILITY
   end
 end
