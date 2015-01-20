@@ -7,8 +7,8 @@
 #  question_id        :integer
 #  host_answer_id     :integer
 #  opponent_answer_id :integer
-#  host_time          :integer          default("0")
-#  opponent_time      :integer          default("0")
+#  host_time          :integer
+#  opponent_time      :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
@@ -49,14 +49,15 @@ class GameSessionQuestion < ActiveRecord::Base
 
   def has_online_answers?
     # Find session questions with the same question
-    sq = question.game_session_questions.sample
-    sq && sq.host_answer && sq.host_time
+    # TODO: Loop through many session questions
+    @random_question = question.game_session_questions.sample
+    @random_question && @random_question.host_answer && @random_question.host_time
   end
 
   # Get answer from already played sessions
   def online_answer
     # In offline sessions real players are hosts
-    [sq.host_answer, sq.host_time]
+    [@random_question.host_answer, @random_question.host_time]
   end
 
   def generate_answer
