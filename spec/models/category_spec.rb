@@ -19,4 +19,8 @@ RSpec.describe Category, :type => :model do
     @category.name = ''
     expect(@category).not_to be_valid
   end
+
+  it "should be valid with correct non-empty name" do
+    expect(@category).to be_valid
+  end
 end

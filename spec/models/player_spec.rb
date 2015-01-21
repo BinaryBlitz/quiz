@@ -19,31 +19,33 @@ RSpec.describe Player, :type => :model do
     @opponent = FactoryGirl.create(:opponent)
   end
 
-  it "should not be valid without name" do
-    @host.name = ''
-    expect(@host).not_to be_valid
-  end
-
-  it "should not be valid without email" do
-    @host.email = ''
-    expect(@host).not_to be_valid
-  end
-
-  it "should not be valid with already existing email" do
-    @opponent.email = @host.email.upcase
-    expect(@opponent).not_to be_valid
-  end
-
-  it "should not be valid when email format is incorrect" do
-    invalid_emails = %w(foobar foo@bar.1com email.com @.email@bar.com)
-    invalid_emails.each do |email|
-      @host.email = email
+  context "should not be valid" do
+    it "without name" do
+      @host.name = ''
       expect(@host).not_to be_valid
     end
-  end
 
-  it "should not be valid without password" do
-    @host.password_digest = ''
-    expect(@host).not_to be_valid
+    it "without email" do
+      @host.email = ''
+      expect(@host).not_to be_valid
+    end
+
+    it "with already existing email" do
+      @opponent.email = @host.email.upcase
+      expect(@opponent).not_to be_valid
+    end
+
+    it "when email format is incorrect" do
+      invalid_emails = %w(foobar foo@bar.1com email.com @.email@bar.com)
+      invalid_emails.each do |email|
+        @host.email = email
+        expect(@host).not_to be_valid
+      end
+    end
+
+    it "without password" do
+      @host.password_digest = ''
+      expect(@host).not_to be_valid
+    end
   end
 end
