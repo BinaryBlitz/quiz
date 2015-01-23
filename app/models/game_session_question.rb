@@ -29,11 +29,10 @@ class GameSessionQuestion < ActiveRecord::Base
   CORRECT_ANSWER_PROBABILITY = 0.7
 
   # Generates offline session question
-  def generate_for_offline(session)
+  def generate_for_offline
     opponent_answer, opponent_time = load_or_generate_answer
 
-    update(opponent_answer: opponent_answer, opponent_time: opponent_time,
-      game_session: session)
+    update(opponent_answer: opponent_answer, opponent_time: opponent_time)
   end
 
   private
@@ -48,6 +47,9 @@ class GameSessionQuestion < ActiveRecord::Base
   end
 
   def has_online_answers?
+    puts self.question
+    puts self.game_session
+    puts '#######'
     # Find session questions with the same question
     # TODO: Loop through many session questions
     @random_question = question.game_session_questions.sample

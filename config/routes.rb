@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   resources :players, except: [:new, :edit], defaults: { format: :json } do
     post 'authenticate', on: :collection
   end
+  resources :lobbies, only: [:show, :create] do
+    get 'find', on: :member
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -18,8 +18,6 @@ class GameSessionsController < ApplicationController
 
     if @game_session.save
       render :show, formats: :json, status: :created, location: @game_session
-      # render json: @game_session.to_json(
-        # include: { session_questions: { include: { question: { include: :answers }} }}), status: :created, location: @game_session
     else
       render json: @game_session.errors, status: :unprocessable_entity
     end
@@ -42,6 +40,10 @@ class GameSessionsController < ApplicationController
     @game_session.destroy
 
     head :no_content
+  end
+
+  # GET /game_sessions/find
+  def find
   end
 
   private

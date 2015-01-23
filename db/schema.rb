@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117182844) do
+ActiveRecord::Schema.define(version: 20150123154744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,11 +80,24 @@ ActiveRecord::Schema.define(version: 20150117182844) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "topic_id"
+    t.boolean  "finished",    default: false
   end
 
   add_index "game_sessions", ["host_id"], name: "index_game_sessions_on_host_id", using: :btree
   add_index "game_sessions", ["opponent_id"], name: "index_game_sessions_on_opponent_id", using: :btree
   add_index "game_sessions", ["topic_id"], name: "index_game_sessions_on_topic_id", using: :btree
+
+  create_table "lobbies", force: :cascade do |t|
+    t.integer  "query_count", default: 0
+    t.boolean  "closed",      default: false
+    t.integer  "topic_id"
+    t.integer  "player_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "lobbies", ["player_id"], name: "index_lobbies_on_player_id", using: :btree
+  add_index "lobbies", ["topic_id"], name: "index_lobbies_on_topic_id", using: :btree
 
   create_table "players", force: :cascade do |t|
     t.string   "name"
@@ -126,6 +139,8 @@ ActiveRecord::Schema.define(version: 20150117182844) do
   add_foreign_key "game_session_questions", "game_sessions"
   add_foreign_key "game_session_questions", "questions"
   add_foreign_key "game_sessions", "topics"
+  add_foreign_key "lobbies", "players"
+  add_foreign_key "lobbies", "topics"
   add_foreign_key "questions", "topics"
   add_foreign_key "topics", "categories"
 end
