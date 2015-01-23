@@ -1,0 +1,7 @@
+= form_for [:admin, @category] do |f|
+  = render 'shared/error_messages', object: @category
+  .form-group
+    = f.label :name
+    = f.text_field :name, placeholder: 'Category name', class: 'form-control'
+
+  = f.submit 'Submit', class: 'btn btn-default'

@@ -1,8 +1,25 @@
 Rails.application.routes.draw do
-  resources :session_questions, only: [:show, :update], defaults: { format: :json }
-  resources :sessions, except: [:new, :edit], defaults: { format: :json }
+  root 'admin/dashboard#index'
+
+  devise_for :admins, path: 'admin'
+
+  namespace :admin do
+    get '/', to: 'dashboard#index'
+    get 'manage', to: 'admins#index'
+    resources :admins
+    resources :categories
+    resources :topics
+    resources :questions
+  end
+
+  resources :topics, only: [:index, :show], defaults: { format: :json }
+  resources :categories, only: [:index, :show], defaults: { format: :json }
+  resources :game_session_questions, only: [:show, :update], defaults: { format: :json }
+  resources :game_sessions, except: [:new, :edit], defaults: { format: :json }
   resources :questions, except: [:new, :edit], defaults: { format: :json }
-  resources :players, except: [:new, :edit], defaults: { format: :json }
+  resources :players, except: [:new, :edit], defaults: { format: :json } do
+    post 'authenticate', on: :collection
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

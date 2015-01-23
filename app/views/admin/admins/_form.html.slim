@@ -1,0 +1,15 @@
+= form_for [:admin, @admin] do |f|
+  = render 'shared/error_messages', object: @admin
+  .form-group
+    = f.label :email
+    = f.text_field :email, placeholder: 'Email', class: 'form-control'
+
+  .form-group
+    = f.label :password
+    = f.password_field :password, class: 'form-control'
+
+  .form-group
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation, class: 'form-control'
+
+  = f.submit 'Submit', class: 'btn btn-default'

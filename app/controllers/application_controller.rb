@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
+  before_filter :restrict_access
 
   def current_player
     @current_player
@@ -9,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   def restrict_access
     unless restrict_access_by_params || restrict_access_by_header
-      render json: {message: 'Invalid API Token'}, status: 401
+      render json: { message: 'Invalid API Token' }, status: 401
       return
     end
 

@@ -1,4 +1,6 @@
 class PlayersController < ApplicationController
+  skip_before_filter :restrict_access, only: [:create, :authenticate]
+
   # GET /players
   def index
     @players = Player.all
@@ -16,7 +18,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      render json: @player, status: :created, location: @player
+      render :show, formats: :json, status: :created, location: @player
     else
       render json: @player.errors, status: :unprocessable_entity
     end
@@ -41,9 +43,20 @@ class PlayersController < ApplicationController
     head :no_content
   end
 
+  # POST /players/authenticate
+  def authenticate
+    @player = Player.find_by(email: params[:email])
+
+    if @player && @player.password_digest == params[:password_digest]
+      render formats: :json
+    else
+      render json: { error: 'Invalid email/password combination' }, status: :unauthorized
+    end
+  end
+
   private
 
-    def player_params
-      params.require(:player).permit(:name, :email, :password_digest, :points)
-    end
+  def player_params
+    params.require(:player).permit(:name, :email, :password_digest, :points)
+  end
 end
