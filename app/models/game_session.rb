@@ -22,28 +22,12 @@ class GameSession < ActiveRecord::Base
   validates :host, presence: true
   validates :topic, presence: true
 
-  MAX_ITERATIONS = 10
-
   def generate
     # Offline only for now
     self.offline = true
 
-    6.times do
-      # Avoid repetitions
-      sq = nil
-      iteration = 0
-      loop do
-        iteration += 1
-        sq = GameSessionQuestion.new(question: Question.where(topic: topic).sample)
-        break unless questions.include?(sq.question) || iteration <= MAX_ITERATIONS
-      end
-
-      # Stop if there're no questions left
-      break if sq.nil?
-
-      # Random answer and time
-      sq.generate_for_offline(self) if offline
-      self.game_session_questions << sq
-    end
+    questions = Question.where(topic: topic).sample(6)
+    questions.map!{ |q| self.game_session_questions.create(question: q) }
+    questions.each{ |q| q.generate_for_offline(self) } if offline
   end
 end

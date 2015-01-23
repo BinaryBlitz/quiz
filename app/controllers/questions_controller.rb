@@ -1,5 +1,4 @@
 class QuestionsController < ApplicationController
-  before_action :restrict_access
   # GET /questions
   def index
     @questions = Question.all

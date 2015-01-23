@@ -1,5 +1,6 @@
 class PlayersController < ApplicationController
-  before_action :restrict_access, except: [:create, :authenticate]
+  skip_before_filter :restrict_access, only: [:create, :authenticate]
+
   # GET /players
   def index
     @players = Player.all
@@ -55,7 +56,7 @@ class PlayersController < ApplicationController
 
   private
 
-    def player_params
-      params.require(:player).permit(:name, :email, :password_digest, :points)
-    end
+  def player_params
+    params.require(:player).permit(:name, :email, :password_digest, :points)
+  end
 end

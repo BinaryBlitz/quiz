@@ -1,6 +1,4 @@
 class GameSessionsController < ApplicationController
-  before_action :restrict_access
-
   # GET /game_sessions
   def index
     @game_sessions = GameSession.all

@@ -15,16 +15,10 @@ class Admin::TopicsController < Admin::AdminController
 
   def create
     @topic = Topic.new(topic_params)
-    @topic.expires_at = Date.new(
-      topic_params['expires_at(1i)'].to_i,
-      topic_params['expires_at(2i)'].to_i,
-      topic_params['expires_at(3i)'].to_i) if topic_params['expires_at(1i)']
 
     if @topic.save
       redirect_to [:admin, @topic], notice: 'Topic was successfully created.'
     else
-      puts params
-      puts @topic.errors.full_messages
       render :new
     end
   end

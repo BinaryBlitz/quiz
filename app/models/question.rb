@@ -21,7 +21,8 @@ class Question < ActiveRecord::Base
   validates :bounty, numericality: { greater_than_or_equal_to: 0 }
   validates :image_url, format: { with: URI.regexp }, allow_blank: true
 
-  accepts_nested_attributes_for :answers, allow_destroy: true, reject_if: lambda { |a| a[:content].blank? }
+  accepts_nested_attributes_for :answers, allow_destroy: true,
+    reject_if: lambda { |a| a[:content].blank? }
 
   # Finds the first answer and updates it to be the correct one
   def set_correct_answer
@@ -40,9 +41,7 @@ class Question < ActiveRecord::Base
 
   # Get random incorrect answer
   def random_incorrect_answer
-    if answers.any?
-      answers.where(correct: false).sample
-    end
+    answers.where(correct: false).sample if answers.any?
   end
 
   private
@@ -50,7 +49,7 @@ class Question < ActiveRecord::Base
   # Finds and updates correct answers to incorrect
   def set_incorrect_answers
     # Get all answers (except the first one)
-    if other_answers = answers[1..-1]
+    if other_answers = answers.drop(1)
       # debugger
       other_answers.each do |answer|
         # Set to incorrect if it was correct
