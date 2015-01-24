@@ -13,6 +13,7 @@
 class Lobby < ActiveRecord::Base
   belongs_to :topic
   belongs_to :player
+  belongs_to :game_session
 
   validates :topic, presence: true
   validates :player, presence: true

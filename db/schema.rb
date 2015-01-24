@@ -88,14 +88,16 @@ ActiveRecord::Schema.define(version: 20150123154744) do
   add_index "game_sessions", ["topic_id"], name: "index_game_sessions_on_topic_id", using: :btree
 
   create_table "lobbies", force: :cascade do |t|
-    t.integer  "query_count", default: 0
-    t.boolean  "closed",      default: false
+    t.integer  "query_count",     default: 0
+    t.boolean  "closed",          default: false
     t.integer  "topic_id"
     t.integer  "player_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.integer  "game_session_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
+  add_index "lobbies", ["game_session_id"], name: "index_lobbies_on_game_session_id", using: :btree
   add_index "lobbies", ["player_id"], name: "index_lobbies_on_player_id", using: :btree
   add_index "lobbies", ["topic_id"], name: "index_lobbies_on_topic_id", using: :btree
 
@@ -139,6 +141,7 @@ ActiveRecord::Schema.define(version: 20150123154744) do
   add_foreign_key "game_session_questions", "game_sessions"
   add_foreign_key "game_session_questions", "questions"
   add_foreign_key "game_sessions", "topics"
+  add_foreign_key "lobbies", "game_sessions"
   add_foreign_key "lobbies", "players"
   add_foreign_key "lobbies", "topics"
   add_foreign_key "questions", "topics"

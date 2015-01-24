@@ -19,43 +19,18 @@ class LobbiesController < ApplicationController
     end
   end
 
-  # TODO
   def find
     # Check if session was already created
-    sessions = @current_player.game_sessions
-    if sessions.any? && !sessions.last.finished?
-      session = @current_player.game_sessions.last
-      render partial: 'game_sessions/game_session',
-             locals: { game_session: session }
-      return
-    end
-
+    render_lobby_session and return if @lobby.game_session
     # Don't search if closed
-    if @lobby.closed?
-      render json: 'Lobby is closed.'
-      return
+    render json: 'Lobby is closed.' and return if @lobby.closed?
+
+    opponent_lobby = @lobby.find_opponent_lobby
+    if opponent_lobby
+      create_online_session_with_lobby(opponent_lobby)
     else
-      opponent_lobby = @lobby.find_opponent_lobby
-      if opponent_lobby
-        @session = GameSession.create(topic: @lobby.topic,
-                                      host: @current_player,
-                                      opponent: opponent_lobby.player,
-                                      offline: false)
-        @session.generate
-        @lobby.close
-      else
-        if @lobby.query_count >= Lobby::MAX_QUERY_COUNT
-          @session = GameSession.create(topic: @lobby.topic,
-                                        host: @current_player,
-                                        offline: true)
-          @session.generate
-          @lobby.close
-        else
-          @lobby.increment_count
-          render json: 'Opponent not found, try again.'
-          return
-        end
-      end
+      increment_lobby and return if @lobby.query_count < Lobby::MAX_QUERY_COUNT
+      create_offline_session
     end
 
     render formats: :json
@@ -69,5 +44,41 @@ class LobbiesController < ApplicationController
 
   def lobby_params
     params.require(:lobby).permit(:topic_id)
+  end
+
+  def render_lobby_session
+    @session = @lobby.game_session
+    render formats: :json
+  end
+
+  def increment_lobby
+    @lobby.increment_count
+    render json: 'Opponent not found, try again.'
+  end
+
+  def create_online_session_with_lobby(opponent_lobby)
+    @session = GameSession.create(
+      topic: @lobby.topic,
+      host: @current_player,
+      opponent: opponent_lobby.player,
+      offline: false)
+    close_lobbies(opponent_lobby)
+  end
+
+  def create_offline_session
+    @session = GameSession.create(
+      topic: @lobby.topic,
+      host: @current_player,
+      offline: true)
+    close_lobbies
+  end
+
+  def close_lobbies(opponent_lobby = nil)
+    @lobby.game_session = @session
+    @lobby.close
+    if opponent_lobby
+      opponent_lobby.game_session = @session
+      opponent_lobby.close
+    end
   end
 end

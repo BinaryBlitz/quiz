@@ -47,9 +47,6 @@ class GameSessionQuestion < ActiveRecord::Base
   end
 
   def has_online_answers?
-    puts self.question
-    puts self.game_session
-    puts '#######'
     # Find session questions with the same question
     # TODO: Loop through many session questions
     @random_question = question.game_session_questions.sample
