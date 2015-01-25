@@ -3,7 +3,7 @@ class CreateGameSessions < ActiveRecord::Migration
     create_table :game_sessions do |t|
       t.integer :host_id, index: true
       t.integer :opponent_id, index: true
-      t.boolean :offline, default: false
+      t.boolean :offline, default: true
 
       t.timestamps null: false
     end

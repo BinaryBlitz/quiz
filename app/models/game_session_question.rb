@@ -18,20 +18,24 @@ class GameSessionQuestion < ActiveRecord::Base
   belongs_to :question
 
   belongs_to :host_answer, class_name: 'Answer', foreign_key: :host_answer_id
-  belongs_to :opponent_answer, class_name: 'Answer', foreign_key: :opponent_answer_id
+  belongs_to :opponent_answer,
+             class_name: 'Answer', foreign_key: :opponent_answer_id
 
   validates :game_session, presence: true
   validates :question, presence: true
 
-  validates :host_time, numericality: { greater_than_or_equal_to: 0 }, on: :update
-  validates :opponent_time, numericality: { greater_than_or_equal_to: 0 }, on: :update
+  validates :host_time,
+            numericality: { greater_than_or_equal_to: 0 },
+            on: :update, allow_blank: true
+  validates :opponent_time,
+            numericality: { greater_than_or_equal_to: 0 },
+            on: :update, allow_blank: true
 
   CORRECT_ANSWER_PROBABILITY = 0.7
 
   # Generates offline session question
   def generate_for_offline
     opponent_answer, opponent_time = load_or_generate_answer
-
     update(opponent_answer: opponent_answer, opponent_time: opponent_time)
   end
 

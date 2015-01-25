@@ -7,8 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Players
-host = Player.create(name: 'Foo', email: 'foo@bar.com', password_digest: BCrypt::Password.create('foobar'))
-opponent = Player.create(name: 'Bar', email: 'bar@foo.com', password_digest: BCrypt::Password.create('barfoo'))
+host = Player.create(
+  name: 'Foo', email: 'foo@bar.com',
+  password_digest: Digest::MD5.hexdigest('foobar'))
+opponent = Player.create(
+  name: 'Bar', email: 'bar@foo.com',
+  password_digest: Digest::MD5.hexdigest('barfoo'))
 
 # Categories and topics
 category = Category.create(name: 'General')
@@ -27,59 +31,86 @@ q2.answers << Answer.create(content: 'New York City')
 q2.answers << Answer.create(content: 'Los Angeles')
 q2.answers << Answer.create(content: 'Chicago')
 
-q3 = Question.create(content: 'What is the largest country in the world?', topic: topic)
+q3 = Question.create(
+  content: 'What is the largest country in the world?',
+  topic: topic)
 q3.answers << Answer.create(content: 'Russia', correct: true)
 q3.answers << Answer.create(content: 'Canada')
 q3.answers << Answer.create(content: 'United States')
 q3.answers << Answer.create(content: 'Brazil')
 
-q4 = Question.create(content: 'What is the largest country in Europe?', topic: topic)
+q4 = Question.create(
+  content: 'What is the largest country in Europe?',
+  topic: topic)
 q4.answers << Answer.create(content: 'Russia', correct: true)
 q4.answers << Answer.create(content: 'Germany')
 q4.answers << Answer.create(content: 'Poland')
 q4.answers << Answer.create(content: 'The United Kingdom')
 
-q5 = Question.create(content: 'What is the largest country in Americas?', topic: topic)
+q5 = Question.create(
+  content: 'What is the largest country in Americas?',
+  topic: topic)
 q5.answers << Answer.create(content: 'Canada', correct: true)
 q5.answers << Answer.create(content: 'The United States')
 q5.answers << Answer.create(content: 'Mexico')
 q5.answers << Answer.create(content: 'Brazil')
 
-q6 = Question.create(content: 'What is the largest country in Africa?', topic: topic)
+q6 = Question.create(
+  content: 'What is the largest country in Africa?',
+  topic: topic)
 q6.answers << Answer.create(content: 'Algeria', correct: true)
 q6.answers << Answer.create(content: 'Egypt')
 q6.answers << Answer.create(content: 'South African Republic')
 q6.answers << Answer.create(content: 'Ghana')
 
-q7 = Question.create(content: 'What is the largest country in Asia?', topic: topic)
+q7 = Question.create(
+  content: 'What is the largest country in Asia?',
+  topic: topic)
 q7.answers << Answer.create(content: 'Russia', correct: true)
 q7.answers << Answer.create(content: 'China')
 q7.answers << Answer.create(content: 'India')
 q7.answers << Answer.create(content: 'Japan')
 
 # Online session
-session = GameSession.create(host: host, opponent: opponent)
-sq1 = GameSessionQuestion.create(game_session: session, question: q1,
+session = GameSession.create(host: host, opponent: opponent, topic: topic)
+
+GameSessionQuestion.create(
+  game_session: session, question: q1,
   host_answer: q1.answers.first, opponent_answer: q1.answers.second)
-sq2 = GameSessionQuestion.create(game_session: session, question: q2,
+GameSessionQuestion.create(
+  game_session: session, question: q2,
   host_answer: q2.answers.second, opponent_answer: q2.answers.first)
-sq3 = GameSessionQuestion.create(game_session: session, question: q1,
+GameSessionQuestion.create(
+  game_session: session, question: q1,
   host_answer: q1.answers.first, opponent_answer: q1.answers.second)
-sq4 = GameSessionQuestion.create(game_session: session, question: q2,
+GameSessionQuestion.create(
+  game_session: session, question: q2,
   host_answer: q2.answers.second, opponent_answer: q2.answers.first)
-sq5 = GameSessionQuestion.create(game_session: session, question: q1,
+GameSessionQuestion.create(
+  game_session: session, question: q1,
   host_answer: q1.answers.first, opponent_answer: q1.answers.second)
-sq6 = GameSessionQuestion.create(game_session: session, question: q2,
+GameSessionQuestion.create(
+  game_session: session, question: q2,
   host_answer: q2.answers.second, opponent_answer: q2.answers.first)
 
 # OfflineSession
-offline_session = GameSession.create(host: host, opponent: opponent, offline: true, topic: topic)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q1, opponent_answer: q1.answers.first)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q2, opponent_answer: q1.answers.second)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q3, opponent_answer: q1.answers.first)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q4, opponent_answer: q1.answers.second)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q5, opponent_answer: q1.answers.first)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q6, opponent_answer: q1.answers.second)
+offline_session = GameSession.create(
+  host: host, opponent: opponent, offline: true, topic: topic)
+
+offline_session.game_session_questions.create(
+  question: q1, opponent_answer: q1.answers.first)
+offline_session.game_session_questions.create(
+  question: q2, opponent_answer: q1.answers.second)
+offline_session.game_session_questions.create(
+  question: q3, opponent_answer: q1.answers.first)
+offline_session.game_session_questions.create(
+  question: q4, opponent_answer: q1.answers.second)
+offline_session.game_session_questions.create(
+  question: q5, opponent_answer: q1.answers.first)
+offline_session.game_session_questions.create(
+  question: q6, opponent_answer: q1.answers.second)
 
 # Admins
-admin = Admin.create(email: 'foo@bar.com', password: 'qwerty123', password_confirmation: 'qwerty123')
+Admin.create(
+  email: 'foo@bar.com',
+  password: 'qwerty123', password_confirmation: 'qwerty123')

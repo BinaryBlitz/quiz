@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20150123154744) do
   create_table "game_sessions", force: :cascade do |t|
     t.integer  "host_id"
     t.integer  "opponent_id"
-    t.boolean  "offline",     default: false
+    t.boolean  "offline",     default: true
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "topic_id"
