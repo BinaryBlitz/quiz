@@ -21,7 +21,12 @@ class LobbiesController < ApplicationController
 
   def find
     # Check if session was already created
-    render_lobby_session and return if @lobby.game_session
+    # render_lobby_session and return if @lobby.game_session
+    if @lobby.game_session
+
+      render_lobby_session and return
+    end
+
     # Don't search if closed
     render json: 'Lobby is closed.' and return if @lobby.closed?
 
@@ -54,6 +59,12 @@ class LobbiesController < ApplicationController
   def render_lobby_session
     @session = @lobby.game_session
     render formats: :json
+    start_game
+  end
+
+  def start_game
+    Pusher.trigger("player-session-#{@current_player.id}", 'game-start', {})
+    Pusher.trigger("player-session-#{@lobby.game_session.host_id}", 'game-start', {})
   end
 
   def increment_lobby
