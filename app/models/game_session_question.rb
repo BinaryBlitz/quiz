@@ -43,14 +43,14 @@ class GameSessionQuestion < ActiveRecord::Base
 
   # Find online answer, generate if not found
   def load_or_generate_answer
-    if has_online_answers?
+    if online_answers?
       online_answer
     else
       [generate_answer, random_time]
     end
   end
 
-  def has_online_answers?
+  def online_answers?
     # Find session questions with the same question
     # TODO: Loop through many session questions
     @random_question = question.game_session_questions.sample
@@ -73,6 +73,6 @@ class GameSessionQuestion < ActiveRecord::Base
 
   # Generates correct answers with the probability of 0.7
   def opponent_correct?
-    rand() <= CORRECT_ANSWER_PROBABILITY
+    rand <= CORRECT_ANSWER_PROBABILITY
   end
 end

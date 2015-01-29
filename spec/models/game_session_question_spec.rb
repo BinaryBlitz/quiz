@@ -56,8 +56,8 @@ RSpec.describe GameSessionQuestion, :type => :model do
     end
 
     it "checks if there are session questions with online answers" do
-      has_online_answers = @sq.send(:has_online_answers?)
-      expect([true, false]).to include(!!has_online_answers)
+      online_answers = @sq.send(:online_answers?)
+      expect([true, false]).to include(!!online_answers)
     end
 
     it "generates offline answers properly" do

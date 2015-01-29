@@ -30,6 +30,6 @@ class GameSession < ActiveRecord::Base
   def generate
     questions = Question.where(topic: topic).sample(6)
     questions.map! { |q| game_session_questions.create(question: q) }
-    questions.each { |q| q.generate_for_offline } if offline
+    game_session_questions.each(&:generate_for_offline) if offline
   end
 end

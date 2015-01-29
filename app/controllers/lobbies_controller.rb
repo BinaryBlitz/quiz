@@ -76,9 +76,8 @@ class LobbiesController < ApplicationController
   def close_lobbies(opponent_lobby = nil)
     @lobby.game_session = @session
     @lobby.close
-    if opponent_lobby
-      opponent_lobby.game_session = @session
-      opponent_lobby.close
-    end
+    return unless opponent_lobby
+    opponent_lobby.game_session = @session
+    opponent_lobby.close
   end
 end
