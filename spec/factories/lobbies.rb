@@ -15,5 +15,6 @@ FactoryGirl.define do
     query_count 1
     topic
     player
+    closed false
   end
 end

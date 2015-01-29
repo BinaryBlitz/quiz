@@ -21,7 +21,8 @@ class Lobby < ActiveRecord::Base
   MAX_QUERY_COUNT = 6
 
   def find_opponent_lobby
-    Lobby.where(topic: topic)
+    Lobby.where(created_at: (Time.now - 30.seconds)..(Time.now))
+      .where(topic: topic)
       .where(closed: false)
       .where.not(player: player).first
   end

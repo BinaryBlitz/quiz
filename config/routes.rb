@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   end
   resources :lobbies, only: [:show, :create] do
     get 'find', on: :member
+    patch 'close', on: :member
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

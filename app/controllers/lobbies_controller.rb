@@ -1,6 +1,6 @@
 class LobbiesController < ApplicationController
   before_action :restrict_access
-  before_action :find_lobby, only: [:show, :find]
+  before_action :find_lobby, only: [:show, :find, :close]
 
   def show
     @lobby.update(query_count: @lobby.query_count + 1)
@@ -34,6 +34,11 @@ class LobbiesController < ApplicationController
     end
 
     render formats: :json
+  end
+
+  def close
+    @lobby.close
+    head :no_content
   end
 
   private
