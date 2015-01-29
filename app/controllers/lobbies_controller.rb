@@ -23,7 +23,6 @@ class LobbiesController < ApplicationController
     # Check if session was already created
     # render_lobby_session and return if @lobby.game_session
     if @lobby.game_session
-
       render_lobby_session and return
     end
 
