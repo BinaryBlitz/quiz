@@ -21,10 +21,7 @@ class LobbiesController < ApplicationController
 
   def find
     # Check if session was already created
-    # render_lobby_session and return if @lobby.game_session
-    if @lobby.game_session
-      render_lobby_session and return
-    end
+    render_lobby_session and return if @lobby.game_session
 
     # Don't search if closed
     render json: 'Lobby is closed.' and return if @lobby.closed?

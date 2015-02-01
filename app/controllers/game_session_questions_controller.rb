@@ -25,7 +25,7 @@ class GameSessionQuestionsController < ApplicationController
         "player-session-#{current_session.opponent_id}",
         'opponent-answer',
         answer_data(
-          @game_session_question.question_id,
+          @game_session_question.id,
           @game_session_question.host_answer_id,
           @game_session_question.host_time)
         )
@@ -34,14 +34,14 @@ class GameSessionQuestionsController < ApplicationController
         "player-session-#{current_session.host_id}",
         'opponent-answer',
         answer_data(
-          @game_session_question.question_id,
+          @game_session_question.id,
           @game_session_question.opponent_answer_id,
           @game_session_question.opponent_time))
     end
   end
 
-  def answer_data(question_id, answer_id, answer_time)
-    { question_id: question_id, answer_id: answer_id, answer_time: answer_time }
+  def answer_data(session_question_id, answer_id, answer_time)
+    { game_session_question_id: session_question_id, answer_id: answer_id, answer_time: answer_time }
   end
 
   def game_session_question_params
