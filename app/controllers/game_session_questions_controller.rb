@@ -6,8 +6,15 @@ class GameSessionQuestionsController < ApplicationController
 
   def update
     @game_session_question = GameSessionQuestion.find(params[:id])
+    if current_player == @game_session_question.game_session.host
+      @game_session_question.host_answer_id = params[:game_session_question][:answer_id]
+      @game_session_question.host_time = params[:game_session_question][:time]
+    elsif current_player == @game_session_question.game_session.opponent
+      @game_session_question.opponent_answer_id = params[:game_session_question][:answer_id]
+      @game_session_question.opponent_time = params[:game_session_question][:time]
+    end
 
-    if @game_session_question.update(game_session_question_params)
+    if @game_session_question.save
       push_answer
       head :no_content
     else
@@ -46,6 +53,6 @@ class GameSessionQuestionsController < ApplicationController
 
   def game_session_question_params
     params.require(:game_session_question)
-      .permit(:host_answer_id, :host_time, :opponent_answer_id, :opponent_time)
+      .permit(:host_answer_id, :host_time, :answer_id, :time)
   end
 end
