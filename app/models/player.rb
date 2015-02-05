@@ -28,7 +28,7 @@ class Player < ActiveRecord::Base
                     format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
 
   def game_sessions
-    host_game_sessions + opponent_game_sessions
+    GameSession.where('host_id = ? OR opponent_id = ?', id, id)
   end
 
   private
