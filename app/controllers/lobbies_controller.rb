@@ -19,14 +19,16 @@ class LobbiesController < ApplicationController
     end
   end
 
+  # GET /lobbies/1/find
   def find
     # Don't search if closed
     render json: 'Lobby is closed.', status: :unprocessable_entity and return if @lobby.closed?
 
     # Check if session was already created
     if @lobby.game_session
-      close_lobby
+      @lobby.close
       render_lobby_session
+      start_game
       return
     end
 
@@ -41,6 +43,7 @@ class LobbiesController < ApplicationController
     render formats: :json
   end
 
+  # PATCH /lobbies/1/close
   def close
     @lobby.close
     head :no_content
@@ -59,7 +62,6 @@ class LobbiesController < ApplicationController
   def render_lobby_session
     @session = @lobby.game_session
     render formats: :json
-    start_game
   end
 
   def start_game
@@ -73,25 +75,20 @@ class LobbiesController < ApplicationController
   end
 
   def create_online_session_with_lobby(opponent_lobby)
-    @session = GameSession.create(
+    @session = GameSession.create!(
       topic: @lobby.topic,
       host: @current_player,
       opponent: opponent_lobby.player,
       offline: false)
-    @lobby.game_session = @session
-    opponent_lobby.update(game_session: @session)
-    close_lobby
+    @session.lobbies << [@lobby, opponent_lobby]
+    @lobby.close
   end
 
   def create_offline_session
-    @session = GameSession.create(
+    @session = GameSession.create!(
       topic: @lobby.topic,
       host: @current_player,
       offline: true)
-    close_lobby
-  end
-
-  def close_lobby
     @lobby.close
   end
 end
