@@ -34,6 +34,8 @@ gem 'devise'
 # Use Bootstrap as a CSS framework
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
+# Use Pusher for message delivery
+gem 'pusher'
 
 gem 'nested_form_fields'
 

@@ -12,22 +12,24 @@
 #
 
 class GameSession < ActiveRecord::Base
+  after_create :generate
+
   belongs_to :host, class_name: 'Player', foreign_key: 'host_id'
   belongs_to :opponent, class_name: 'Player', foreign_key: 'opponent_id'
   belongs_to :topic
 
   has_many :game_session_questions, dependent: :destroy
   has_many :questions, through: :game_session_questions
+  has_many :lobbies, dependent: :destroy
 
   validates :host, presence: true
   validates :topic, presence: true
 
-  def generate
-    # Offline only for now
-    self.offline = true
+  private
 
+  def generate
     questions = Question.where(topic: topic).sample(6)
-    questions.map!{ |q| self.game_session_questions.create(question: q) }
-    questions.each{ |q| q.generate_for_offline(self) } if offline
+    questions.map! { |q| game_session_questions.create(question: q) }
+    game_session_questions.each(&:generate_for_offline) if offline
   end
 end

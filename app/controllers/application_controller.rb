@@ -4,9 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   before_filter :restrict_access
 
-  def current_player
-    @current_player
-  end
+  attr_reader :current_player
 
   def restrict_access
     unless restrict_access_by_params || restrict_access_by_header

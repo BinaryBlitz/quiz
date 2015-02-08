@@ -24,7 +24,6 @@ RSpec.describe GameSession, :type => :model do
   end
 
   it "should properly generate a session" do
-    @session.generate
     expect(@session.game_session_questions.count).to be > 0
     @session.game_session_questions.each do |sq|
       expect(sq.opponent_time).to be > 0
