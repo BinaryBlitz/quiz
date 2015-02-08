@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :players, except: [:new, :edit], defaults: { format: :json } do
     post 'authenticate', on: :collection
   end
-  resources :lobbies, only: [:show, :create] do
+  resources :lobbies, only: [:create] do
     get 'find', on: :member
     patch 'close', on: :member
   end
