@@ -27,11 +27,10 @@ class Question < ActiveRecord::Base
   # Finds the first answer and updates it to be the correct one
   def set_correct_answer
     # Skip if there're no answers
-    if answers.any?
-      answers.first.update(correct: true)
-      # Set other answers to incorrect, skip if new record
-      set_incorrect_answers unless new_record?
-    end
+    return unless answers.any?
+    answers.first.update(correct: true)
+    # Set other answers to incorrect, skip if new record
+    set_incorrect_answers unless new_record?
   end
 
   # Get correct answer
@@ -49,13 +48,11 @@ class Question < ActiveRecord::Base
   # Finds and updates correct answers to incorrect
   def set_incorrect_answers
     # Get all answers (except the first one)
-    if other_answers = answers.drop(1)
-      # debugger
-      other_answers.each do |answer|
-        # Set to incorrect if it was correct
-        answer.update(correct: true) if answer.correct?
-      end
+    other_answers = answers.drop(1)
+    return unless other_answers
+    other_answers.each do |answer|
+      # Set to incorrect if it was correct
+      answer.update(correct: true) if answer.correct?
     end
   end
-
 end

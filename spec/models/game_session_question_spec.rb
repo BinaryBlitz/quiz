@@ -41,7 +41,7 @@ RSpec.describe GameSessionQuestion, :type => :model do
   end
 
   it "should generate a valid session question for offline mode" do
-    @sq.generate_for_offline(@sq.game_session)
+    @sq.generate_for_offline
     expect(@sq.opponent_time).to be > 0
   end
 
@@ -56,8 +56,8 @@ RSpec.describe GameSessionQuestion, :type => :model do
     end
 
     it "checks if there are session questions with online answers" do
-      has_online_answers = @sq.send(:has_online_answers?)
-      expect([true, false]).to include(!!has_online_answers)
+      online_answers = @sq.send(:online_answers?)
+      expect([true, false]).to include(!!online_answers)
     end
 
     it "generates offline answers properly" do

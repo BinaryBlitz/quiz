@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root 'admin/dashboard#index'
 
-  devise_for :admins, path: 'admin'
+  devise_for :admins, path: 'admin', controllers: {
+    sessions: 'admins/sessions'
+  }
 
   namespace :admin do
     get '/', to: 'dashboard#index'
@@ -19,6 +21,10 @@ Rails.application.routes.draw do
   resources :questions, except: [:new, :edit], defaults: { format: :json }
   resources :players, except: [:new, :edit], defaults: { format: :json } do
     post 'authenticate', on: :collection
+  end
+  resources :lobbies, only: [:show, :create] do
+    get 'find', on: :member
+    patch 'close', on: :member
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
