@@ -4,8 +4,8 @@ class GameSessionQuestionsController < ApplicationController
   # PATCH /game_session_question/1
   def update
     @current_session = @session_question.game_session
-    answer_id = params[:game_session_question][:answer_id]
-    time = params[:game_session_question][:time]
+    answer_id = params[:game_session_question][:answer_id].to_i
+    time = params[:game_session_question][:time].to_i
 
     update_answer(answer_id, time)
     if @session_question.save
@@ -21,10 +21,10 @@ class GameSessionQuestionsController < ApplicationController
   def update_answer(answer_id, time)
     if current_player == @current_session.host
       update_host_answer(answer_id, time)
-      push_answer(@current_session.opponent, answer_id, time)
+      push_answer(@current_session.opponent, answer_id, time) unless @current_session.offline?
     elsif current_player == @current_session.opponent
       update_opponent_answer(answer_id, time)
-      push_answer(@current_session.host, answer_id, time)
+      push_answer(@current_session.host, answer_id, time) unless @current_session.offline?
     end
   end
 

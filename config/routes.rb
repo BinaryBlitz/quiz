@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :topics, only: [:index, :show], defaults: { format: :json }
   resources :categories, only: [:index, :show], defaults: { format: :json }
-  resources :game_session_questions, only: [:show, :update], defaults: { format: :json }
+  resources :game_session_questions, only: [:update], defaults: { format: :json }
   resources :game_sessions, except: [:new, :edit], defaults: { format: :json }
   resources :questions, except: [:new, :edit], defaults: { format: :json }
   resources :players, except: [:new, :edit], defaults: { format: :json } do
