@@ -22,7 +22,7 @@ class GameSessionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /game_sessions/1
+  # PATCH /game_sessions/1
   def update
     if @game_session.update(game_session_params)
       head :no_content

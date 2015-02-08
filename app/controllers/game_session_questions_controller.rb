@@ -1,10 +1,7 @@
 class GameSessionQuestionsController < ApplicationController
   before_action :find_session_question, only: [:show, :update]
 
-  # def show
-  #   render json: @session_question
-  # end
-
+  # PATCH /game_session_question/1
   def update
     @current_session = @session_question.game_session
     answer_id = params[:game_session_question][:answer_id]
