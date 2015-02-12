@@ -19,6 +19,7 @@ class Player < ActiveRecord::Base
   has_many :lobbies, dependent: :destroy
   has_many :host_game_sessions, class_name: 'GameSession', foreign_key: 'host_id'
   has_many :opponent_game_sessions, class_name: 'GameSession', foreign_key: 'opponent_id'
+  has_many :results, dependent: :destroy
 
   # Validations
   has_secure_password
@@ -29,6 +30,14 @@ class Player < ActiveRecord::Base
 
   def game_sessions
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
+  end
+
+  def points
+    results.inject(0) { |a, e| a + e.points }
+  end
+
+  def points_by_topic(topic)
+    results.where(topic: topic).inject(0) { |a, e| a + e.points }
   end
 
   private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123154744) do
+ActiveRecord::Schema.define(version: 20150212092812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,17 @@ ActiveRecord::Schema.define(version: 20150123154744) do
 
   add_index "questions", ["topic_id"], name: "index_questions_on_topic_id", using: :btree
 
+  create_table "results", force: :cascade do |t|
+    t.integer  "points"
+    t.integer  "player_id",  null: false
+    t.integer  "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "results", ["player_id"], name: "index_results_on_player_id", using: :btree
+  add_index "results", ["topic_id"], name: "index_results_on_topic_id", using: :btree
+
   create_table "topics", force: :cascade do |t|
     t.string   "name"
     t.boolean  "visible",      default: false
@@ -145,5 +156,7 @@ ActiveRecord::Schema.define(version: 20150123154744) do
   add_foreign_key "lobbies", "players"
   add_foreign_key "lobbies", "topics"
   add_foreign_key "questions", "topics"
+  add_foreign_key "results", "players"
+  add_foreign_key "results", "topics"
   add_foreign_key "topics", "categories"
 end

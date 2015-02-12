@@ -1,14 +1,15 @@
 class GameSessionQuestionsController < ApplicationController
-  before_action :find_session_question, only: [:show, :update]
+  before_action :find_session_question
+  before_action :find_current_session
 
   # PATCH /game_session_question/1
   def update
-    @current_session = @session_question.game_session
     answer_id = params[:game_session_question][:answer_id].to_i
     time = params[:game_session_question][:time].to_i
 
     update_answer(answer_id, time)
     if @session_question.save
+      close_session if @current_session.last_question?(@session_question)
       head :no_content
     else
       render json: @session_question.errors, status: :unprocessable_entity
@@ -16,6 +17,12 @@ class GameSessionQuestionsController < ApplicationController
   end
 
   private
+
+  def close_session
+    current_player.results.create(
+      points: @current_session.player_points(current_player),
+      topic: @current_session.topic)
+  end
 
   # Update answer data (host / opponent)
   def update_answer(answer_id, time)
@@ -60,6 +67,10 @@ class GameSessionQuestionsController < ApplicationController
 
   def find_session_question
     @session_question = GameSessionQuestion.find(params[:id])
+  end
+
+  def find_current_session
+    @current_session = @session_question.game_session
   end
 
   def game_session_question_params
