@@ -2,30 +2,23 @@
 #
 # Table name: lobbies
 #
-#  id          :integer          not null, primary key
-#  query_count :integer
-#  topic_id    :integer
-#  player_id   :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id              :integer          not null, primary key
+#  query_count     :integer          default("0")
+#  closed          :boolean          default("false")
+#  topic_id        :integer
+#  player_id       :integer
+#  game_session_id :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 require 'rails_helper'
 
-RSpec.describe Lobby, :type => :model do
-  before do
-    @lobby = build(:lobby)
-  end
+RSpec.describe Lobby, type: :model do
+  before { @lobby = build(:lobby) }
 
-  it 'should not be valid without topic' do
-    @lobby.topic = nil
-    expect(@lobby).not_to be_valid
-  end
-
-  it 'should not be valid without player' do
-    @lobby.player = nil
-    expect(@lobby).not_to be_valid
-  end
+  it { should validate_presence_of(:topic) }
+  it { should validate_presence_of(:player) }
 
   it 'should properly close itself' do
     @lobby.close

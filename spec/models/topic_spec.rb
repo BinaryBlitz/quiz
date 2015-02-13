@@ -15,28 +15,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Topic, :type => :model do
-  before do
-    @topic = FactoryGirl.create(:topic)
-  end
+RSpec.describe Topic, type: :model do
+  before { @topic = create(:topic) }
 
-  it "should not be valid without name" do
-    @topic.name = ''
-    expect(@topic).not_to be_valid
-  end
-
-  it "should not be valid when price is negative" do
-    @topic.price = -1
-    expect(@topic).not_to be_valid
-  end
-
-  it "should not be valid when played count is negative" do
-    @topic.played_count = -1
-    expect(@topic).not_to be_valid
-  end
-
-  it "should not be valid without category" do
-    @topic.category = nil
-    expect(@topic).not_to be_valid
-  end
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:category) }
+  it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
+  it { should validate_numericality_of(:played_count).is_greater_than_or_equal_to(0) }
 end

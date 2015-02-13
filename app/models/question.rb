@@ -21,8 +21,8 @@ class Question < ActiveRecord::Base
   validates :bounty, numericality: { greater_than_or_equal_to: 0 }
   validates :image_url, format: { with: URI.regexp }, allow_blank: true
 
-  accepts_nested_attributes_for :answers, allow_destroy: true,
-    reject_if: lambda { |a| a[:content].blank? }
+  accepts_nested_attributes_for :answers,
+                                reject_if: -> (a) { a[:content].blank? }, allow_destroy: true
 
   # Finds the first answer and updates it to be the correct one
   def set_correct_answer

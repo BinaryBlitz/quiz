@@ -12,18 +12,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Answer, :type => :model do
-  before do
-    @answer = build(:answer)
-  end
+RSpec.describe Answer, type: :model do
+  before { @answer = build(:answer) }
 
-  it "should not be valid without content" do
-    @answer.content = ''
-    expect(@answer).not_to be_valid
-  end
-
-  it "should not be valid without question" do
-    @answer.question = nil
-    expect(@answer).not_to be_valid
-  end
+  it { should validate_presence_of(:content) }
+  it { should validate_presence_of(:question) }
 end

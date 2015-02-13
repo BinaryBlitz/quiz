@@ -10,17 +10,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Category, :type => :model do
-  before do
-    @category = build(:category)
-  end
-
-  it "should not be valid without name" do
-    @category.name = ''
-    expect(@category).not_to be_valid
-  end
-
-  it "should be valid with correct non-empty name" do
-    expect(@category).to be_valid
-  end
+RSpec.describe Category, type: :model do
+  before { @category = build(:category) }
+  it { should validate_presence_of(:name) }
 end
