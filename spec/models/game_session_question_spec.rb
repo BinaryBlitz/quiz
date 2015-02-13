@@ -15,7 +15,7 @@
 
 require 'rails_helper'
 
-RSpec.describe GameSessionQuestion, :type => :model do
+RSpec.describe GameSessionQuestion, type: :model do
   before { @sq = create(:game_session_question) }
 
   it { should validate_presence_of(:game_session) }
@@ -64,4 +64,11 @@ RSpec.describe GameSessionQuestion, :type => :model do
       end
     end
   end
+end
+
+describe GameSessionQuestion, 'Associations' do
+  it { should belong_to(:game_session) }
+  it { should belong_to(:question) }
+  it { should belong_to(:host_answer) }
+  it { should belong_to(:opponent_answer) }
 end

@@ -26,3 +26,13 @@ RSpec.describe GameSession, type: :model do
     end
   end
 end
+
+describe GameSession, 'Associations' do
+  it { should belong_to(:host) }
+  it { should belong_to(:opponent) }
+  it { should belong_to(:topic) }
+
+  it { should have_many(:game_session_questions) }
+  it { should have_many(:questions) }
+  it { should have_many(:lobbies) }
+end

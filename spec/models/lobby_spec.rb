@@ -25,3 +25,9 @@ RSpec.describe Lobby, type: :model do
     expect(@lobby.closed?).to be true
   end
 end
+
+describe Lobby, 'Associations' do
+  it { should belong_to(:topic) }
+  it { should belong_to(:player) }
+  it { should belong_to(:game_session) }
+end

@@ -39,3 +39,10 @@ RSpec.describe Player, type: :model do
     end
   end
 end
+
+describe Player, 'Associations' do
+  it { should have_one(:api_key) }
+  it { should have_many(:lobbies) }
+  it { should have_many(:host_game_sessions) }
+  it { should have_many(:opponent_game_sessions) }
+end

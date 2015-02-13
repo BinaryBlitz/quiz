@@ -29,3 +29,9 @@ RSpec.describe Question, type: :model do
     expect(@question).not_to be_valid
   end
 end
+
+describe Question, 'Associations' do
+  it { should belong_to(:topic) }
+  it { should have_many(:answers) }
+  it { should have_many(:game_session_questions) }
+end

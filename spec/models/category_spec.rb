@@ -14,3 +14,7 @@ RSpec.describe Category, type: :model do
   before { @category = build(:category) }
   it { should validate_presence_of(:name) }
 end
+
+describe Category, 'Associations' do
+  it { should have_many(:topics) }
+end

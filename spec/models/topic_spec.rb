@@ -23,3 +23,10 @@ RSpec.describe Topic, type: :model do
   it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
   it { should validate_numericality_of(:played_count).is_greater_than_or_equal_to(0) }
 end
+
+describe Topic, 'Associations' do
+  it { should belong_to(:category) }
+  it { should have_many(:questions) }
+  it { should have_many(:game_sessions) }
+  it { should have_many(:lobbies) }
+end

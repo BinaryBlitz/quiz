@@ -12,9 +12,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Answer, type: :model do
+describe Answer, type: :model do
   before { @answer = build(:answer) }
 
   it { should validate_presence_of(:content) }
   it { should validate_presence_of(:question) }
+end
+
+describe Answer, 'Associations' do
+  it { should have_many(:game_session_questions) }
+  it { should belong_to(:question) }
 end
