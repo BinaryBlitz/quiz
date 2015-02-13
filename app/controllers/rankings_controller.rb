@@ -26,10 +26,4 @@ class RankingsController < ApplicationController
   rescue
     nil
   end
-
-  def page
-    params[:page].to_i
-  rescue
-    nil
-  end
 end

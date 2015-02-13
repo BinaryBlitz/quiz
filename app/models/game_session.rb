@@ -19,7 +19,7 @@ class GameSession < ActiveRecord::Base
   belongs_to :opponent, class_name: 'Player', foreign_key: 'opponent_id'
   belongs_to :topic
 
-  has_many :game_session_questions, dependent: :destroy
+  has_many :game_session_questions, -> { order(created_at: :asc) }, dependent: :destroy
   has_many :questions, through: :game_session_questions
   has_many :lobbies, dependent: :destroy
 
