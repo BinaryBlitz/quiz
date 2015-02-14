@@ -31,6 +31,10 @@ class Player < ActiveRecord::Base
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
   end
 
+  def token
+    api_key.token
+  end
+
   private
 
   def create_key

@@ -10,7 +10,6 @@
 
 FactoryGirl.define do
   factory :category do
-    name "My Category"
+    name 'My Category'
   end
-
 end

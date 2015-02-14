@@ -13,16 +13,16 @@
 
 FactoryGirl.define do
   factory :player, aliases: [:host] do
-    name "Host Player"
-    email "host@player.com"
+    name 'Host Player'
+    email 'host@player.com'
     password_digest BCrypt::Password.create('foobar')
-    api_key { self.create_api_key }
+    api_key
   end
 
   factory :opponent, class: Player do
-    name "Opponent Player"
-    email "opponent@player.com"
+    name 'Opponent Player'
+    email 'opponent@player.com'
     password_digest BCrypt::Password.create('bazqux')
-    api_key { self.create_api_key }
+    api_key { create_api_key }
   end
 end
