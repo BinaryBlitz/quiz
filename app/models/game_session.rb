@@ -43,7 +43,12 @@ class GameSession < ActiveRecord::Base
   def host_points
     sum = 0
     game_session_questions.each do |question|
-      sum += question.host_points
+      next unless question.host_answer.correct?
+      if game_session_questions.last == question
+        sum += question.host_points * 2
+      else
+        sum += question.host_points
+      end
     end
     sum
   end
@@ -51,7 +56,12 @@ class GameSession < ActiveRecord::Base
   def opponent_points
     sum = 0
     game_session_questions.each do |question|
-      sum += question.opponent_points
+      next unless question.opponent_answer.correct?
+      if game_session_questions.last == question
+        sum += question.opponent_points * 2
+      else
+        sum += question.opponent_points
+      end
     end
     sum
   end

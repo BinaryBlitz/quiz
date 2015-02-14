@@ -35,12 +35,12 @@ class GameSessionQuestion < ActiveRecord::Base
 
   def host_points
     return 0 unless host_time
-    host_time + 10
+    20 - host_time
   end
 
   def opponent_points
     return 0 unless opponent_time
-    opponent_time + 10
+    20 - opponent_time
   end
 
   # Generates offline session question
