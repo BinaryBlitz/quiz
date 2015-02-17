@@ -1,5 +1,5 @@
 desc 'Calculate overall and weekly player points'
-task calculate_points: :environment do
+task update_rankings: :environment do
   players = Player.all
   players.each do |player|
     # Sum
@@ -15,7 +15,9 @@ task calculate_points: :environment do
 
       # Update topic result for given player
       topic_result = topic_results(player, session)
-      topic_result.update!(points: session_points, weekly_points: weekly_points)
+      topic_result.update!(
+        points: topic_result.points + session_points,
+        weekly_points: topic_result.weekly_points + session_points)
     end
 
     player.update!(points: points, weekly_points: weekly_points)
