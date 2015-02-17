@@ -18,7 +18,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      render :show, formats: :json, status: :created, location: @player
+      render formats: :json, status: :created
     else
       render json: @player.errors, status: :unprocessable_entity
     end
@@ -48,10 +48,9 @@ class PlayersController < ApplicationController
     @player = Player.find_by(email: params[:email])
 
     if @player && @player.password_digest == params[:password_digest]
-      render :show, formats: :json, location: @player
+      render formats: :json
     else
-      render json: { error: 'Invalid email/password combination' },
-             status: :unauthorized
+      render json: { error: 'Invalid email/password combination' }, status: :unauthorized
     end
   end
 
