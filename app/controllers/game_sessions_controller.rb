@@ -1,5 +1,5 @@
 class GameSessionsController < ApplicationController
-  before_action :find_game_session, only: [:show, :update, :destroy]
+  before_action :find_game_session, only: [:show, :update, :destroy, :close]
   # GET /game_sessions
   def index
     @game_sessions = GameSession.all
@@ -36,6 +36,12 @@ class GameSessionsController < ApplicationController
     @game_session.destroy
 
     head :no_content
+  end
+
+  def close
+    @game_session.close
+    head :no_content
+    # TODO: Return host and opponent points
   end
 
   private

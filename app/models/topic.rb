@@ -18,6 +18,8 @@ class Topic < ActiveRecord::Base
   has_many :questions, dependent: :destroy
   has_many :game_sessions, dependent: :destroy
   has_many :lobbies
+  has_many :topic_results
+  has_many :players, -> { uniq }, through: :topic_results
 
   validates :name, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }

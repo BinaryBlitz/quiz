@@ -9,7 +9,6 @@ class GameSessionQuestionsController < ApplicationController
 
     update_answer(answer_id, time)
     if @session_question.save
-      close_session if @current_session.last_question?(@session_question)
       head :no_content
     else
       render json: @session_question.errors, status: :unprocessable_entity
@@ -17,12 +16,6 @@ class GameSessionQuestionsController < ApplicationController
   end
 
   private
-
-  def close_session
-    current_player.results.create(
-      points: @current_session.player_points(current_player),
-      topic: @current_session.topic)
-  end
 
   # Update answer data (host / opponent)
   def update_answer(answer_id, time)

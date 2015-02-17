@@ -5,10 +5,12 @@
 #  id          :integer          not null, primary key
 #  host_id     :integer
 #  opponent_id :integer
-#  offline     :boolean          default("false")
+#  offline     :boolean          default("true")
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  topic_id    :integer
+#  finished    :boolean          default("false")
+#  closed      :boolean
 #
 
 class GameSession < ActiveRecord::Base
@@ -43,12 +45,8 @@ class GameSession < ActiveRecord::Base
   def host_points
     sum = 0
     game_session_questions.each do |question|
-      next unless question.host_answer.correct?
-      if game_session_questions.last == question
-        sum += question.host_points * 2
-      else
-        sum += question.host_points
-      end
+      next unless question.host_answer && question.host_answer.correct?
+      sum += question.host_points
     end
     sum
   end
@@ -56,18 +54,22 @@ class GameSession < ActiveRecord::Base
   def opponent_points
     sum = 0
     game_session_questions.each do |question|
-      next unless question.opponent_answer.correct?
-      if game_session_questions.last == question
-        sum += question.opponent_points * 2
-      else
-        sum += question.opponent_points
-      end
+      next unless question.opponent_answer && question.opponent_answer.correct?
+      sum += question.opponent_points
     end
     sum
   end
 
-  def last_question?(session_question)
-    game_session_questions.last == session_question
+  def close
+    return if closed
+    update(closed: true)
+    # TODO: Results?
+    # opponent.results.create(points: opponent_points, topic: topic) unless offline
+    # host.results.create(points: host_points, topic: topic)
+  end
+
+  def recent?
+    updated_at.between?(1.week.ago, Time.zone.now)
   end
 
   private
