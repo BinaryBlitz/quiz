@@ -35,16 +35,8 @@ class Player < ActiveRecord::Base
   # Scopes
   scope :order_by_points, -> { order(points: :desc) }
   scope :order_by_weekly_points, -> { order(weekly_points: :desc) }
-  scope :order_by_topic, lambda { |topic|
-    joins(:topic_results)
-      .where('topic_id = ?', topic.id)
-      .order('topic_results.points DESC')
-  }
-  scope :order_by_weekly_topic, lambda { |topic|
-    joins(:topic_results)
-      .where('topic_id = ?', topic.id)
-      .order('topic_results.weekly_points DESC')
-  }
+
+  TOP_SIZE = 20
 
   def game_sessions
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
@@ -62,6 +54,16 @@ class Player < ActiveRecord::Base
 
   def weekly_topic_points(topic)
     topic_results.find_by_topic_id(topic).weekly_points
+  end
+
+  # Scope methods
+
+  def self.order_by_topic(topic)
+    joins(:topic_results).where('topic_id = ?', topic.id).order('topic_results.points DESC')
+  end
+
+  def self.order_by_weekly_topic(topic)
+    joins(:topic_results).where('topic_id = ?', topic.id).order('topic_results.weekly_points DESC')
   end
 
   private

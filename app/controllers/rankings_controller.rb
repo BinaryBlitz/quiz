@@ -4,9 +4,9 @@ class RankingsController < ApplicationController
   def general
     top_players = @topic ? Player.order_by_topic(@topic) : Player.order_by_points
 
-    @rankings = top_players.limit(20)
+    @rankings = top_players.limit(Player::TOP_SIZE)
     @position = top_players.index(current_player)
-    @player_rankings = player_rankings(top_players) if @position && @position >= 20
+    @player_rankings = player_rankings(top_players) if @position.to_i >= Player::TOP_SIZE
 
     render formats: :json
   end
@@ -14,9 +14,9 @@ class RankingsController < ApplicationController
   def weekly
     top_players = @topic ? Player.order_by_weekly_topic(@topic) : Player.order_by_weekly_points
 
-    @rankings = top_players.limit(20)
+    @rankings = top_players.limit(Player::TOP_SIZE)
     @position = top_players.index(current_player)
-    @player_rankings = player_rankings(top_players) if @position && @position >= 20
+    @player_rankings = player_rankings(top_players) if @position.to_i >= Player::TOP_SIZE
 
     render formats: :json
   end
@@ -28,7 +28,7 @@ class RankingsController < ApplicationController
   end
 
   def find_topic
-    @topic = Topic.find(params[:topic_id]) if params[:topic_id]
+    @topic = Topic.find_by(id: params[:topic_id])
   end
 
   def player_rankings(players)
