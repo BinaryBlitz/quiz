@@ -10,6 +10,7 @@
 #  updated_at  :datetime         not null
 #  topic_id    :integer
 #  finished    :boolean          default("false")
+#  closed      :boolean
 #
 
 require 'rails_helper'

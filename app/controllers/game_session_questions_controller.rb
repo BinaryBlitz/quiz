@@ -1,9 +1,9 @@
 class GameSessionQuestionsController < ApplicationController
-  before_action :find_session_question, only: [:show, :update]
+  before_action :find_session_question
+  before_action :find_current_session
 
   # PATCH /game_session_question/1
   def update
-    @current_session = @session_question.game_session
     answer_id = params[:game_session_question][:answer_id].to_i
     time = params[:game_session_question][:time].to_i
 
@@ -60,6 +60,10 @@ class GameSessionQuestionsController < ApplicationController
 
   def find_session_question
     @session_question = GameSessionQuestion.find(params[:id])
+  end
+
+  def find_current_session
+    @current_session = @session_question.game_session
   end
 
   def game_session_question_params

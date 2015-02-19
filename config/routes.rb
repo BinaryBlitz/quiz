@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   root 'admin/dashboard#index'
 
+  # Devise
   devise_for :admins, path: 'admin', controllers: {
     sessions: 'admins/sessions'
   }
 
+  # Dashboard
   namespace :admin do
     get '/', to: 'dashboard#index'
     get 'manage', to: 'admins#index'
@@ -14,18 +16,27 @@ Rails.application.routes.draw do
     resources :questions
   end
 
+  # Resources
   resources :topics, only: [:index, :show], defaults: { format: :json }
   resources :categories, only: [:index, :show], defaults: { format: :json }
   resources :game_session_questions, only: [:update], defaults: { format: :json }
-  resources :game_sessions, except: [:new, :edit], defaults: { format: :json }
+  resources :game_sessions, except: [:new, :edit], defaults: { format: :json } do
+    patch 'close', on: :member
+  end
   resources :questions, except: [:new, :edit], defaults: { format: :json }
   resources :players, except: [:new, :edit], defaults: { format: :json } do
     post 'authenticate', on: :collection
   end
+
+  # Online sessions
   resources :lobbies, only: [:create] do
     get 'find', on: :member
     patch 'close', on: :member
   end
+
+  # Rankings
+  get 'rankings/general'
+  get 'rankings/weekly'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

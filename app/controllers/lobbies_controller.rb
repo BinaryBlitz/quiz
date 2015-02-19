@@ -8,7 +8,7 @@ class LobbiesController < ApplicationController
     @lobby.player = @current_player
 
     if @lobby.save
-      render :show, formats: :json, status: :created, location: @lobby
+      render :show, formats: :json, status: :created
     else
       render json: @lobby.errors, status: :unprocessable_entity
     end

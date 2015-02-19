@@ -9,6 +9,8 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  imei            :string
+#  points          :integer          default("0")
+#  weekly_points   :integer          default("0")
 #
 
 require 'rails_helper'

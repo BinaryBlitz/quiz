@@ -33,6 +33,24 @@ class GameSessionQuestion < ActiveRecord::Base
 
   CORRECT_ANSWER_PROBABILITY = 0.7
 
+  def host_points
+    return 0 unless host_time
+    if game_session.game_session_questions.last == self
+      (20 - host_time) * 2
+    else
+      20 - host_time
+    end
+  end
+
+  def opponent_points
+    return 0 unless opponent_time
+    if game_session.game_session_questions.last == self
+      (20 - opponent_time) * 2
+    else
+      20 - opponent_time
+    end
+  end
+
   # Generates offline session question
   def generate_for_offline
     opponent_answer, opponent_time = load_or_generate_answer
