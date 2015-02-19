@@ -1,1 +1,1 @@
-json.extract! @player, :id, :name, :token
+json.extract! @player, :id, :email, :name, :token
