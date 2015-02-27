@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :questions, except: [:new, :edit], defaults: { format: :json }
   resources :players, except: [:new, :edit], defaults: { format: :json } do
     post 'authenticate', on: :collection
+    post 'authenticate_vk', on: :collection
   end
 
   # Online sessions

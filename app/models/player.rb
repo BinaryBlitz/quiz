@@ -26,11 +26,13 @@ class Player < ActiveRecord::Base
   has_many :topics, -> { uniq }, through: :topic_results
 
   # Validations
-  has_secure_password
+  has_secure_password validations: false
   validates :name, presence: true
-  validates :password_digest, presence: true, on: :create
+  validates :password, length: { minimum: 8 }, if: -> { password.present? }
+  validates :password, length: { minimum: 8 }, allow_blank: true
   validates :email, presence: true, uniqueness: { case_sensitive: false },
-                    format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
+                    format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
+                    allow_blank: true
 
   # Scopes
   scope :order_by_points, -> { order(points: :desc) }

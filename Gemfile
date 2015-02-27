@@ -29,15 +29,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-# Use Devise for authentication
 gem 'devise'
-# Use Bootstrap as a CSS framework
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
-# Use Pusher for message delivery
-gem 'pusher'
-
 gem 'nested_form_fields'
+
+gem 'pusher'
+gem 'vkontakte_api'
 
 # Use Unicorn as the app server
 gem 'unicorn'

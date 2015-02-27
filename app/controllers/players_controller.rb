@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  skip_before_filter :restrict_access, only: [:create, :authenticate]
+  skip_before_filter :restrict_access, only: [:create, :authenticate, :authenticate_vk]
 
   # GET /players
   def index
@@ -54,9 +54,30 @@ class PlayersController < ApplicationController
     end
   end
 
+  def authenticate_vk
+    token = params[:token]
+    return unless token
+
+    user = find_vk_player(token)
+
+    unless @player
+      name = "#{user.first_name} #{user.last_name}"
+      @player = Player.create(name: name, vk_token: token, vk_id: user.uid)
+    end
+
+    render formats: :json, action: :authenticate, location: @player
+  end
+
   private
 
   def player_params
     params.require(:player).permit(:name, :email, :password_digest, :points)
+  end
+
+  def find_vk_player(token)
+    vk = VkontakteApi::Client.new(token)
+    user = vk.users.get(fields: [:photo]).first
+    @player = Player.find_by(vk_id: user.uid)
+    user
   end
 end
