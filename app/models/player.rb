@@ -40,6 +40,18 @@ class Player < ActiveRecord::Base
 
   TOP_SIZE = 20
 
+  def self.find_or_create_from_vk(vk)
+    user = vk.users.get(fields: [:photo]).first
+    player = Player.find_by(vk_id: user.uid)
+
+    unless player
+      name = "#{user.first_name} #{user.last_name}"
+      player = Player.create!(name: name, vk_token: vk.token, vk_id: user.uid)
+    end
+
+    player
+  end
+
   def game_sessions
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
   end
