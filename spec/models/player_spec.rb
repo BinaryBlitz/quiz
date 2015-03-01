@@ -15,7 +15,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Player, type: :model do
+RSpec.describe Player do
   before do
     @host = create(:host)
     @opponent = create(:opponent)
@@ -37,6 +37,35 @@ RSpec.describe Player, type: :model do
       invalid_emails.each do |email|
         @host.email = email
         expect(@host).not_to be_valid
+      end
+    end
+  end
+
+  context 'vk authorization' do
+    let!(:user) { double }
+    let!(:vk) { double }
+
+    before do
+      allow(vk).to receive_message_chain(:users, :get) { [user] }
+      allow(vk).to receive(:token) { 'token' }
+      allow(user).to receive(:first_name) { 'first_name' }
+      allow(user).to receive(:last_name) { 'last_name' }
+      allow(user).to receive(:uid) { 1 }
+    end
+
+    describe 'Player#find_or_create_from_vk' do
+      it 'create user' do
+        expect{Player.find_or_create_from_vk(vk)}.to change{Player.count}.by(1)
+        player = Player.last
+        expect(player.name).to eq("#{user.first_name} #{user.last_name}")
+        expect(player.vk_id).to eq(user.uid)
+        expect(player.vk_token).to eq(vk.token)
+      end
+
+      it 'find user' do
+        player = Player.find_or_create_from_vk(vk)
+        expect{Player.find_or_create_from_vk(vk)}.not_to change{Player.count}
+        expect(Player.find_or_create_from_vk(vk)).to eq(player)
       end
     end
   end
