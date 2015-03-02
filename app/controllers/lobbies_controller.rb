@@ -8,6 +8,7 @@ class LobbiesController < ApplicationController
     @lobby.player = @current_player
 
     if @lobby.save
+      logger.debug "Player #{@current_player.id} created a lobby."
       render :show, formats: :json, status: :created
     else
       render json: @lobby.errors, status: :unprocessable_entity
@@ -21,6 +22,7 @@ class LobbiesController < ApplicationController
 
     # Check if session was already created
     if @lobby.game_session
+      logger.debug 'Game session found. Starting.'
       @lobby.close
       render_lobby_session
       start_game
@@ -30,9 +32,12 @@ class LobbiesController < ApplicationController
     # Find opponent lobby, otherwise increment count or create offline session
     opponent_lobby = @lobby.find_opponent_lobby
     if opponent_lobby
+      logger.debug 'Lobby found. Creating game session.'
       create_online_session_with_lobby(opponent_lobby)
     else
+      logger.debug "Lobby not found. Attempt #{@lobby.query_count}."
       increment_lobby and return if @lobby.query_count < Lobby::MAX_QUERY_COUNT
+      logger.debug 'Creating offline session.'
       create_offline_session
     end
 
@@ -55,8 +60,11 @@ class LobbiesController < ApplicationController
 
   # Trigger Pusher events
   def start_game
+    logger.debug 'Starting game session.'
     Pusher.trigger("player-session-#{@current_player.id}", 'game-start', {})
+    logger.debug "Game start event sent to player #{@current_player.id}."
     Pusher.trigger("player-session-#{@lobby.game_session.host_id}", 'game-start', {})
+    logger.debug "Game start event sent to player #{@lobby.game_session.host_id}."
   end
 
   # Increment lobby count and render message
