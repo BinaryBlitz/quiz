@@ -13,6 +13,8 @@ host = Player.create(
 opponent = Player.create(
   name: 'Bar', email: 'bar@foo.com',
   password_digest: Digest::MD5.hexdigest('barfoo'))
+host.api_key.update(token: 'foobar')
+opponent.api_key.update(token: 'barfoo')
 
 # Categories and topics
 category = Category.create(name: 'General')

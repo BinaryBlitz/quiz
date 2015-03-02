@@ -11,6 +11,8 @@
 #  imei            :string
 #  points          :integer          default("0")
 #  weekly_points   :integer          default("0")
+#  vk_token        :string
+#  vk_id           :integer
 #
 
 require 'rails_helper'

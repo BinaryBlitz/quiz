@@ -38,6 +38,7 @@ class GameSessionsController < ApplicationController
     head :no_content
   end
 
+  # PATCH /game_sessions/1/close
   def close
     @game_session.close
     head :no_content

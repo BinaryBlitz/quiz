@@ -11,6 +11,8 @@
 #  imei            :string
 #  points          :integer          default("0")
 #  weekly_points   :integer          default("0")
+#  vk_token        :string
+#  vk_id           :integer
 #
 
 class Player < ActiveRecord::Base
@@ -26,6 +28,8 @@ class Player < ActiveRecord::Base
   has_many :results, dependent: :destroy
   has_many :topic_results
   has_many :topics, -> { uniq }, through: :topic_results
+  has_many :category_results
+  has_many :categories, -> { uniq }, through: :category_results
 
   # Validations
   has_secure_password validations: false
@@ -64,6 +68,14 @@ class Player < ActiveRecord::Base
     topic_results.find_by_topic_id(topic).weekly_points
   end
 
+  def category_points(category)
+    category_results.find_by_category_id(category).points
+  end
+
+  def weekly_category_points(category)
+    category_results.find_by_category_id(category).weekly_points
+  end
+
   # Scope methods
 
   def self.order_by_topic(topic)
@@ -72,6 +84,18 @@ class Player < ActiveRecord::Base
 
   def self.order_by_weekly_topic(topic)
     joins(:topic_results).where('topic_id = ?', topic.id).order('topic_results.weekly_points DESC')
+  end
+
+  def self.order_by_category(category)
+    joins(:category_results)
+      .where('category_id = ?', category.id)
+      .order('category_results.points DESC')
+  end
+
+  def self.order_by_weekly_category(category)
+    joins(:category_results)
+      .where('category_id = ?', category.id)
+      .order('category_results.weekly_points DESC')
   end
 
   private

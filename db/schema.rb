@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222125612) do
+ActiveRecord::Schema.define(version: 20150302164618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,18 @@ ActiveRecord::Schema.define(version: 20150222125612) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "category_results", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "category_id"
+    t.integer  "points",        default: 0
+    t.integer  "weekly_points", default: 0
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "category_results", ["category_id"], name: "index_category_results_on_category_id", using: :btree
+  add_index "category_results", ["player_id"], name: "index_category_results_on_player_id", using: :btree
 
   create_table "game_session_questions", force: :cascade do |t|
     t.integer  "game_session_id"
@@ -155,6 +167,8 @@ ActiveRecord::Schema.define(version: 20150222125612) do
 
   add_foreign_key "answers", "questions"
   add_foreign_key "api_keys", "players"
+  add_foreign_key "category_results", "categories"
+  add_foreign_key "category_results", "players"
   add_foreign_key "game_session_questions", "game_sessions"
   add_foreign_key "game_session_questions", "questions"
   add_foreign_key "game_sessions", "topics"

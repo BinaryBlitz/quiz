@@ -38,6 +38,8 @@ Rails.application.routes.draw do
   # Rankings
   get 'rankings/general'
   get 'rankings/weekly'
+  get 'rankings/general_by_category'
+  get 'rankings/weekly_by_category'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

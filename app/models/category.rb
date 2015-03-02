@@ -10,6 +10,8 @@
 
 class Category < ActiveRecord::Base
   has_many :topics, dependent: :destroy
+  has_many :category_results
+  has_many :players, -> { uniq }, through: :category_results
 
   validates :name, presence: true
 
