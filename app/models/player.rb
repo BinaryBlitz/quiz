@@ -76,6 +76,10 @@ class Player < ActiveRecord::Base
     category_results.find_by_category_id(category).weekly_points
   end
 
+  def self.random_name
+    pluck(:name).sample
+  end
+
   # Scope methods
 
   def self.order_by_topic(topic)
