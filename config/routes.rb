@@ -30,7 +30,11 @@ Rails.application.routes.draw do
     get 'friends', on: :member
   end
   resources :friendships, only: [:index, :create], defaults: { format: :json } do
+    get 'requests', on: :collection
     delete 'unfriend', on: :collection
+  end
+  resources :push_tokens, only: [:create, :destroy], defaults: { format: :json } do
+    patch 'replace', on: :collection
   end
 
   # Online sessions

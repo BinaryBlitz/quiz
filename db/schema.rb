@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305110512) do
+ActiveRecord::Schema.define(version: 20150305124625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,8 +74,9 @@ ActiveRecord::Schema.define(version: 20150305110512) do
   create_table "friendships", force: :cascade do |t|
     t.integer  "player_id"
     t.integer  "friend_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "viewed",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "friendships", ["player_id"], name: "index_friendships_on_player_id", using: :btree
@@ -138,6 +139,17 @@ ActiveRecord::Schema.define(version: 20150305110512) do
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
 
+  create_table "push_tokens", force: :cascade do |t|
+    t.string   "token"
+    t.boolean  "android",    default: false
+    t.integer  "player_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "push_tokens", ["player_id"], name: "index_push_tokens_on_player_id", using: :btree
+  add_index "push_tokens", ["token"], name: "index_push_tokens_on_token", using: :btree
+
   create_table "questions", force: :cascade do |t|
     t.text     "content"
     t.string   "image_url"
@@ -185,6 +197,7 @@ ActiveRecord::Schema.define(version: 20150305110512) do
   add_foreign_key "lobbies", "game_sessions"
   add_foreign_key "lobbies", "players"
   add_foreign_key "lobbies", "topics"
+  add_foreign_key "push_tokens", "players"
   add_foreign_key "questions", "topics"
   add_foreign_key "topic_results", "players"
   add_foreign_key "topic_results", "topics"

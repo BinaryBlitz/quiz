@@ -3,6 +3,7 @@ class CreateFriendships < ActiveRecord::Migration
     create_table :friendships do |t|
       t.belongs_to :player, index: true
       t.integer :friend_id
+      t.boolean :viewed, default: false
 
       t.timestamps null: false
     end
