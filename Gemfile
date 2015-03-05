@@ -36,6 +36,7 @@ gem 'nested_form_fields'
 
 gem 'pusher'
 gem 'vkontakte_api'
+gem 'houston'
 
 # Use Unicorn as the app server
 gem 'unicorn'

@@ -1,5 +1,6 @@
 class PlayersController < ApplicationController
   skip_before_filter :restrict_access, only: [:create, :authenticate, :authenticate_vk]
+  before_action :set_player, only: [:show, :update, :destroy, :friends]
 
   # GET /players
   def index
@@ -9,7 +10,6 @@ class PlayersController < ApplicationController
 
   # GET /players/1
   def show
-    @player = Player.find(params[:id])
     render formats: :json
   end
 
@@ -26,8 +26,6 @@ class PlayersController < ApplicationController
 
   # PATCH/PUT /players/1
   def update
-    @player = Player.find(params[:id])
-
     if @player.update(player_params)
       head :no_content
     else
@@ -37,10 +35,15 @@ class PlayersController < ApplicationController
 
   # DELETE /players/1
   def destroy
-    @player = Player.find(params[:id])
     @player.destroy
 
     head :no_content
+  end
+
+  # GET /players/1/friends
+  def friends
+    @friends = @player.friends
+    render formats: :json
   end
 
   # POST /players/authenticate
@@ -64,8 +67,11 @@ class PlayersController < ApplicationController
 
   private
 
+  def set_player
+    @player = Player.find(params[:id])
+  end
+
   def player_params
     params.require(:player).permit(:name, :email, :password_digest, :points)
   end
-
 end

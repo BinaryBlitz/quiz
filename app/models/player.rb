@@ -26,10 +26,15 @@ class Player < ActiveRecord::Base
   has_many :host_game_sessions, class_name: 'GameSession', foreign_key: 'host_id'
   has_many :opponent_game_sessions, class_name: 'GameSession', foreign_key: 'opponent_id'
   has_many :results, dependent: :destroy
+
   has_many :topic_results
   has_many :topics, -> { uniq }, through: :topic_results
+
   has_many :category_results
   has_many :categories, -> { uniq }, through: :category_results
+
+  has_many :friendships
+  has_many :friends, -> { uniq }, through: :friendships
 
   # Validations
   has_secure_password validations: false
