@@ -10,6 +10,7 @@ class PlayersController < ApplicationController
 
   # GET /players/1
   def show
+    @is_friend = current_player.friends.include?(@player)
     render formats: :json
   end
 
