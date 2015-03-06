@@ -83,8 +83,7 @@ class Player < ActiveRecord::Base
   end
 
   def push_friend_request(player)
-    logger.debug 'Pushing frend request to device.'
-    # debugger
+    logger.debug 'Pushing friend request to device.'
     push_tokens.each do |push_token|
       if push_token.android?
         # Android
