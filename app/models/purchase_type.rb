@@ -12,6 +12,7 @@
 
 class PurchaseType < ActiveRecord::Base
   belongs_to :topic
+  has_many :purchases, dependent: :destroy
 
   validates :identifier, presence: true
   validates :identifier, uniqueness: true

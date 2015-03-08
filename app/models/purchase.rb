@@ -15,4 +15,5 @@ class Purchase < ActiveRecord::Base
 
   validates :purchase_type, presence: true
   validates :player, presence: true
+  validates :player_id, uniqueness: { scope: :purchase_type_id }
 end

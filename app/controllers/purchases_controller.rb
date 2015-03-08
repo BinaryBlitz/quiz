@@ -1,11 +1,12 @@
 class PurchasesController < ApplicationController
   def index
-    @identifiers = current_player.purchases.map { |p| p.purchase_type.identifier }
+    @purchases = current_player.purchases.map(&:purchase_type)
     render formats: :json
   end
 
   def available
-    @available = PurchaseType.all
+    purchased_types = current_player.purchases.map(&:purchase_type)
+    @available = PurchaseType.all - purchased_types
     render formats: :json
   end
 
