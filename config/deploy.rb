@@ -3,7 +3,7 @@ require 'bundler/capistrano'
 load 'deploy/assets'
 
 set :application, "quizapp"
-set :rails_env, "development"
+set :rails_env, "production"
 set :domain, "quizapp@binaryblitz.ru"
 set :deploy_to, "/home/quizapp/#{application}"
 set :use_sudo, false
@@ -14,7 +14,7 @@ set :rvm_ruby_string, 'ruby-2.2.0@quizapp'
 
 set :scm, :git
 set :repository, "git@github.com:BinaryBlitz/quiz_app.git"
-set :branch, "deploy"
+set :branch, "development"
 set :deploy_via, :remote_cache
 
 role :web, domain
