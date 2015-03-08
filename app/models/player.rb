@@ -27,6 +27,7 @@ class Player < ActiveRecord::Base
   has_many :opponent_game_sessions, class_name: 'GameSession', foreign_key: 'opponent_id'
   has_many :results, dependent: :destroy
   has_many :push_tokens, dependent: :destroy
+  has_many :purchases, dependent: :destroy
 
   has_many :topic_results
   has_many :topics, -> { uniq }, through: :topic_results

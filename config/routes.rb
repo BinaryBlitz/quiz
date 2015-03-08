@@ -37,6 +37,9 @@ Rails.application.routes.draw do
   resources :push_tokens, only: [:create, :destroy], defaults: { format: :json } do
     patch 'replace', on: :collection
   end
+  resources :purchases, defaults: { format: :json } do
+    get 'available', on: :collection
+  end
 
   # Online sessions
   resources :lobbies, only: [:create] do

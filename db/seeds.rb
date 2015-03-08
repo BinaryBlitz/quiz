@@ -16,6 +16,10 @@ opponent = Player.create(
 host.api_key.update(token: 'foobar')
 opponent.api_key.update(token: 'barfoo')
 
+# Purchases
+PurchaseType.create(
+  [{ identifier: 'booster-x2', multiplier: 2 }, { identifier: 'booster-x3', multiplier: 3 }])
+
 # Categories and topics
 category = Category.create(name: 'General')
 topic = Topic.create(name: 'Geography', category: category)
