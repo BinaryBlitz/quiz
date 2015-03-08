@@ -20,8 +20,9 @@ class PushTokensController < ApplicationController
     end
   end
 
-  def destroy
-    @token = PushToken.find_by_token(params[:push_token])
+  def delete
+    @token = PushToken.find_by(token: params[:push_token])
+    render json: { error: 'Push token not found.' } and return unless @token
     @token.destroy
     head :no_content
   end

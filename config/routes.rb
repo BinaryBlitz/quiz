@@ -34,8 +34,9 @@ Rails.application.routes.draw do
     patch 'mark_requests_as_viewed', on: :collection
     delete 'unfriend', on: :collection
   end
-  resources :push_tokens, only: [:create, :destroy], defaults: { format: :json } do
+  resources :push_tokens, only: [:create], defaults: { format: :json } do
     patch 'replace', on: :collection
+    delete 'delete', on: :collection
   end
 
   # Online sessions
