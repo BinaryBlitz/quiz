@@ -27,6 +27,15 @@ Rails.application.routes.draw do
   resources :players, except: [:new, :edit], defaults: { format: :json } do
     post 'authenticate', on: :collection
     post 'authenticate_vk', on: :collection
+    get 'friends', on: :member
+  end
+  resources :friendships, only: [:index, :create], defaults: { format: :json } do
+    get 'requests', on: :collection
+    patch 'mark_requests_as_viewed', on: :collection
+    delete 'unfriend', on: :collection
+  end
+  resources :push_tokens, only: [:create, :destroy], defaults: { format: :json } do
+    patch 'replace', on: :collection
   end
 
   # Online sessions
