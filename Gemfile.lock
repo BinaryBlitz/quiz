@@ -56,6 +56,12 @@ GEM
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
+    capistrano (2.15.5)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -124,6 +130,13 @@ GEM
     multipart-post (2.0.0)
     nested_form_fields (0.6)
       rails (>= 3.2.0)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.2)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     oauth2 (1.0.0)
@@ -202,6 +215,8 @@ GEM
       rspec-mocks (~> 3.2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.1)
+    rvm-capistrano (1.5.6)
+      capistrano (~> 2.15.4)
     sass (3.4.12)
     sass-rails (5.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -269,6 +284,7 @@ DEPENDENCIES
   better_errors
   bootstrap-sass
   byebug
+  capistrano
   coffee-rails (~> 4.1.0)
   devise
   factory_girl
@@ -284,6 +300,7 @@ DEPENDENCIES
   rails (= 4.2.0)
   rails_12factor
   rspec-rails
+  rvm-capistrano
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   shoulda-matchers
