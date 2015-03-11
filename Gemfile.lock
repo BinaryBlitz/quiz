@@ -36,6 +36,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    ambry (0.3.1)
     annotate (2.6.6)
       activerecord (>= 2.3.0)
       rake (~> 10.4.2, >= 10.4.2)
@@ -127,6 +128,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    merit (2.3.1)
+      ambry (~> 0.3.0)
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.2)
@@ -299,6 +302,7 @@ DEPENDENCIES
   houston
   jbuilder (~> 2.0)
   jquery-rails
+  merit
   nested_form_fields
   pg
   pry-byebug

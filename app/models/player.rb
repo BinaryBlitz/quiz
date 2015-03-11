@@ -16,6 +16,8 @@
 #
 
 class Player < ActiveRecord::Base
+  has_merit
+
   include VkAuthorization
 
   after_create :create_key

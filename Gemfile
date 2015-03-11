@@ -36,6 +36,7 @@ gem 'pusher'
 gem 'vkontakte_api'
 gem 'gcm'
 gem 'houston'
+gem 'merit'
 
 # Use Unicorn as the app server
 gem 'unicorn'
