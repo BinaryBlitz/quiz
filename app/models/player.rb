@@ -91,7 +91,9 @@ class Player < ActiveRecord::Base
       else
         notification = Houston::Notification.new(device: push_token.token)
         notification.alert = "#{player.name} added you as a friend."
-        notification.custom_data = { action: 'FRIEND_REQUEST', player_id: player.id }
+        notification.custom_data = {
+          action: 'FRIEND_REQUEST', player: { id: player.id, name: player.name }
+        }
         APN.push(notification)
         logger.debug 'iOS push sent.'
       end
