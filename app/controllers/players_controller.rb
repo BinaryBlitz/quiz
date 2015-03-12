@@ -66,6 +66,11 @@ class PlayersController < ApplicationController
     render formats: :json, action: :authenticate, location: @player
   end
 
+  def search
+    @players = Player.where(name: params[:query])
+    render formats: :json
+  end
+
   private
 
   def set_player

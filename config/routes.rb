@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     post 'authenticate', on: :collection
     post 'authenticate_vk', on: :collection
     get 'friends', on: :member
+    get 'search', on: :collection
   end
   resources :friendships, only: [:index, :create], defaults: { format: :json } do
     get 'requests', on: :collection
