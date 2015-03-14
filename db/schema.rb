@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305124625) do
+ActiveRecord::Schema.define(version: 20150308084740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,26 @@ ActiveRecord::Schema.define(version: 20150305124625) do
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
 
+  create_table "purchase_types", force: :cascade do |t|
+    t.string   "identifier"
+    t.integer  "multiplier"
+    t.integer  "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "purchase_types", ["topic_id"], name: "index_purchase_types_on_topic_id", using: :btree
+
+  create_table "purchases", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "purchase_type_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "purchases", ["player_id"], name: "index_purchases_on_player_id", using: :btree
+  add_index "purchases", ["purchase_type_id"], name: "index_purchases_on_purchase_type_id", using: :btree
+
   create_table "push_tokens", force: :cascade do |t|
     t.string   "token"
     t.boolean  "android",    default: false
@@ -197,6 +217,9 @@ ActiveRecord::Schema.define(version: 20150305124625) do
   add_foreign_key "lobbies", "game_sessions"
   add_foreign_key "lobbies", "players"
   add_foreign_key "lobbies", "topics"
+  add_foreign_key "purchase_types", "topics"
+  add_foreign_key "purchases", "players"
+  add_foreign_key "purchases", "purchase_types"
   add_foreign_key "push_tokens", "players"
   add_foreign_key "questions", "topics"
   add_foreign_key "topic_results", "players"

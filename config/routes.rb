@@ -39,6 +39,9 @@ Rails.application.routes.draw do
     patch 'replace', on: :collection
     delete 'delete', on: :collection
   end
+  resources :purchases, defaults: { format: :json } do
+    get 'available', on: :collection
+  end
 
   # Online sessions
   resources :lobbies, only: [:create] do

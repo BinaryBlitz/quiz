@@ -14,15 +14,24 @@
 #
 
 class Topic < ActiveRecord::Base
+  after_create :associate_with_purchase_type
+
   belongs_to :category
   has_many :questions, dependent: :destroy
   has_many :game_sessions, dependent: :destroy
   has_many :lobbies
   has_many :topic_results
   has_many :players, -> { uniq }, through: :topic_results
+  has_one :purchase_types, dependent: :destroy
 
   validates :name, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }
   validates :played_count, numericality: { greater_than_or_equal_to: 0 }
   validates :category, presence: true
+
+  private
+
+  def associate_with_purchase_type
+    PurchaseType.create(identifier: "topic-#{id}", topic: self) if price > 0
+  end
 end

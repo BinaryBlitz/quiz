@@ -1,18 +1,18 @@
 # == Schema Information
 #
-# Table name: friendships
+# Table name: purchase_types
 #
 #  id         :integer          not null, primary key
-#  player_id  :integer
-#  friend_id  :integer
-#  viewed     :boolean          default("false")
+#  identifier :string
+#  multiplier :integer
+#  topic_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 FactoryGirl.define do
-  factory :friendship do
-    player nil
-    friend_id 1
+  factory :purchase_type do
+    name "MyString"
   end
+
 end
