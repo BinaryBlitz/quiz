@@ -2,6 +2,7 @@ class PushTokensController < ApplicationController
   def create
     @token = PushToken.new(token: params[:push_token])
     @token.player = current_player
+    @token.android = params[:android] == 'true'
 
     if @token.save
       head :created
@@ -22,7 +23,8 @@ class PushTokensController < ApplicationController
 
   def delete
     @token = PushToken.find_by(token: params[:push_token])
-    render json: { error: 'Push token not found.' } and return unless @token
+    render json: { error: 'Push token not found.' },
+           status: :not_found and return unless @token
     @token.destroy
     head :no_content
   end

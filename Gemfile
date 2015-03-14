@@ -34,6 +34,7 @@ gem 'nested_form_fields'
 
 gem 'pusher'
 gem 'vkontakte_api'
+gem 'gcm'
 gem 'houston'
 
 # Use Unicorn as the app server
@@ -46,7 +47,7 @@ gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem 'capistrano'
-  gem "rvm-capistrano"
+  gem "rvm-capistrano", require: false
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-rails'

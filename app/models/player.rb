@@ -86,7 +86,13 @@ class Player < ActiveRecord::Base
     logger.debug 'Pushing friend request to device.'
     push_tokens.each do |push_token|
       if push_token.android?
-        # Android
+        options = {
+          data: {
+            title: 'iQuiz',
+            message: "#{player.name} added you as a friend."
+          }
+        }
+        GCM.send(push_token, options)
         logger.debug 'Android push sent.'
       else
         notification = Houston::Notification.new(device: push_token.token)

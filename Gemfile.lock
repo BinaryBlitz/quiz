@@ -97,6 +97,9 @@ GEM
       faraday (~> 0.9.0)
       faraday_middleware (~> 0.9.1)
       oj (~> 2.0)
+    gcm (0.1.0)
+      httparty
+      json
     globalid (0.3.3)
       activesupport (>= 4.1.0)
     hashie (3.4.0)
@@ -105,6 +108,9 @@ GEM
     houston (2.2.3)
       commander (~> 4.1)
       json
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     httpclient (2.6.0.1)
     i18n (0.7.0)
     jbuilder (2.2.11)
@@ -289,6 +295,7 @@ DEPENDENCIES
   devise
   factory_girl
   factory_girl_rails
+  gcm
   houston
   jbuilder (~> 2.0)
   jquery-rails
