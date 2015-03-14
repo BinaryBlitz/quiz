@@ -1,1 +1,1 @@
-::GCM = GCM.new(Rails.application.secrets.gcm_sender_id)
+::SHARED_GCM = GCM.new(Rails.application.secrets.gcm_sender_id)

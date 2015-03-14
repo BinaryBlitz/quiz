@@ -93,7 +93,7 @@ class Player < ActiveRecord::Base
             message: "#{player.name} added you as a friend."
           }
         }
-        GCM.send(push_token, options)
+        GCM_INSTANCE.send(push_token, options)
         logger.debug 'Android push sent.'
       else
         notification = Houston::Notification.new(device: push_token.token)
