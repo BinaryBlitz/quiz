@@ -1,4 +1,5 @@
 class LobbiesController < ApplicationController
+  include Notifications
   before_action :restrict_access
   before_action :find_lobby, only: [:show, :find, :close]
 
@@ -13,6 +14,15 @@ class LobbiesController < ApplicationController
     else
       render json: @lobby.errors, status: :unprocessable_entity
     end
+  end
+
+  def challenge
+    opponent = Player.find(params[:opponent_id])
+    @lobby = Lobby.new(lobby_params)
+
+    @lobby.session.create(host_id: current_player, opponent_id: opponent)
+    # Push challenge notification
+    # Client should open pusher channel
   end
 
   # GET /lobbies/1/find
@@ -91,6 +101,10 @@ class LobbiesController < ApplicationController
       host: @current_player,
       offline: true)
     @lobby.close
+  end
+
+  def push_challenge(lobby)
+
   end
 
   def find_lobby

@@ -10,7 +10,7 @@ class FriendshipsController < ApplicationController
     @friendship = current_player.friendships.build(friend_id: params[:friend_id])
     if @friendship.save
       logger.debug 'Friend added.'
-      @friendship.friend.push_friend_request(current_player)
+      @friendship.friend.push_friend_request_from(current_player)
       head :created
     else
       head :unprocessable_entity
