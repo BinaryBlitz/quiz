@@ -37,4 +37,9 @@ class Lobby < ActiveRecord::Base
   def increment_count
     update(query_count: query_count + 1)
   end
+
+  def generate_session(opponent)
+    game_session = GameSession.create(host: player, opponent: opponent, topic: topic)
+    update!(game_session: game_session)
+  end
 end

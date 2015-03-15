@@ -17,6 +17,7 @@ class PushToken < ActiveRecord::Base
 
   def push(message, options = {})
     logger.debug "Started pushing notification to #{player}"
+    logger.debug options
     if android?
       push_to_android(message, options)
     else
