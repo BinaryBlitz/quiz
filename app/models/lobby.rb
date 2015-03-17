@@ -39,7 +39,8 @@ class Lobby < ActiveRecord::Base
   end
 
   def generate_session(opponent)
-    game_session = GameSession.create(host: player, opponent: opponent, topic: topic)
+    game_session = GameSession.create(
+      host: player, opponent: opponent, topic: topic, offline: false)
     update!(game_session: game_session)
   end
 end
