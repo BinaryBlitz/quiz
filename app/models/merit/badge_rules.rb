@@ -49,17 +49,22 @@ module Merit
         game_session.finisher.wins == 100
       end
 
-      # grant_on 'game_sessions#close', badge: 'faithful' do |game_session|
-      #   game_session.finisher.days_in_a_row == 10
-      # end
+      grant_on 'game_sessions#close', badge: 'faithful' do |game_session|
+        game_session.finisher.stats.days_in_a_row == 10
+      end
 
       grant_on 'game_sessions#close', badge: 'lightning' do |game_session|
         sum = 0
+        eligible = true
         game_session.player_answers(game_session.finisher).each do |time|
-          return false if time.nil?
-          sum += time
+          if time.nil?
+            eligible = false
+            break
+          else
+            sum += time
+          end
         end
-        sum <= 12
+        eligible && sum <= 12
       end
     end
   end

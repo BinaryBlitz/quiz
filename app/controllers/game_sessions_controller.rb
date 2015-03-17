@@ -1,5 +1,6 @@
 class GameSessionsController < ApplicationController
   before_action :find_game_session, only: [:show, :update, :destroy, :close]
+  before_action :update_stats, only: [:close]
   # GET /game_sessions
   def index
     @game_sessions = GameSession.all
@@ -59,5 +60,9 @@ class GameSessionsController < ApplicationController
 
   def find_game_session
     @game_session = GameSession.find(params[:id])
+  end
+
+  def update_stats
+    current_player.stats.increment_consecutive_days
   end
 end

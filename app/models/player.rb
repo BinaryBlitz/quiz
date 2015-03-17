@@ -20,10 +20,12 @@ class Player < ActiveRecord::Base
   include Achievements
 
   after_create :create_key
+  after_create :create_stats
 
   # Associations
   has_merit
   has_one :api_key, dependent: :destroy
+  has_one :stats, dependent: :destroy
   has_many :lobbies, dependent: :destroy
   has_many :host_game_sessions, class_name: 'GameSession', foreign_key: 'host_id'
   has_many :opponent_game_sessions, class_name: 'GameSession', foreign_key: 'opponent_id'
