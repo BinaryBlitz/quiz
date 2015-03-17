@@ -64,13 +64,22 @@ class GameSession < ActiveRecord::Base
   def close
     return if closed
     update(closed: true)
-    # TODO: Results?
-    # opponent.results.create(points: opponent_points, topic: topic) unless offline
-    # host.results.create(points: host_points, topic: topic)
   end
 
   def recent?
     updated_at.between?(1.week.ago, Time.zone.now)
+  end
+
+  def host?(player)
+    player == host
+  end
+
+  def winner?(player)
+    if host?(player)
+      host_points > opponent_points
+    else
+      opponent_points > host_points
+    end
   end
 
   private

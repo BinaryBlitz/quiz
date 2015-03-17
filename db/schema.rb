@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317081615) do
+ActiveRecord::Schema.define(version: 20150317103244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,8 +115,10 @@ ActiveRecord::Schema.define(version: 20150317081615) do
     t.integer  "topic_id"
     t.boolean  "finished",    default: false
     t.boolean  "closed"
+    t.integer  "finisher_id"
   end
 
+  add_index "game_sessions", ["finisher_id"], name: "index_game_sessions_on_finisher_id", using: :btree
   add_index "game_sessions", ["host_id"], name: "index_game_sessions_on_host_id", using: :btree
   add_index "game_sessions", ["opponent_id"], name: "index_game_sessions_on_opponent_id", using: :btree
   add_index "game_sessions", ["topic_id"], name: "index_game_sessions_on_topic_id", using: :btree

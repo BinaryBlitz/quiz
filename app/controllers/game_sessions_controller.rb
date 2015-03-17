@@ -41,8 +41,14 @@ class GameSessionsController < ApplicationController
   # PATCH /game_sessions/1/close
   def close
     @game_session.update!(closed: true, finisher: current_player)
+    current_player.topic_results
+      .find_or_create_by(topic: @game_session.topic)
+      .add(@game_session.player_points(current_player))
+    current_player.category_results
+      .find_or_create_by(category: @game_session.topic.category)
+      .add(@game_session.player_points(current_player))
+    # Render achievements
     head :no_content
-    # TODO: Return host and opponent points
   end
 
   private

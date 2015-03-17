@@ -99,6 +99,12 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def wins
+    count = 0
+    game_sessions.each { |gs| count += 1 if gs.winner?(self) }
+    count
+  end
+
   def self.random_name
     pluck(:name).sample
   end

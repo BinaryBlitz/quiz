@@ -14,4 +14,8 @@
 class TopicResult < ActiveRecord::Base
   belongs_to :player
   belongs_to :topic
+
+  def add(result)
+    update!(points: points + result)
+  end
 end

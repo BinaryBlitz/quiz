@@ -14,4 +14,8 @@
 class CategoryResult < ActiveRecord::Base
   belongs_to :player
   belongs_to :category
+
+  def add(result)
+    update!(points: points + result)
+  end
 end
