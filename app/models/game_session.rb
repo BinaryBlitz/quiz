@@ -19,6 +19,7 @@ class GameSession < ActiveRecord::Base
   # Associations
   belongs_to :host, class_name: 'Player', foreign_key: 'host_id'
   belongs_to :opponent, class_name: 'Player', foreign_key: 'opponent_id'
+  belongs_to :finisher, class_name: 'Player', foreign_key: 'finisher_id'
   belongs_to :topic
 
   has_many :game_session_questions, -> { order(created_at: :asc) }, dependent: :destroy

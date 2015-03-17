@@ -44,6 +44,10 @@ module Merit
       #
       #   user.name.length > 4
       # end
+
+      grant_on 'game_sessions#close', badge: 'winner' do |game_session|
+        # game_session.closer.wins == 100
+      end
     end
   end
 end

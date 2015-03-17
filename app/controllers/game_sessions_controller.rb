@@ -40,7 +40,7 @@ class GameSessionsController < ApplicationController
 
   # PATCH /game_sessions/1/close
   def close
-    @game_session.close
+    @game_session.update!(closed: true, finisher: current_player)
     head :no_content
     # TODO: Return host and opponent points
   end
