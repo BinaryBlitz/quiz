@@ -15,6 +15,16 @@ class LobbiesController < ApplicationController
     end
   end
 
+  def challenges
+    @lobbies = Lobby.joins(:game_session)
+                    .where(game_sessions: { opponent_id: current_player.id })
+                    .where(closed: false)
+  end
+
+  def challenged
+    @lobbies = current_player.lobbies.where(challenge: true).where(closed: false)
+  end
+
   # 1. Create the lobby with the given opponent ant topic
   # 2. Create the session
   # 3. Push the challenge to opponent (with lobby id)
@@ -24,7 +34,7 @@ class LobbiesController < ApplicationController
     opponent = Player.find(params[:opponent_id])
     topic = Topic.find(params[:topic_id])
 
-    @lobby = Lobby.new(player: current_player, topic: topic)
+    @lobby = Lobby.new(player: current_player, topic: topic, challenge: true)
     @lobby.generate_session(opponent)
 
     push_challenge(opponent)
