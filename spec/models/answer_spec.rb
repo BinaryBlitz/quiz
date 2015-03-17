@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  content     :text
 #  question_id :integer
-#  correct     :boolean          default("false"), not null
+#  correct     :boolean          default(FALSE), not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
