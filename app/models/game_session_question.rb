@@ -51,6 +51,22 @@ class GameSessionQuestion < ActiveRecord::Base
     end
   end
 
+  def player_answer_correct?(player)
+    if player == game_session.host
+      host_answer && host_answer.correct?
+    elsif player == game_session.opponent
+      opponent_answer && opponent_answer.correct?
+    end
+  end
+
+  def player_time(player)
+    if player == game_session.host
+      host_time
+    elsif player == game_session.opponent
+      opponent_time
+    end
+  end
+
   # Generates offline session question
   def generate_for_offline
     opponent_answer, opponent_time = load_or_generate_answer

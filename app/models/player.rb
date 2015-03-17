@@ -16,13 +16,13 @@
 #
 
 class Player < ActiveRecord::Base
-  has_merit
-
   include VkAuthorization
+  include Achievements
 
   after_create :create_key
 
   # Associations
+  has_merit
   has_one :api_key, dependent: :destroy
   has_many :lobbies, dependent: :destroy
   has_many :host_game_sessions, class_name: 'GameSession', foreign_key: 'host_id'
@@ -97,12 +97,6 @@ class Player < ActiveRecord::Base
     push_tokens.each do |push_token|
       push_token.push(message, options)
     end
-  end
-
-  def wins
-    count = 0
-    game_sessions.each { |gs| count += 1 if gs.winner?(self) }
-    count
   end
 
   def self.random_name

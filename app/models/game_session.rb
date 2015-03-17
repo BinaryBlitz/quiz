@@ -61,9 +61,12 @@ class GameSession < ActiveRecord::Base
     sum
   end
 
-  def close
-    return if closed
-    update(closed: true)
+  # Returns an array where each element is answer time or nil if the answer was incorrect
+  # Example: [1, 2, nil, 3, 4, nil]
+  def player_answers(player)
+    game_session_questions.map do |question|
+      question.player_time(player) if question.player_answer_correct?(player)
+    end
   end
 
   def recent?

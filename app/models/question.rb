@@ -43,6 +43,10 @@ class Question < ActiveRecord::Base
     answers.where(correct: false).sample if answers.any?
   end
 
+  def valid_answer?(answer)
+    answers.include?(answer)
+  end
+
   private
 
   # Finds and updates correct answers to incorrect

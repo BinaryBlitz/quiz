@@ -37,3 +37,15 @@ Merit::Badge.create!(
   name: 'winner',
   description: 'Win 100 games.'
 )
+
+Merit::Badge.create!(
+  id: 2,
+  name: 'faithful',
+  description: 'Play 10 days in a row.'
+)
+
+Merit::Badge.create!(
+  id: 3,
+  name: 'lightning',
+  description: 'Answer all questions in 12 seconds or less.'
+)
