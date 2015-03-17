@@ -44,8 +44,13 @@ Rails.application.routes.draw do
   end
 
   # Online sessions
-  resources :lobbies, only: [:create] do
+  resources :lobbies, only: [:create], defaults: { format: :json } do
     get 'find', on: :member
+    get 'challenges', on: :collection
+    get 'challenged', on: :collection
+    post 'challenge', on: :collection
+    post 'accept_challenge', on: :member
+    post 'decline_challenge', on: :member
     patch 'close', on: :member
   end
 

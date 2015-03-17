@@ -83,27 +83,17 @@ class Player < ActiveRecord::Base
     category_results.find_by_category_id(category).weekly_points
   end
 
-  def push_friend_request(player)
-    logger.debug 'Pushing friend request to device.'
+  def push_friend_request_from(player)
+    message = "#{player.name} added you as a friend."
+    options = {
+      action: 'FRIEND_REQUEST', player: { id: player.id, name: player.name }
+    }
+    push_notification(message, options)
+  end
+
+  def push_notification(message, options = {})
     push_tokens.each do |push_token|
-      if push_token.android?
-        options = {
-          data: {
-            title: 'iQuiz',
-            message: "#{player.name} added you as a friend."
-          }
-        }
-        GCM_INSTANCE.send(push_token, options)
-        logger.debug 'Android push sent.'
-      else
-        notification = Houston::Notification.new(device: push_token.token)
-        notification.alert = "#{player.name} added you as a friend."
-        notification.custom_data = {
-          action: 'FRIEND_REQUEST', player: { id: player.id, name: player.name }
-        }
-        APN.push(notification)
-        logger.debug 'iOS push sent.'
-      end
+      push_token.push(message, options)
     end
   end
 
@@ -131,6 +121,10 @@ class Player < ActiveRecord::Base
     joins(:category_results)
       .where('category_id = ?', category.id)
       .order('category_results.weekly_points DESC')
+  end
+
+  def to_s
+    name
   end
 
   private
