@@ -94,6 +94,12 @@ class Player < ActiveRecord::Base
     push_notification(message, options)
   end
 
+  def push_achievement(badge)
+    message = "You received an achievement: #{badge.name}"
+    options = { action: 'ACHIEVEMENT', badge: { id: badge.id, name: badge.name } }
+    push_notification(message, options)
+  end
+
   def push_notification(message, options = {})
     push_tokens.each do |push_token|
       push_token.push(message, options)
