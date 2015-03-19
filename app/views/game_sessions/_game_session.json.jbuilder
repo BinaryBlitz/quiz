@@ -1,4 +1,5 @@
 json.extract! game_session, :id, :host_id, :opponent_id, :offline
+json.lobby_id game_session.player_lobby_id(current_player)
 
 json.host_name game_session.host.name
 json.opponent_name game_session.offline ? Player.random_name : game_session.opponent.name

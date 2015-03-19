@@ -70,6 +70,11 @@ class GameSession < ActiveRecord::Base
     end
   end
 
+  def player_lobby_id(player)
+    lobby = lobbies.find_by(player: player)
+    lobby.id if lobby
+  end
+
   def recent?
     updated_at.between?(1.week.ago, Time.zone.now)
   end
