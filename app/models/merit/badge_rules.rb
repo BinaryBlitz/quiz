@@ -60,9 +60,8 @@ module Merit
           if time.nil?
             eligible = false
             break
-          else
-            sum += time
           end
+          sum += time
         end
         eligible && sum <= 12
       end

@@ -32,20 +32,11 @@ end
 #   Merit::Badge.create! attrs
 # end
 
-Merit::Badge.create!(
-  id: 1,
-  name: 'winner',
-  description: 'Win 100 games.'
-)
-
-Merit::Badge.create!(
-  id: 2,
-  name: 'faithful',
-  description: 'Play 10 days in a row.'
-)
-
-Merit::Badge.create!(
-  id: 3,
-  name: 'lightning',
-  description: 'Answer all questions in 12 seconds or less.'
-)
+[
+  { id: 1, name: 'winner', description: 'Win 100 games.' },
+  { id: 2, name: 'faithful', description: 'Play 10 days in a row.' },
+  { id: 3, name: 'lightning', description: 'Answer all questions in 12 seconds or less.' },
+  { id: 4, name: 'columbus', description: 'Top in Geography.', custom_fields: { topic_id: 1 } }
+].each do |attrs|
+  Merit::Badge.create!(attrs)
+end
