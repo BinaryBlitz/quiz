@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'achievements/index'
+
   root 'admin/dashboard#index'
 
   # Devise
@@ -42,6 +44,7 @@ Rails.application.routes.draw do
   resources :purchases, defaults: { format: :json } do
     get 'available', on: :collection
   end
+  resources :achievements, only: [:index], defaults: { format: :json }
 
   # Online sessions
   resources :lobbies, only: [:create], defaults: { format: :json } do

@@ -53,6 +53,10 @@ module Merit
         game_session.finisher.stats.days_in_a_row == 10
       end
 
+      grant_on 'game_sessions#close', badge: 'erudite' do |game_session|
+        game_session.finisher.erudite?
+      end
+
       grant_on 'game_sessions#close', badge: 'lightning' do |game_session|
         sum = 0
         eligible = true
