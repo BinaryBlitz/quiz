@@ -37,7 +37,8 @@ end
   { id: 2, name: 'faithful', description: 'Play 10 days in a row.' },
   { id: 3, name: 'lightning', description: 'Answer all questions in 12 seconds or less.' },
   { id: 4, name: 'columbus', description: 'Top in Geography.', custom_fields: { topic_id: 1 } },
-  { id: 5, name: 'erudite', description: 'At least 1 win in all topics.' }
+  { id: 5, name: 'erudite', description: 'At least 1 win in all topics.' },
+  { id: 6, name: 'supercomputer', description: 'Win 50 games ahead of time.' }
 ].each do |attrs|
   Merit::Badge.create!(attrs)
 end

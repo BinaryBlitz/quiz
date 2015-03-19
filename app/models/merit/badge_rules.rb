@@ -57,6 +57,10 @@ module Merit
         game_session.finisher.erudite?
       end
 
+      grant_on 'game_sessions#close', badge: 'supercomputer' do |game_session|
+        game_session.finisher.stats.early_wins == 50
+      end
+
       grant_on 'game_sessions#close', badge: 'lightning' do |game_session|
         sum = 0
         eligible = true

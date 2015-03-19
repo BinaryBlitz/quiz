@@ -60,5 +60,6 @@ class GameSessionsController < ApplicationController
 
   def update_stats
     current_player.stats.increment_consecutive_days
+    current_player.stats.increment_early_winner(@game_session)
   end
 end

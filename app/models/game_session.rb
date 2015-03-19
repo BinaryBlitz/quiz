@@ -91,6 +91,18 @@ class GameSession < ActiveRecord::Base
     end
   end
 
+  def early_winner?(player)
+    return false unless winner?(player)
+
+    if player == host
+      host_points - 40 > opponent_points
+    elsif player == opponent
+      opponent_points - 40 > host_points
+    else
+      0
+    end
+  end
+
   private
 
   def generate
