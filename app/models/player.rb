@@ -38,9 +38,6 @@ class Player < ActiveRecord::Base
   has_many :topic_results
   has_many :topics, -> { uniq }, through: :topic_results
 
-  has_many :category_results
-  has_many :categories, -> { uniq }, through: :category_results
-
   has_many :friendships
   has_many :friends, -> { uniq }, through: :friendships
 
@@ -82,11 +79,11 @@ class Player < ActiveRecord::Base
   end
 
   def category_points(category)
-    category_results.find_by_category_id(category).points
+    topic_results.where(category: category).sum(:points)
   end
 
   def weekly_category_points(category)
-    category_results.find_by_category_id(category).weekly_points
+    topic_results.where(category: category).sum(:weekly_points)
   end
 
   def push_friend_request_from(player)
@@ -118,15 +115,19 @@ class Player < ActiveRecord::Base
   end
 
   def self.order_by_category(category)
-    joins(:category_results)
+    joins(:topic_results)
       .where('category_id = ?', category.id)
-      .order('category_results.points DESC')
+      .select('players.id, players.name, sum(topic_results.points) as total_points')
+      .group('players.id')
+      .order('total_points desc')
   end
 
   def self.order_by_weekly_category(category)
-    joins(:category_results)
+    joins(:topic_results)
       .where('category_id = ?', category.id)
-      .order('category_results.weekly_points DESC')
+      .select('players.id, players.name, sum(topic_results.weekly_points) as total_points')
+      .group('players.id')
+      .order('total_points desc')
   end
 
   def to_s
