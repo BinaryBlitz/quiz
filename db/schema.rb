@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317081615) do
+ActiveRecord::Schema.define(version: 20150317134643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,17 @@ ActiveRecord::Schema.define(version: 20150317081615) do
   end
 
   add_index "api_keys", ["player_id"], name: "index_api_keys_on_player_id", using: :btree
+
+  create_table "badges_sashes", force: :cascade do |t|
+    t.integer  "badge_id"
+    t.integer  "sash_id"
+    t.boolean  "notified_user", default: false
+    t.datetime "created_at"
+  end
+
+  add_index "badges_sashes", ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id", using: :btree
+  add_index "badges_sashes", ["badge_id"], name: "index_badges_sashes_on_badge_id", using: :btree
+  add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -104,8 +115,10 @@ ActiveRecord::Schema.define(version: 20150317081615) do
     t.integer  "topic_id"
     t.boolean  "finished",    default: false
     t.boolean  "closed"
+    t.integer  "finisher_id"
   end
 
+  add_index "game_sessions", ["finisher_id"], name: "index_game_sessions_on_finisher_id", using: :btree
   add_index "game_sessions", ["host_id"], name: "index_game_sessions_on_host_id", using: :btree
   add_index "game_sessions", ["opponent_id"], name: "index_game_sessions_on_opponent_id", using: :btree
   add_index "game_sessions", ["topic_id"], name: "index_game_sessions_on_topic_id", using: :btree
@@ -125,6 +138,39 @@ ActiveRecord::Schema.define(version: 20150317081615) do
   add_index "lobbies", ["player_id"], name: "index_lobbies_on_player_id", using: :btree
   add_index "lobbies", ["topic_id"], name: "index_lobbies_on_topic_id", using: :btree
 
+  create_table "merit_actions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "action_method"
+    t.integer  "action_value"
+    t.boolean  "had_errors",    default: false
+    t.string   "target_model"
+    t.integer  "target_id"
+    t.text     "target_data"
+    t.boolean  "processed",     default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "merit_activity_logs", force: :cascade do |t|
+    t.integer  "action_id"
+    t.string   "related_change_type"
+    t.integer  "related_change_id"
+    t.string   "description"
+    t.datetime "created_at"
+  end
+
+  create_table "merit_score_points", force: :cascade do |t|
+    t.integer  "score_id"
+    t.integer  "num_points", default: 0
+    t.string   "log"
+    t.datetime "created_at"
+  end
+
+  create_table "merit_scores", force: :cascade do |t|
+    t.integer "sash_id"
+    t.string  "category", default: "default"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -136,6 +182,8 @@ ActiveRecord::Schema.define(version: 20150317081615) do
     t.integer  "weekly_points",   default: 0
     t.string   "vk_token"
     t.integer  "vk_id"
+    t.integer  "sash_id"
+    t.integer  "level",           default: 0
   end
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
@@ -182,6 +230,21 @@ ActiveRecord::Schema.define(version: 20150317081615) do
 
   add_index "questions", ["topic_id"], name: "index_questions_on_topic_id", using: :btree
 
+  create_table "sashes", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stats", force: :cascade do |t|
+    t.integer  "days_in_a_row", default: 0
+    t.date     "played_at"
+    t.integer  "player_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "stats", ["player_id"], name: "index_stats_on_player_id", using: :btree
+
   create_table "topic_results", force: :cascade do |t|
     t.integer  "player_id"
     t.integer  "topic_id"
@@ -189,8 +252,10 @@ ActiveRecord::Schema.define(version: 20150317081615) do
     t.integer  "weekly_points", default: 0
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "category_id"
   end
 
+  add_index "topic_results", ["category_id"], name: "index_topic_results_on_category_id", using: :btree
   add_index "topic_results", ["player_id"], name: "index_topic_results_on_player_id", using: :btree
   add_index "topic_results", ["topic_id"], name: "index_topic_results_on_topic_id", using: :btree
 
@@ -223,6 +288,8 @@ ActiveRecord::Schema.define(version: 20150317081615) do
   add_foreign_key "purchases", "purchase_types"
   add_foreign_key "push_tokens", "players"
   add_foreign_key "questions", "topics"
+  add_foreign_key "stats", "players"
+  add_foreign_key "topic_results", "categories"
   add_foreign_key "topic_results", "players"
   add_foreign_key "topic_results", "topics"
   add_foreign_key "topics", "categories"

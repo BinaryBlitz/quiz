@@ -5,12 +5,13 @@
 #  id          :integer          not null, primary key
 #  host_id     :integer
 #  opponent_id :integer
-#  offline     :boolean          default("true")
+#  offline     :boolean          default(TRUE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  topic_id    :integer
-#  finished    :boolean          default("false")
+#  finished    :boolean          default(FALSE)
 #  closed      :boolean
+#  finisher_id :integer
 #
 
 class GameSession < ActiveRecord::Base
@@ -19,6 +20,7 @@ class GameSession < ActiveRecord::Base
   # Associations
   belongs_to :host, class_name: 'Player', foreign_key: 'host_id'
   belongs_to :opponent, class_name: 'Player', foreign_key: 'opponent_id'
+  belongs_to :finisher, class_name: 'Player', foreign_key: 'finisher_id'
   belongs_to :topic
 
   has_many :game_session_questions, -> { order(created_at: :asc) }, dependent: :destroy
@@ -60,16 +62,28 @@ class GameSession < ActiveRecord::Base
     sum
   end
 
-  def close
-    return if closed
-    update(closed: true)
-    # TODO: Results?
-    # opponent.results.create(points: opponent_points, topic: topic) unless offline
-    # host.results.create(points: host_points, topic: topic)
+  # Returns an array where each element is answer time or nil if the answer was incorrect
+  # Example: [1, 2, nil, 3, 4, nil]
+  def player_answers(player)
+    game_session_questions.map do |question|
+      question.player_time(player) if question.player_answer_correct?(player)
+    end
   end
 
   def recent?
     updated_at.between?(1.week.ago, Time.zone.now)
+  end
+
+  def host?(player)
+    player == host
+  end
+
+  def winner?(player)
+    if host?(player)
+      host_points > opponent_points
+    else
+      opponent_points > host_points
+    end
   end
 
   private

@@ -48,7 +48,10 @@ end
 
 # Online and offline session
 GameSession.create(host: host, opponent: opponent, topic: topic, offline: false)
-GameSession.create(host: host, topic: topic, offline: true)
+offline_session = GameSession.create(host: host, topic: topic, offline: true)
+offline_session.game_session_questions.each do |session_question|
+  session_question.update!(host_answer: session_question.question.correct_answer, host_time: 1)
+end
 
 # Admin
 Admin.create(

@@ -12,7 +12,6 @@
 FactoryGirl.define do
   factory :purchase do
     player nil
-purchase_type nil
+    purchase_type nil
   end
-
 end

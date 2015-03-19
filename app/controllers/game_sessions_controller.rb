@@ -1,5 +1,6 @@
 class GameSessionsController < ApplicationController
   before_action :find_game_session, only: [:show, :update, :destroy, :close]
+  before_action :update_stats, only: [:close]
   # GET /game_sessions
   def index
     @game_sessions = GameSession.all
@@ -40,9 +41,11 @@ class GameSessionsController < ApplicationController
 
   # PATCH /game_sessions/1/close
   def close
-    @game_session.close
+    @game_session.update!(closed: true, finisher: current_player)
+    current_player.topic_results
+      .find_or_create_by(topic: @game_session.topic)
+      .add(@game_session.player_points(current_player))
     head :no_content
-    # TODO: Return host and opponent points
   end
 
   private
@@ -53,5 +56,9 @@ class GameSessionsController < ApplicationController
 
   def find_game_session
     @game_session = GameSession.find(params[:id])
+  end
+
+  def update_stats
+    current_player.stats.increment_consecutive_days
   end
 end

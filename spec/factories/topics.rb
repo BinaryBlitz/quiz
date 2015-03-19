@@ -4,10 +4,10 @@
 #
 #  id           :integer          not null, primary key
 #  name         :string
-#  visible      :boolean          default("false")
+#  visible      :boolean          default(FALSE)
 #  expires_at   :date
-#  price        :integer          default("0")
-#  played_count :integer          default("0")
+#  price        :integer          default(0)
+#  played_count :integer          default(0)
 #  category_id  :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

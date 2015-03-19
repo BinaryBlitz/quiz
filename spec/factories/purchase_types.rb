@@ -12,7 +12,6 @@
 
 FactoryGirl.define do
   factory :purchase_type do
-    name "MyString"
+    name 'MyString'
   end
-
 end

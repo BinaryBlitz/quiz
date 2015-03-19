@@ -5,7 +5,7 @@
 #  id         :integer          not null, primary key
 #  content    :text
 #  image_url  :string
-#  bounty     :integer          default("1")
+#  bounty     :integer          default(1)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  topic_id   :integer
@@ -41,6 +41,10 @@ class Question < ActiveRecord::Base
   # Get random incorrect answer
   def random_incorrect_answer
     answers.where(correct: false).sample if answers.any?
+  end
+
+  def valid_answer?(answer)
+    answers.include?(answer)
   end
 
   private
