@@ -16,5 +16,4 @@ class Answer < ActiveRecord::Base
   has_many :game_session_questions, foreign_key: :opponent_answer_id, dependent: :destroy
 
   validates :content, presence: true
-  validates :question, presence: true
 end
