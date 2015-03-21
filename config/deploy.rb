@@ -14,7 +14,7 @@ set :rvm_ruby_string, 'ruby-2.2.0@quizapp'
 
 set :scm, :git
 set :repository, "git@github.com:BinaryBlitz/quiz_app.git"
-set :branch, "development"
+set :branch, "pictures"
 set :deploy_via, :remote_cache
 
 role :web, domain

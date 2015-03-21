@@ -10,7 +10,9 @@ module Player::VkAuthorization
       if player
         player
       else
-        create!(name: format_name(user), vk_token: vk.token, vk_id: user.uid)
+        create!(
+          name: format_name(user),
+          vk_token: vk.token, vk_id: user.uid, remote_avatar_url: user.photo)
       end
     end
 
