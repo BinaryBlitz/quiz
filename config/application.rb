@@ -25,5 +25,7 @@ module QuizApp
 
     config.generators.stylesheets = false
     config.generators.javascripts = false
+
+    config.autoload_paths << Rails.root.join("app", "services")
   end
 end

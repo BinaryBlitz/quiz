@@ -48,7 +48,7 @@ class LobbiesController < ApplicationController
 
     # Render and start the game
     render partial: 'game_sessions/game_session', locals: { game_session: @lobby.game_session }
-    start_game
+    PusherSender.new(current_player.id, @lobby.game_session.host_id).start_game
   end
 
   def decline_challenge
@@ -74,7 +74,7 @@ class LobbiesController < ApplicationController
       logger.debug 'Game session found. Starting.'
       @lobby.close
       render_lobby_session
-      start_game
+      PusherSender.new(current_player.id, @lobby.game_session.host_id).start_game
       return
     end
 
@@ -105,14 +105,6 @@ class LobbiesController < ApplicationController
   def render_lobby_session
     @session = @lobby.game_session
     render formats: :json
-  end
-
-  # Trigger Pusher events
-  def start_game
-    Pusher.trigger("player-session-#{current_player.id}", 'game-start', {})
-    logger.debug "Game start event sent to player #{current_player.id}."
-    Pusher.trigger("player-session-#{@lobby.game_session.host_id}", 'game-start', {})
-    logger.debug "Game start event sent to player #{@lobby.game_session.host_id}."
   end
 
   # Increment lobby count and render message
