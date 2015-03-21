@@ -23,4 +23,9 @@
     div
       = collection_select(:topic, :category_id, Category.all, :id, :name, prompt: 'Select category')
 
+  = f.fields_for :purchase_type do |ff|
+    .form-group
+      = ff.label :identifier
+      = ff.text_field :identifier, class: 'form-control'
+
   = f.submit 'Submit', class: 'btn btn-default'

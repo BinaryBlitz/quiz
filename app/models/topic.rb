@@ -22,12 +22,14 @@ class Topic < ActiveRecord::Base
   has_many :lobbies
   has_many :topic_results
   has_many :players, -> { uniq }, through: :topic_results
-  has_one :purchase_types, dependent: :destroy
+  has_one :purchase_type, dependent: :destroy
 
   validates :name, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }
   validates :played_count, numericality: { greater_than_or_equal_to: 0 }
   validates :category, presence: true
+
+  accepts_nested_attributes_for :purchase_type, reject_if: -> (a) { a[:identifier].blank? }
 
   private
 
