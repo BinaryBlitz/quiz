@@ -41,6 +41,8 @@ class Player < ActiveRecord::Base
   has_many :friendships
   has_many :friends, -> { uniq }, through: :friendships
 
+  mount_base64_uploader :avatar, AvatarUploader
+
   # Validations
   has_secure_password validations: false
   validates :name, presence: true

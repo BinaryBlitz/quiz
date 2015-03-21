@@ -37,6 +37,8 @@ gem 'vkontakte_api'
 gem 'gcm'
 gem 'houston'
 gem 'merit'
+gem 'carrierwave'
+gem 'carrierwave-base64'
 
 # Use Unicorn as the app server
 gem 'unicorn'
