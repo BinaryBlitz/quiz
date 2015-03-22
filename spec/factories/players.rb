@@ -15,6 +15,7 @@
 #  vk_id           :integer
 #  sash_id         :integer
 #  level           :integer          default(0)
+#  avatar          :string
 #
 
 FactoryGirl.define do
