@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'pages/home'
+
   get 'achievements/index'
 
   root 'admin/dashboard#index'

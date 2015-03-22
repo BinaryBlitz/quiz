@@ -9,6 +9,8 @@
 #  weekly_points :integer          default(0)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  category_id   :integer
+#  count         :integer          default(0)
 #
 
 class TopicResult < ActiveRecord::Base
@@ -21,7 +23,7 @@ class TopicResult < ActiveRecord::Base
   validates :topic, presence: true
 
   def add(result)
-    update!(points: points + result)
+    update!(points: points + result, count: count + 1)
     if updated_at < DateTime.now.beginning_of_week
       update!(weekly_points: result)
     else

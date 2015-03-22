@@ -15,6 +15,7 @@
 #  vk_id           :integer
 #  sash_id         :integer
 #  level           :integer          default(0)
+#  avatar          :string
 #
 
 class Player < ActiveRecord::Base
@@ -105,6 +106,23 @@ class Player < ActiveRecord::Base
     push_tokens.each do |push_token|
       push_token.push(message, options)
     end
+  end
+
+  def favorite_topic
+    topic_result = topic_results.order(count: :desc).first
+    topic_result.topic if topic_result
+  end
+
+  def favorite_topic_games
+    favorite_topic ? topic_results.order(count: :desc).first.count : 0
+  end
+
+  def favorite_topics
+    topic_results.order(count: :desc).limit(3).map(&:topic)
+  end
+
+  def friends_favorite_topics
+    friends.sort_by(&:favorite_topic_games).map(&:favorite_topic).compact.first(3)
   end
 
   def self.random_name
