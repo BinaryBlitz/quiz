@@ -7,6 +7,9 @@ json.opponent_name game_session.offline ? Player.random_name : game_session.oppo
 json.host_avatar_url game_session.host.avatar_url
 json.opponent_avatar_url game_session.offline ? nil : game_session.opponent.avatar_url
 
+json.host_points current_player.topic_points(game_session.topic)
+json.opponent_points game_session.offline ? 0 : game_session.opponent.topic_points(game_session.topic)
+
 json.game_session_questions game_session.game_session_questions do |sq|
   json.partial! 'game_session_questions/game_session_question', game_session_question: sq
 end

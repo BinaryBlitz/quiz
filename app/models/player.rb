@@ -73,11 +73,11 @@ class Player < ActiveRecord::Base
   end
 
   def topic_points(topic)
-    topic_results.find_by_topic_id(topic).points
+    topic_results.find_by(topic: topic).points
   end
 
   def weekly_topic_points(topic)
-    topic_results.find_by_topic_id(topic).weekly_points
+    topic_results.find_by(topic: topic).weekly_points
   end
 
   def category_points(category)
