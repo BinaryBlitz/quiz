@@ -73,7 +73,7 @@ class Player < ActiveRecord::Base
   end
 
   def topic_points(topic)
-    topic_results.find_by(topic: topic).points
+    topic_results.find_by(topic: topic).points rescue 0
   end
 
   def weekly_topic_points(topic)
