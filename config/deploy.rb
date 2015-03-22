@@ -27,8 +27,8 @@ before 'deploy:setup', 'rvm:install_rvm', 'rvm:install_ruby'
 after 'deploy:update_code', :roles => :app do
   run "rm -f #{current_release}/config/secrets.yml"
   run "ln -nfs #{deploy_to}/shared/config/secrets.yml #{current_release}/config/secrets.yml"
-  # run "rm -f #{current_release}/public/uploads"
-  # run "ln -nfs #{deploy_to}/shared/public/uploads #{current_release}/public/uploads"
+  run "rm -f #{current_release}/public/uploads"
+  run "ln -nfs #{deploy_to}/shared/public/uploads #{current_release}/public/uploads"
   # run "cd #{current_release}; rake db:schema:load RAILS_ENV=#{rails_env}"
   run "cd #{current_release}; bundle exec rake db:migrate RAILS_ENV=#{rails_env}"
   # run "rm -f #{current_release}/config/initializers/app_constants.rb"
