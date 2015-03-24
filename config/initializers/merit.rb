@@ -38,7 +38,8 @@ end
   { id: 3, name: 'lightning', description: 'Answer all questions in 12 seconds or less.' },
   { id: 4, name: 'columbus', description: 'Top in Geography.', custom_fields: { topic_id: 1 } },
   { id: 5, name: 'erudite', description: 'At least 1 win in all topics.' },
-  { id: 6, name: 'supercomputer', description: 'Win 50 games ahead of time.' }
+  { id: 6, name: 'supercomputer', description: 'Win 50 games ahead of time.' },
+  { id: 7, name: 'test-badge', description: 'Fuck you.' }
 ].each do |attrs|
   Merit::Badge.create!(attrs)
 end

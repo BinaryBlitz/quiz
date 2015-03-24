@@ -73,6 +73,8 @@ module Merit
         end
         eligible && sum <= 12
       end
+
+      grant_on 'game_sessions#close', badge: 'test-badge'
     end
   end
 end
