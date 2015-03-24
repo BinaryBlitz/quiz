@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
   get 'pages/home'
-
-  get 'achievements/index'
-
   root 'admin/dashboard#index'
 
   # Devise
@@ -60,10 +57,10 @@ Rails.application.routes.draw do
   end
 
   # Rankings
-  get 'rankings/general'
-  get 'rankings/weekly'
-  get 'rankings/general_by_category'
-  get 'rankings/weekly_by_category'
+  get 'rankings/general', defaults: { format: :json }
+  get 'rankings/weekly', defaults: { format: :json }
+  get 'rankings/general_by_category', defaults: { format: :json }
+  get 'rankings/weekly_by_category', defaults: { format: :json }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

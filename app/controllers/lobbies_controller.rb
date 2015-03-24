@@ -12,7 +12,7 @@ class LobbiesController < ApplicationController
 
     if @lobby.save
       logger.debug "Player #{current_player.id} created a lobby."
-      render :show, formats: :json, status: :created
+      render :show, status: :created
     else
       render json: @lobby.errors, status: :unprocessable_entity
     end
@@ -92,8 +92,6 @@ class LobbiesController < ApplicationController
       logger.debug 'Creating offline session.'
       create_offline_session
     end
-
-    render formats: :json
   end
 
   # PATCH /lobbies/1/close

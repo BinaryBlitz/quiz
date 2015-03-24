@@ -2,7 +2,6 @@ class FriendshipsController < ApplicationController
   # GET /friendships
   def index
     @friends = current_player.friends
-    render formats: :json
   end
 
   # POST /friendships
@@ -27,7 +26,6 @@ class FriendshipsController < ApplicationController
   # GET /friendships/requests
   def requests
     @friendships = Friendship.where(friend: current_player)
-    render formats: :json
   end
 
   # PATCH /friendships/mark_requests_as_viewed

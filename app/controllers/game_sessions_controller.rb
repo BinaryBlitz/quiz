@@ -4,12 +4,10 @@ class GameSessionsController < ApplicationController
   # GET /game_sessions
   def index
     @game_sessions = GameSession.all
-    render formats: :json
   end
 
   # GET /game_sessions/1
   def show
-    render formats: :json
   end
 
   # POST /game_sessions
@@ -17,7 +15,7 @@ class GameSessionsController < ApplicationController
     @game_session = GameSession.new(game_session_params)
 
     if @game_session.save
-      render :show, formats: :json, status: :created, location: @game_session
+      render :show, status: :created, location: @game_session
     else
       render json: @game_session.errors, status: :unprocessable_entity
     end

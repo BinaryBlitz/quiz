@@ -5,13 +5,11 @@ class PlayersController < ApplicationController
   # GET /players
   def index
     @players = Player.all
-    render formats: :json
   end
 
   # GET /players/1
   def show
     @is_friend = current_player.friends.include?(@player)
-    render formats: :json
   end
 
   # POST /players
@@ -19,7 +17,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      render formats: :json, status: :created
+      render status: :created
     else
       render json: @player.errors, status: :unprocessable_entity
     end
@@ -44,7 +42,6 @@ class PlayersController < ApplicationController
   # GET /players/1/friends
   def friends
     @friends = @player.friends
-    render formats: :json
   end
 
   # POST /players/authenticate
@@ -63,12 +60,11 @@ class PlayersController < ApplicationController
     vk = VkontakteApi::Client.new(params[:token])
     @player = Player.find_or_create_from_vk(vk)
 
-    render formats: :json, action: :authenticate, location: @player
+    render action: :authenticate, location: @player
   end
 
   def search
     @players = Player.where(name: params[:query])
-    render formats: :json
   end
 
   private

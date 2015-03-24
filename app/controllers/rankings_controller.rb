@@ -5,26 +5,24 @@ class RankingsController < ApplicationController
   def general
     top_players = @topic ? Player.order_by_topic(@topic) : Player.order_by_points
     set_up_rankings(top_players)
-    render formats: :json
   end
 
   def weekly
     top_players = @topic ? Player.order_by_weekly_topic(@topic) : Player.order_by_weekly_points
     set_up_rankings(top_players)
-    render formats: :json
   end
 
   def general_by_category
     top_players = Player.order_by_category(@category)
     set_up_rankings(top_players)
-    render formats: :json, template: 'rankings/category_rankings'
+    render template: 'rankings/category_rankings'
   end
 
   def weekly_by_category
     top_players = Player.order_by_weekly_category(@category)
     set_up_rankings(top_players)
     @weekly = true
-    render formats: :json, template: 'rankings/category_rankings'
+    render template: 'rankings/category_rankings'
   end
 
   private
