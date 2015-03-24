@@ -2,8 +2,8 @@ module PlayerRankings
   extend ActiveSupport::Concern
 
   included do
-    scope :order_by_points, -> { order(points: :desc) }
-    scope :order_by_weekly_points, -> { order(weekly_points: :desc) }
+    # scope :order_by_points, -> { order(points: :desc) }
+    # scope :order_by_weekly_points, -> { order(weekly_points: :desc) }
   end
 
   def topic_points(topic)
@@ -23,6 +23,20 @@ module PlayerRankings
   end
 
   module ClassMethods
+    def order_by_points
+      joins(:topic_results)
+        .select('players.id, players.name, sum(topic_results.points) as total_points')
+        .group('players.id')
+        .order('total_points desc')
+    end
+
+    def order_by_weekly_points
+      joins(:topic_results)
+        .select('players.id, players.name, sum(topic_results.weekly_points) as total_points')
+        .group('players.id')
+        .order('total_points desc')
+    end
+
     def order_by_topic(topic)
       joins(:topic_results).where('topic_id = ?', topic.id).order('topic_results.points DESC')
     end
