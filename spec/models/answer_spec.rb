@@ -16,7 +16,6 @@ describe Answer, type: :model do
   before { @answer = build(:answer) }
 
   it { should validate_presence_of(:content) }
-  it { should validate_presence_of(:question) }
 end
 
 describe Answer, 'Associations' do

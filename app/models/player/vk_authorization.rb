@@ -1,5 +1,4 @@
 module Player::VkAuthorization
-
   extend ActiveSupport::Concern
 
   module ClassMethods
