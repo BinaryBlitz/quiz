@@ -88,14 +88,8 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.4.0)
-    factory_girl (4.5.0)
-      activesupport (>= 3.0.0)
-    factory_girl_rails (4.5.0)
-      factory_girl (~> 4.5.0)
-      railties (>= 3.0.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
@@ -120,7 +114,7 @@ GEM
       multi_xml (>= 0.5.2)
     httpclient (2.6.0.1)
     i18n (0.7.0)
-    jbuilder (2.2.11)
+    jbuilder (2.2.12)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     jquery-rails (4.0.3)
@@ -143,7 +137,7 @@ GEM
     multi_json (1.11.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    nested_form_fields (0.6.1)
+    nested_form_fields (0.6.3)
       rails (>= 3.2.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -213,23 +207,6 @@ GEM
     rdoc (4.2.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
-    rspec-core (3.2.2)
-      rspec-support (~> 3.2.0)
-    rspec-expectations (3.2.0)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.2.0)
-    rspec-mocks (3.2.1)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.2.0)
-    rspec-rails (3.2.1)
-      actionpack (>= 3.0, < 4.3)
-      activesupport (>= 3.0, < 4.3)
-      railties (>= 3.0, < 4.3)
-      rspec-core (~> 3.2.0)
-      rspec-expectations (~> 3.2.0)
-      rspec-mocks (~> 3.2.0)
-      rspec-support (~> 3.2.0)
-    rspec-support (3.2.2)
     rvm-capistrano (1.5.6)
       capistrano (~> 2.15.4)
     sass (3.4.13)
@@ -242,8 +219,6 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    shoulda-matchers (2.8.0)
-      activesupport (>= 3.0.0)
     signature (0.1.8)
     slim (3.0.3)
       temple (~> 0.7.3)
@@ -304,8 +279,6 @@ DEPENDENCIES
   carrierwave-base64
   coffee-rails (~> 4.1.0)
   devise
-  factory_girl
-  factory_girl_rails
   gcm
   houston
   jbuilder (~> 2.0)
@@ -318,11 +291,9 @@ DEPENDENCIES
   pusher
   rails (= 4.2.1)
   rails_12factor
-  rspec-rails
   rvm-capistrano
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
-  shoulda-matchers
   slim-rails
   spring
   turbolinks

@@ -51,18 +51,10 @@ gem 'rails_12factor', group: :production
 group :development, :test do
   gem 'capistrano'
   gem "rvm-capistrano", require: false
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-rails'
-  # Use RSpec for testing
-  gem 'rspec-rails'
-  # Use FactoryGirl for factories
-  gem 'factory_girl'
-  gem 'factory_girl_rails'
-  # Improved error pages
   gem 'better_errors'
   gem 'pry-byebug'
-  gem 'shoulda-matchers'
   gem 'annotate', '~> 2.6.5'
   gem 'spring'
 end
