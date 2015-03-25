@@ -48,10 +48,9 @@ class PlayersController < ApplicationController
   def authenticate
     @player = Player.find_by(email: params[:email])
 
-    if @player && @player.password_digest == params[:password_digest]
-      render formats: :json
-    else
+    unless @player && @player.password_digest == params[:password_digest]
       render json: { error: 'Invalid email/password combination' }, status: :unauthorized
+      return
     end
   end
 

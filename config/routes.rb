@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'pages/home'
   root 'admin/dashboard#index'
 
   # Devise
@@ -17,50 +16,54 @@ Rails.application.routes.draw do
     resources :questions
   end
 
-  # Resources
-  resources :topics, only: [:index, :show], defaults: { format: :json }
-  resources :categories, only: [:index, :show], defaults: { format: :json }
-  resources :game_session_questions, only: [:update], defaults: { format: :json }
-  resources :game_sessions, except: [:new, :edit], defaults: { format: :json } do
-    patch 'close', on: :member
-  end
-  resources :questions, except: [:new, :edit], defaults: { format: :json }
-  resources :players, except: [:new, :edit], defaults: { format: :json } do
-    post 'authenticate', on: :collection
-    post 'authenticate_vk', on: :collection
-    get 'friends', on: :member
-    get 'search', on: :collection
-  end
-  resources :friendships, only: [:index, :create], defaults: { format: :json } do
-    get 'requests', on: :collection
-    patch 'mark_requests_as_viewed', on: :collection
-    delete 'unfriend', on: :collection
-  end
-  resources :push_tokens, only: [:create], defaults: { format: :json } do
-    patch 'replace', on: :collection
-    delete 'delete', on: :collection
-  end
-  resources :purchases, defaults: { format: :json } do
-    get 'available', on: :collection
-  end
-  resources :achievements, only: [:index], defaults: { format: :json }
+  scope '/api', defaults: { format: :json } do
+    # Resources
+    resources :topics, only: [:index, :show]
+    resources :categories, only: [:index, :show]
+    resources :game_session_questions, only: [:update]
+    resources :game_sessions, except: [:new, :edit] do
+      patch 'close', on: :member
+    end
+    resources :questions, except: [:new, :edit]
+    resources :players, except: [:new, :edit] do
+      post 'authenticate', on: :collection
+      post 'authenticate_vk', on: :collection
+      get 'friends', on: :member
+      get 'search', on: :collection
+    end
+    resources :friendships, only: [:index, :create] do
+      get 'requests', on: :collection
+      patch 'mark_requests_as_viewed', on: :collection
+      delete 'unfriend', on: :collection
+    end
+    resources :push_tokens, only: [:create] do
+      patch 'replace', on: :collection
+      delete 'delete', on: :collection
+    end
+    resources :purchases do
+      get 'available', on: :collection
+    end
+    resources :achievements, only: [:index]
 
-  # Online sessions
-  resources :lobbies, only: [:create], defaults: { format: :json } do
-    get 'find', on: :member
-    get 'challenges', on: :collection
-    get 'challenged', on: :collection
-    post 'challenge', on: :collection
-    post 'accept_challenge', on: :member
-    post 'decline_challenge', on: :member
-    patch 'close', on: :member
-  end
+    # Online sessions
+    resources :lobbies, only: [:create] do
+      get 'find', on: :member
+      get 'challenges', on: :collection
+      get 'challenged', on: :collection
+      post 'challenge', on: :collection
+      post 'accept_challenge', on: :member
+      post 'decline_challenge', on: :member
+      patch 'close', on: :member
+    end
 
-  # Rankings
-  get 'rankings/general', defaults: { format: :json }
-  get 'rankings/weekly', defaults: { format: :json }
-  get 'rankings/general_by_category', defaults: { format: :json }
-  get 'rankings/weekly_by_category', defaults: { format: :json }
+    # Rankings
+    get 'rankings/general'
+    get 'rankings/weekly'
+    get 'rankings/general_by_category'
+    get 'rankings/weekly_by_category'
+
+    get 'pages/home'
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
