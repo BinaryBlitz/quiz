@@ -5,9 +5,7 @@
         td ID
         td Name
         td Visible
-        / td Expires at
         td Price
-        td Played count
         td Category
         td Actions
     - for topic in topics
@@ -15,9 +13,7 @@
         td = topic.id
         td = link_to topic.name, admin_topic_path(topic)
         td = topic.visible
-        / td = topic.expires_at
         td = topic.price
-        td = topic.played_count
         td = link_to topic.category, admin_category_path(topic.category)
         td
           = link_to 'Edit', edit_admin_topic_path(topic), class: 'btn btn-default'
