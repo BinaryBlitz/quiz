@@ -1,0 +1,37 @@
+# == Schema Information
+#
+# Table name: answers
+#
+#  id          :integer          not null, primary key
+#  content     :text
+#  question_id :integer
+#  correct     :boolean          default(FALSE), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+correct:
+  content: London
+  correct: true
+  question: capital_of_the_uk
+
+incorrect_one:
+  content: Manchester
+  question: capital_of_the_uk
+
+incorrect_two:
+  content: Liverpool
+  question: capital_of_the_uk
+
+incorrect_three:
+  content: Cambridge
+  question: capital_of_the_uk
+
+<% 24.times do |n| %>
+answer_<%= n %>:
+  content: <%= "Answer #{n}" %>
+  correct: <%= n % 4 == 0 %>
+  question: question_<%= n / 4 %>
+<% end %>

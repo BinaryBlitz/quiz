@@ -1,0 +1,38 @@
+# == Schema Information
+#
+# Table name: players
+#
+#  id              :integer          not null, primary key
+#  name            :string
+#  email           :string
+#  password_digest :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  imei            :string
+#  points          :integer          default(0)
+#  weekly_points   :integer          default(0)
+#  vk_token        :string
+#  vk_id           :integer
+#  sash_id         :integer
+#  level           :integer          default(0)
+#  avatar          :string
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+foo:
+  name: Foo
+  email: foo@bar.com
+  password_digest: foobar
+
+bar:
+  name: Bar
+  email: bar@foo.com
+  password_digest: barfoo
+
+vk_player:
+  name: VK user
+  email:
+  password_digest:
+  vk_id: 1
+  vk_token: foobar

@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id         :integer          not null, primary key
+#  content    :text
+#  image_url  :string
+#  bounty     :integer          default(1)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  topic_id   :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+capital_of_the_uk:
+  content: What is the capital of the UK?
+  topic: geography
+
+<% 6.times do |n| %>
+question_<%= n %>:
+  content: <%= "Question #{n}" %>
+  topic: geography
+<% end %>
