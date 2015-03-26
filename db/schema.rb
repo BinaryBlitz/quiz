@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150322103344) do
+ActiveRecord::Schema.define(version: 20150326153226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,10 +110,9 @@ ActiveRecord::Schema.define(version: 20150322103344) do
     t.integer  "host_id"
     t.integer  "opponent_id"
     t.boolean  "offline",     default: true
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "topic_id"
-    t.boolean  "finished",    default: false
     t.boolean  "closed"
     t.integer  "finisher_id"
   end
@@ -177,9 +176,6 @@ ActiveRecord::Schema.define(version: 20150322103344) do
     t.string   "password_digest"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "imei"
-    t.integer  "points",          default: 0
-    t.integer  "weekly_points",   default: 0
     t.string   "vk_token"
     t.integer  "vk_id"
     t.integer  "sash_id"
@@ -223,9 +219,8 @@ ActiveRecord::Schema.define(version: 20150322103344) do
   create_table "questions", force: :cascade do |t|
     t.text     "content"
     t.string   "image_url"
-    t.integer  "bounty",     default: 1
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "topic_id"
   end
 
@@ -264,14 +259,13 @@ ActiveRecord::Schema.define(version: 20150322103344) do
 
   create_table "topics", force: :cascade do |t|
     t.string   "name"
-    t.boolean  "visible",      default: false
+    t.boolean  "visible",     default: false
     t.date     "expires_at"
-    t.integer  "price",        default: 0
-    t.integer  "played_count", default: 0
+    t.integer  "price",       default: 0
     t.integer  "category_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.boolean  "featured",     default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "featured",    default: false
   end
 
   add_index "topics", ["category_id"], name: "index_topics_on_category_id", using: :btree

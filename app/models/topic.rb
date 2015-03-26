@@ -27,7 +27,6 @@ class Topic < ActiveRecord::Base
 
   validates :name, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }
-  validates :played_count, numericality: { greater_than_or_equal_to: 0 }
   validates :category, presence: true
 
   accepts_nested_attributes_for :purchase_type, reject_if: -> (a) { a[:identifier].blank? }
