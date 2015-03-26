@@ -49,11 +49,10 @@ class Player < ActiveRecord::Base
   # Validations
   has_secure_password validations: false
   validates :name, presence: true
-  validates :password, length: { minimum: 8 }, if: -> { password.present? }
-  validates :password, length: { minimum: 8 }, allow_blank: true
+  validates :password, length: { minimum: 8 }, unless: :vk_user?
   validates :email, presence: true, uniqueness: { case_sensitive: false },
                     format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
-                    allow_blank: true
+                    unless: :vk_user?
 
   TOP_SIZE = 20
 
@@ -77,5 +76,9 @@ class Player < ActiveRecord::Base
 
   def create_key
     create_api_key
+  end
+
+  def vk_user?
+    vk_id && vk_token
   end
 end

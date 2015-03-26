@@ -23,12 +23,12 @@
 foo:
   name: Foo
   email: foo@bar.com
-  password_digest: foobar
+  password_digest: <%= BCrypt::Password.create("foobar123") %>
 
 bar:
   name: Bar
   email: bar@foo.com
-  password_digest: barfoo
+  password_digest: <%= BCrypt::Password.create("barfoo123") %>
 
 vk_player:
   name: VK user

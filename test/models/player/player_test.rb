@@ -32,6 +32,18 @@ class PlayerTest < ActiveSupport::TestCase
     assert @foo.invalid?
   end
 
+  test 'invalid without email' do
+    player = Player.new(@foo.attributes)
+    player.password = 'password'
+    player.email = ''
+    assert player.invalid?
+  end
+
+  test 'should allow empty email if vk' do
+    @vk_player.email = ''
+    assert @vk_player.valid?
+  end
+
   test 'email uniqueness' do
     @bar.email = @foo.email
     assert @bar.invalid?
