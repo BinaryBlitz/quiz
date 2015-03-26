@@ -1,9 +1,9 @@
 class InitSchema < ActiveRecord::Migration
   def up
-    
+
     # These are extensions that must be enabled in order to support this database
     enable_extension "plpgsql"
-    
+
     create_table "admins", force: :cascade do |t|
       t.string   "email",                  default: "", null: false
       t.string   "encrypted_password",     default: "", null: false
@@ -18,10 +18,10 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "created_at"
       t.datetime "updated_at"
     end
-    
+
     add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
     add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
-    
+
     create_table "answers", force: :cascade do |t|
       t.text     "content"
       t.integer  "question_id"
@@ -29,35 +29,35 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "created_at",                  null: false
       t.datetime "updated_at",                  null: false
     end
-    
+
     add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
-    
+
     create_table "api_keys", force: :cascade do |t|
       t.string   "token"
       t.integer  "player_id"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
     end
-    
+
     add_index "api_keys", ["player_id"], name: "index_api_keys_on_player_id", using: :btree
-    
+
     create_table "badges_sashes", force: :cascade do |t|
       t.integer  "badge_id"
       t.integer  "sash_id"
       t.boolean  "notified_user", default: false
       t.datetime "created_at"
     end
-    
+
     add_index "badges_sashes", ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id", using: :btree
     add_index "badges_sashes", ["badge_id"], name: "index_badges_sashes_on_badge_id", using: :btree
     add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id", using: :btree
-    
+
     create_table "categories", force: :cascade do |t|
       t.string   "name"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
     end
-    
+
     create_table "category_results", force: :cascade do |t|
       t.integer  "player_id"
       t.integer  "category_id"
@@ -66,10 +66,10 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "created_at",                null: false
       t.datetime "updated_at",                null: false
     end
-    
+
     add_index "category_results", ["category_id"], name: "index_category_results_on_category_id", using: :btree
     add_index "category_results", ["player_id"], name: "index_category_results_on_player_id", using: :btree
-    
+
     create_table "friendships", force: :cascade do |t|
       t.integer  "player_id"
       t.integer  "friend_id"
@@ -77,9 +77,9 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "created_at",                 null: false
       t.datetime "updated_at",                 null: false
     end
-    
+
     add_index "friendships", ["player_id"], name: "index_friendships_on_player_id", using: :btree
-    
+
     create_table "game_session_questions", force: :cascade do |t|
       t.integer  "game_session_id"
       t.integer  "question_id"
@@ -90,10 +90,10 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "created_at",         null: false
       t.datetime "updated_at",         null: false
     end
-    
+
     add_index "game_session_questions", ["game_session_id"], name: "index_game_session_questions_on_game_session_id", using: :btree
     add_index "game_session_questions", ["question_id"], name: "index_game_session_questions_on_question_id", using: :btree
-    
+
     create_table "game_sessions", force: :cascade do |t|
       t.integer  "host_id"
       t.integer  "opponent_id"
@@ -104,12 +104,12 @@ class InitSchema < ActiveRecord::Migration
       t.boolean  "closed"
       t.integer  "finisher_id"
     end
-    
+
     add_index "game_sessions", ["finisher_id"], name: "index_game_sessions_on_finisher_id", using: :btree
     add_index "game_sessions", ["host_id"], name: "index_game_sessions_on_host_id", using: :btree
     add_index "game_sessions", ["opponent_id"], name: "index_game_sessions_on_opponent_id", using: :btree
     add_index "game_sessions", ["topic_id"], name: "index_game_sessions_on_topic_id", using: :btree
-    
+
     create_table "lobbies", force: :cascade do |t|
       t.integer  "query_count",     default: 0
       t.boolean  "closed",          default: false
@@ -120,11 +120,11 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "updated_at",                      null: false
       t.boolean  "challenge",       default: false
     end
-    
+
     add_index "lobbies", ["game_session_id"], name: "index_lobbies_on_game_session_id", using: :btree
     add_index "lobbies", ["player_id"], name: "index_lobbies_on_player_id", using: :btree
     add_index "lobbies", ["topic_id"], name: "index_lobbies_on_topic_id", using: :btree
-    
+
     create_table "merit_actions", force: :cascade do |t|
       t.integer  "user_id"
       t.string   "action_method"
@@ -137,7 +137,7 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "created_at"
       t.datetime "updated_at"
     end
-    
+
     create_table "merit_activity_logs", force: :cascade do |t|
       t.integer  "action_id"
       t.string   "related_change_type"
@@ -145,19 +145,19 @@ class InitSchema < ActiveRecord::Migration
       t.string   "description"
       t.datetime "created_at"
     end
-    
+
     create_table "merit_score_points", force: :cascade do |t|
       t.integer  "score_id"
       t.integer  "num_points", default: 0
       t.string   "log"
       t.datetime "created_at"
     end
-    
+
     create_table "merit_scores", force: :cascade do |t|
       t.integer "sash_id"
       t.string  "category", default: "default"
     end
-    
+
     create_table "players", force: :cascade do |t|
       t.string   "name"
       t.string   "email"
@@ -170,9 +170,9 @@ class InitSchema < ActiveRecord::Migration
       t.integer  "level",           default: 0
       t.string   "avatar"
     end
-    
+
     add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
-    
+
     create_table "purchase_types", force: :cascade do |t|
       t.string   "identifier"
       t.integer  "multiplier"
@@ -180,19 +180,19 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
     end
-    
+
     add_index "purchase_types", ["topic_id"], name: "index_purchase_types_on_topic_id", using: :btree
-    
+
     create_table "purchases", force: :cascade do |t|
       t.integer  "player_id"
       t.integer  "purchase_type_id"
       t.datetime "created_at",       null: false
       t.datetime "updated_at",       null: false
     end
-    
+
     add_index "purchases", ["player_id"], name: "index_purchases_on_player_id", using: :btree
     add_index "purchases", ["purchase_type_id"], name: "index_purchases_on_purchase_type_id", using: :btree
-    
+
     create_table "push_tokens", force: :cascade do |t|
       t.string   "token"
       t.boolean  "android",    default: false
@@ -200,10 +200,10 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "created_at",                 null: false
       t.datetime "updated_at",                 null: false
     end
-    
+
     add_index "push_tokens", ["player_id"], name: "index_push_tokens_on_player_id", using: :btree
     add_index "push_tokens", ["token"], name: "index_push_tokens_on_token", using: :btree
-    
+
     create_table "questions", force: :cascade do |t|
       t.text     "content"
       t.string   "image_url"
@@ -211,14 +211,14 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "updated_at", null: false
       t.integer  "topic_id"
     end
-    
+
     add_index "questions", ["topic_id"], name: "index_questions_on_topic_id", using: :btree
-    
+
     create_table "sashes", force: :cascade do |t|
       t.datetime "created_at"
       t.datetime "updated_at"
     end
-    
+
     create_table "stats", force: :cascade do |t|
       t.integer  "days_in_a_row", default: 0
       t.date     "played_at"
@@ -227,9 +227,9 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "updated_at",                null: false
       t.integer  "early_wins",    default: 0
     end
-    
+
     add_index "stats", ["player_id"], name: "index_stats_on_player_id", using: :btree
-    
+
     create_table "topic_results", force: :cascade do |t|
       t.integer  "player_id"
       t.integer  "topic_id"
@@ -240,14 +240,14 @@ class InitSchema < ActiveRecord::Migration
       t.integer  "category_id"
       t.integer  "count",         default: 0
     end
-    
+
     add_index "topic_results", ["category_id"], name: "index_topic_results_on_category_id", using: :btree
     add_index "topic_results", ["player_id"], name: "index_topic_results_on_player_id", using: :btree
     add_index "topic_results", ["topic_id"], name: "index_topic_results_on_topic_id", using: :btree
-    
+
     create_table "topics", force: :cascade do |t|
       t.string   "name"
-      t.boolean  "visible",     default: false
+      t.boolean  "visible",     default: true
       t.date     "expires_at"
       t.integer  "price",       default: 0
       t.integer  "category_id"
@@ -255,9 +255,9 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "updated_at",                  null: false
       t.boolean  "featured",    default: false
     end
-    
+
     add_index "topics", ["category_id"], name: "index_topics_on_category_id", using: :btree
-    
+
     add_foreign_key "answers", "questions"
     add_foreign_key "api_keys", "players"
     add_foreign_key "category_results", "categories"
