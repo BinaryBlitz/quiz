@@ -8,9 +8,6 @@
 #  password_digest :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  imei            :string
-#  points          :integer          default(0)
-#  weekly_points   :integer          default(0)
 #  vk_token        :string
 #  vk_id           :integer
 #  sash_id         :integer
