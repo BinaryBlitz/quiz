@@ -13,7 +13,12 @@
 require 'test_helper'
 
 class FriendshipTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  def setup
+    @friendship = friendships(:friendship)
+  end
+
+  test 'self friendships are restricted' do
+    @friendship.update(friend: @friendship.player)
+    assert @friendship.invalid?
+  end
 end

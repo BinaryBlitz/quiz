@@ -13,6 +13,8 @@ class ApiKey < ActiveRecord::Base
   before_create :generate_token
   belongs_to :player
 
+  validates :token, uniqueness: true
+
   def to_s
     token
   end

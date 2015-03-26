@@ -12,7 +12,7 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+friendship:
   player: foo
   friend: bar
   viewed: false

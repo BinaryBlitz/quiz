@@ -26,7 +26,7 @@ online:
   host: foo
   opponent: bar
   offline: false
-  topic: math
+  topic: geography
 
 empty:
   host: foo

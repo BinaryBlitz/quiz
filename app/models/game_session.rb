@@ -28,8 +28,9 @@ class GameSession < ActiveRecord::Base
   has_many :lobbies, dependent: :destroy
 
   # Validations
-  validates :host, presence: true
   validates :topic, presence: true
+  validates :host, presence: true
+  validates :opponent, presence: true, if: 'offline == false'
 
   # Scopes
   scope :last_week, -> { where(updated_at: (1.week.ago)..(Time.zone.now)) }
@@ -109,5 +110,6 @@ class GameSession < ActiveRecord::Base
     questions = Question.where(topic: topic).sample(6)
     questions.map! { |q| game_session_questions.create(question: q) }
     game_session_questions.each(&:generate_for_offline) if offline
+    self
   end
 end
