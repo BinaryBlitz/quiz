@@ -20,12 +20,12 @@
 foo:
   name: Foo
   email: foo@bar.com
-  password_digest: <%= BCrypt::Password.create("foobar123") %>
+  password_digest: <%= Digest::MD5.hexdigest("foobar123") %>
 
 bar:
   name: Bar
   email: bar@foo.com
-  password_digest: <%= BCrypt::Password.create("barfoo123") %>
+  password_digest: <%= Digest::MD5.hexdigest("barfoo123") %>
 
 vk_player:
   name: VK user

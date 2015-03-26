@@ -46,7 +46,7 @@ class Player < ActiveRecord::Base
   # Validations
   has_secure_password validations: false
   validates :name, presence: true
-  validates :password, length: { minimum: 8 }, unless: :vk_user?
+  validates :password_digest, presence: true, unless: :vk_user?
   validates :email, presence: true, uniqueness: { case_sensitive: false },
                     format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
                     unless: :vk_user?

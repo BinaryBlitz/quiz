@@ -34,7 +34,6 @@ class PlayerTest < ActiveSupport::TestCase
 
   test 'invalid without email' do
     player = Player.new(@foo.attributes)
-    player.password = 'password'
     player.email = ''
     assert player.invalid?
   end
