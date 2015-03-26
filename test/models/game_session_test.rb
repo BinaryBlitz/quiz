@@ -37,8 +37,10 @@ class GameSessionTest < ActiveSupport::TestCase
   end
 
   test 'session creation' do
-    assert_equal 6, @offline.game_session_questions.count
-    @offline.game_session_questions.each do |question|
+    game_session = @offline.dup
+    game_session.save
+    assert_equal 6, game_session.game_session_questions.count
+    game_session.game_session_questions.each do |question|
       assert_includes 0..6, question.opponent_time
       assert_kind_of Answer, question.opponent_answer
     end
