@@ -83,6 +83,10 @@ class GameSession < ActiveRecord::Base
     player == host
   end
 
+  def draw?
+    host_points == opponent_points
+  end
+
   def winner?(player)
     if host?(player)
       host_points > opponent_points

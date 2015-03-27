@@ -10,6 +10,7 @@ class PlayersController < ApplicationController
   # GET /players/1
   def show
     @is_friend = current_player.friends.include?(@player)
+    @score = current_player.score_against(@player)
   end
 
   # POST /players

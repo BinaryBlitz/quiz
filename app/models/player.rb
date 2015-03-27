@@ -69,6 +69,18 @@ class Player < ActiveRecord::Base
     name
   end
 
+  def score_against(opponent)
+    return [nil, nil] if self == opponent
+    sessions = game_sessions.where('host_id = ? OR opponent_id = ?', opponent, opponent)
+    wins = 0
+    draws = 0
+    sessions.each do |session|
+      draws += 1 and next if session.draw?
+      wins += 1 if session.winner?(self)
+    end
+    [wins, sessions.count - wins - draws]
+  end
+
   private
 
   def create_key
