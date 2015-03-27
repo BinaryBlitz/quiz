@@ -81,6 +81,16 @@ class Player < ActiveRecord::Base
     [wins, sessions.count - wins - draws]
   end
 
+  def stats
+    wins = 0
+    draws = 0
+    game_sessions.each do |session|
+      draws += 1 and next if session.draw?
+      wins += 1 if session.winner?(self)
+    end
+    [wins, draws, game_sessions.count - wins - draws]
+  end
+
   private
 
   def create_key

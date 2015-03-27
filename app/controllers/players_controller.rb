@@ -11,6 +11,7 @@ class PlayersController < ApplicationController
   def show
     @is_friend = current_player.friends.include?(@player)
     @score = current_player.score_against(@player)
+    @stats = current_player.stats
   end
 
   # POST /players
