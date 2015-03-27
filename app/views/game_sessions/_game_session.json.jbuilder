@@ -1,14 +1,23 @@
-json.extract! game_session, :id, :host_id, :opponent_id, :offline
+json.extract! game_session, :id, :offline
 json.lobby_id game_session.player_lobby_id(current_player)
 
-json.host_name game_session.host.name
-json.opponent_name game_session.offline ? Player.random_name : game_session.opponent.name
+json.host do
+  json.extract! game_session.host, :id, :name, :avatar_url, :multiplier
+  json.points current_player.topic_points(game_session.topic)
+end
 
-json.host_avatar_url game_session.host.avatar_url
-json.opponent_avatar_url game_session.offline ? nil : game_session.opponent.avatar_url
-
-json.host_points current_player.topic_points(game_session.topic)
-json.opponent_points game_session.offline ? 0 : game_session.opponent.topic_points(game_session.topic)
+json.opponent do
+  if game_session.offline?
+    json.id nil
+    json.name Player.random_name
+    json.avatar_url nil
+    json.points 0
+    json.multiplier 1
+  else
+    json.extract! game_session.opponent, :id, :name, :avatar_url, :multiplier
+    json.points game_session.opponent.topic_points(game_session.topic)
+  end
+end
 
 json.game_session_questions game_session.game_session_questions do |sq|
   json.partial! 'game_session_questions/game_session_question', game_session_question: sq

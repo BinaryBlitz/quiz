@@ -33,6 +33,6 @@ class Topic < ActiveRecord::Base
   private
 
   def associate_with_purchase_type
-    PurchaseType.create(identifier: "topic-#{id}", topic: self) if price > 0
+    PurchaseType.create(identifier: "topic-#{id}", topic: self) if price > 0 && !purchase_type
   end
 end

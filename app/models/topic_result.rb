@@ -23,6 +23,7 @@ class TopicResult < ActiveRecord::Base
   validates :topic, presence: true
 
   def add(result)
+    result *= player.multiplier
     update!(points: points + result, count: count + 1)
     if updated_at < DateTime.now.beginning_of_week
       update!(weekly_points: result)

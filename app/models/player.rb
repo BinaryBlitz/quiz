@@ -81,7 +81,7 @@ class Player < ActiveRecord::Base
     [wins, sessions.count - wins - draws]
   end
 
-  def stats
+  def total_score
     wins = 0
     draws = 0
     game_sessions.each do |session|
@@ -89,6 +89,12 @@ class Player < ActiveRecord::Base
       wins += 1 if session.winner?(self)
     end
     [wins, draws, game_sessions.count - wins - draws]
+  end
+
+  def multiplier
+    multipliers = purchases.joins(:purchase_type).where('multiplier > 0')
+    return 1 unless multipliers
+    multipliers.map { |purchase| purchase.purchase_type.multiplier }.max
   end
 
   private
