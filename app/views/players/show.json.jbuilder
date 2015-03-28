@@ -12,6 +12,11 @@ json.score do
   json.losses @score[1]
 end
 
+json.favorite_topics! @player.favorite_topics do |topic|
+  json.extract! topic, :id, :name
+  json.points @player.topic_points(topic)
+end
+
 json.achievements do
   json.array! @player.badges, :id, :name, :description
 end
