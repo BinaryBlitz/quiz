@@ -6,19 +6,28 @@ module Player::VkAuthorization
       user = vk.users.get(fields: [:photo]).first
       player = find_by(vk_id: user.uid)
 
-      if player
-        player
-      else
-        create!(
+      unless player
+        player = create!(
           name: format_name(user),
           vk_token: vk.token, vk_id: user.uid, remote_avatar_url: user.photo)
+        add_friends(player, vk.friends.get)
       end
+      player
     end
 
     private
 
     def format_name(user)
       "#{user.first_name} #{user.last_name}"
+    end
+
+    def add_friends(player, friends)
+      friends.each do |friend_id|
+        Rails.logger.debug "#{Time.zone.now}: Adding VK friend #{friend_id}"
+        friend = Player.find_by(vk_id: friend_id)
+        next unless friend
+        player.friends << friend
+      end
     end
   end
 end
