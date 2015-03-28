@@ -2,7 +2,7 @@ class PushTokensController < ApplicationController
   def create
     @token = PushToken.new(token: params[:push_token])
     @token.player = current_player
-    @token.android = params[:android] == 'true'
+    @token.android = (params[:android] == 'true')
 
     if @token.save
       head :created
@@ -14,7 +14,7 @@ class PushTokensController < ApplicationController
   def replace
     @token = PushToken.find_by_token(params[:old_token])
 
-    if @token.update(token: params[:new_token])
+    if @token && @token.update(token: params[:new_token])
       head :ok
     else
       head :unprocessable_entity
@@ -23,10 +23,13 @@ class PushTokensController < ApplicationController
 
   def delete
     @token = PushToken.find_by(token: params[:push_token])
-    render json: { error: 'Push token not found.' },
-           status: :not_found and return unless @token
-    @token.destroy
-    head :no_content
+
+    if @token
+      @token.destroy
+      head :no_content
+    else
+      head :not_found
+    end
   end
 
   private

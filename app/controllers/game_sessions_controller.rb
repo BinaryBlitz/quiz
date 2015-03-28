@@ -11,31 +11,31 @@ class GameSessionsController < ApplicationController
   end
 
   # POST /game_sessions
-  def create
-    @game_session = GameSession.new(game_session_params)
+  # def create
+  #   @game_session = GameSession.new(game_session_params)
 
-    if @game_session.save
-      render :show, status: :created, location: @game_session
-    else
-      render json: @game_session.errors, status: :unprocessable_entity
-    end
-  end
+  #   if @game_session.save
+  #     render :show, status: :created, location: @game_session
+  #   else
+  #     render json: @game_session.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # PATCH /game_sessions/1
-  def update
-    if @game_session.update(game_session_params)
-      head :no_content
-    else
-      render json: @game_session.errors, status: :unprocessable_entity
-    end
-  end
+  # def update
+  #   if @game_session.update(game_session_params)
+  #     head :no_content
+  #   else
+  #     render json: @game_session.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # DELETE /game_sessions/1
-  def destroy
-    @game_session.destroy
+  # def destroy
+  #   @game_session.destroy
 
-    head :no_content
-  end
+  #   head :no_content
+  # end
 
   # PATCH /game_sessions/1/close
   def close
