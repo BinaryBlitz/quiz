@@ -93,7 +93,7 @@ class Player < ActiveRecord::Base
 
   def multiplier
     multipliers = purchases.joins(:purchase_type).where('multiplier > 0')
-    return 1 unless multipliers
+    return 1 if multipliers.empty?
     multipliers.map { |purchase| purchase.purchase_type.multiplier }.max
   end
 

@@ -15,6 +15,11 @@ module PlayerTopics
   end
 
   def friends_favorite_topics
-    friends.sort_by(&:favorite_topic_games).map(&:favorite_topic).compact.first(3)
+    topics = []
+    friends.sort_by(&:favorite_topic_games).each do |player|
+      topic = player.favorite_topic
+      topics << topic if !topics.include?(topic) && topic
+    end
+    topics.first(3)
   end
 end
