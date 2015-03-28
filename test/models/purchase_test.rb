@@ -12,7 +12,19 @@
 require 'test_helper'
 
 class PurchaseTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  def setup
+    @player = players(:foo)
+    @purchase = purchases(:booster)
+  end
+
+  test 'invalid without purchase type' do
+    @purchase.purchase_type = nil
+    assert @purchase.invalid?
+  end
+
+  test 'only unique purchases allowed' do
+    assert_raise ActiveRecord::RecordInvalid do
+      @player.purchases.create!(purchase_type: @purchase.purchase_type)
+    end
+  end
 end

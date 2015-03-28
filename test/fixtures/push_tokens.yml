@@ -12,5 +12,10 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one: {}
-two: {}
+apple:
+  token: apple
+  player: foo
+
+android:
+  token: android
+  player: bar

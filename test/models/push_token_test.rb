@@ -13,7 +13,12 @@
 require 'test_helper'
 
 class PushTokenTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  def setup
+    @push_token = push_tokens(:apple)
+  end
+
+  test 'uniqueness' do
+    copy = PushToken.new(token: @push_token.token)
+    assert_not copy.valid?
+  end
 end

@@ -11,5 +11,6 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one: {}
-two: {}
+booster:
+  player: foo
+  purchase_type_id: booster
