@@ -97,6 +97,16 @@ class Player < ActiveRecord::Base
     multipliers.map { |purchase| purchase.purchase_type.multiplier }.max
   end
 
+  def challenges
+    Lobby.joins(:game_session)
+      .where(game_sessions: { opponent_id: id })
+      .where(closed: false)
+  end
+
+  def challenged
+    lobbies.where(challenge: true).where(closed: false)
+  end
+
   private
 
   def create_key

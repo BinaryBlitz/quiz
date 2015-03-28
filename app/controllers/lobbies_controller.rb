@@ -19,13 +19,11 @@ class LobbiesController < ApplicationController
   end
 
   def challenges
-    @lobbies = Lobby.joins(:game_session)
-                    .where(game_sessions: { opponent_id: current_player.id })
-                    .where(closed: false)
+    @lobbies = current_player.challenges
   end
 
   def challenged
-    @lobbies = current_player.lobbies.where(challenge: true).where(closed: false)
+    @lobbies = current_player.challenged
   end
 
   # 1. Create the lobby with the given opponent ant topic
