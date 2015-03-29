@@ -6,7 +6,7 @@
 
   .checkbox
     label
-      = f.check_box :visible
+      = f.check_box :visible, checked: true
       | Visible
 
   / .form-group
@@ -22,6 +22,11 @@
     = label_tag :category
     div
       = collection_select(:topic, :category_id, Category.all, :id, :name, prompt: 'Select category')
+
+  .checkbox
+    label
+      = f.check_box :featured
+      | Featured
 
   = f.fields_for :purchase_type do |ff|
     .form-group

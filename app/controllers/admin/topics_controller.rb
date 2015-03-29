@@ -2,7 +2,7 @@ class Admin::TopicsController < Admin::AdminController
   before_action :find_topic, only: [:show, :edit, :update, :destroy]
 
   def index
-    @topics = Topic.where(visible: true)
+    @topics = Topic.all
   end
 
   def show
@@ -48,7 +48,7 @@ class Admin::TopicsController < Admin::AdminController
 
   def topic_params
     params.require(:topic).permit(
-      :name, :visible, :expires_at, :price,
+      :name, :visible, :expires_at, :price, :featured,
       :category_id, purchase_type_attributes: [:id, :identifier])
   end
 end

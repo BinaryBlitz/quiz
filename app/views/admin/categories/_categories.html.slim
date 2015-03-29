@@ -2,14 +2,8 @@
   table.table
     thead
       tr
-        td ID
+        td id
         td Name
         td Actions
     - for category in categories
-      tr
-        td = category.id
-        td = link_to category.name, admin_category_path(category)
-        td
-          = link_to 'Edit', edit_admin_category_path(category), class: 'btn btn-default'
-          = ' '
-          = link_to 'Delete', admin_category_path(category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+      = render category

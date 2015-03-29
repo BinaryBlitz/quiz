@@ -2,20 +2,12 @@
   table.table
     thead
       tr
-        td ID
+        td id
         td Name
         td Visible
         td Price
         td Category
+        td Featured
         td Actions
     - for topic in topics
-      tr
-        td = topic.id
-        td = link_to topic.name, admin_topic_path(topic)
-        td = topic.visible
-        td = topic.price
-        td = link_to topic.category, admin_category_path(topic.category)
-        td
-          = link_to 'Edit', edit_admin_topic_path(topic), class: 'btn btn-default'
-          = ' '
-          = link_to 'Delete', admin_topic_path(topic), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+      = render topic
