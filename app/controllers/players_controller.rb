@@ -1,6 +1,6 @@
 class PlayersController < ApplicationController
   skip_before_filter :restrict_access, only: [:create, :authenticate, :authenticate_vk]
-  before_action :set_player, only: [:show, :update, :destroy, :friends]
+  before_action :set_player, only: [:show, :update, :destroy, :friends, :report]
 
   # GET /players
   def index
@@ -66,6 +66,12 @@ class PlayersController < ApplicationController
 
   def search
     @players = Player.where(name: params[:query])
+  end
+
+  # GET /players/1/report
+  def report
+    @player.reports.create(message: params[:message])
+    head :created
   end
 
   private

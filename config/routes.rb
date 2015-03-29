@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       post 'authenticate_vk', on: :collection
       get 'friends', on: :member
       get 'search', on: :collection
+      get 'report', on: :member
     end
     resources :friendships, only: [:index, :create] do
       get 'requests', on: :collection
