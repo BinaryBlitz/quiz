@@ -23,6 +23,6 @@ class ReportTest < ActiveSupport::TestCase
 
   test 'invalid without message' do
     @report.message = ''
-    assert @report.invald?
+    assert @report.invalid?
   end
 end

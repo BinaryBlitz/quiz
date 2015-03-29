@@ -16,6 +16,8 @@ class Friendship < ActiveRecord::Base
   belongs_to :player
   belongs_to :friend, class_name: 'Player'
 
+  validates :player, presence: true
+  validates :friend, presence: true
   validates :friend, uniqueness: { scope: :player }
 
   def not_self

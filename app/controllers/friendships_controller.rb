@@ -6,7 +6,7 @@ class FriendshipsController < ApplicationController
 
   # POST /friendships
   def create
-    @friendship = current_player.friendships.build(friend_id: params[:friend_id])
+    @friendship = current_player.friendships.build(friend: Player.find(params[:friend_id]))
     if @friendship.save
       logger.debug 'Friend added.'
       @friendship.friend.push_friend_request_from(current_player)

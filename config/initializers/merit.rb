@@ -39,7 +39,8 @@ end
   { id: 4, name: 'columbus', description: 'Top in Geography.', custom_fields: { topic_id: 1 } },
   { id: 5, name: 'erudite', description: 'At least 1 win in all topics.' },
   { id: 6, name: 'supercomputer', description: 'Win 50 games ahead of time.' },
-  { id: 7, name: 'test-badge', description: 'Fuck you.' }
+  { id: 7, name: 'friendly', description: 'Add a friend.' },
+  { id: 42, name: 'test-badge', description: 'Fuck you.' }
 ].each do |attrs|
   Merit::Badge.create!(attrs)
 end

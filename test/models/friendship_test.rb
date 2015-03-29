@@ -17,6 +17,16 @@ class FriendshipTest < ActiveSupport::TestCase
     @friendship = friendships(:friendship)
   end
 
+  test 'invalid without player' do
+    @friendship.player = nil
+    assert @friendship.invalid?
+  end
+
+  test 'invalid without friend' do
+    @friendship.friend = nil
+    assert @friendship.invalid?
+  end
+
   test 'self friendships are restricted' do
     @friendship.update(friend: @friendship.player)
     assert @friendship.invalid?
