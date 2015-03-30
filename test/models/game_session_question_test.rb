@@ -45,4 +45,9 @@ class GameSessionQuestionTest < ActiveSupport::TestCase
     assert_includes 0..6, @session_question.opponent_time
     assert_kind_of Answer, @session_question.opponent_answer
   end
+
+  test 'invalid with answer from another question' do
+    @session_question.host_answer = Answer.new(content: 'answer')
+    assert @session_question.invalid?
+  end
 end

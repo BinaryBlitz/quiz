@@ -30,6 +30,8 @@ class GameSessionQuestion < ActiveRecord::Base
   validates :opponent_time,
             numericality: { greater_than_or_equal_to: 0 },
             on: :update, allow_blank: true
+  validate :valid_host_answer, on: :update
+  validate :valid_opponent_answer, on: :update
 
   CORRECT_ANSWER_PROBABILITY = 0.7
 
@@ -108,5 +110,19 @@ class GameSessionQuestion < ActiveRecord::Base
   # Generates correct answers with the probability of 0.7
   def opponent_correct?
     rand <= CORRECT_ANSWER_PROBABILITY
+  end
+
+  def valid_host_answer
+    return if !question || !host_answer
+    unless question.answers.include?(host_answer)
+      errors.add(:host_answer, "doesn't belong to the question")
+    end
+  end
+
+  def valid_opponent_answer
+    return if !question || !opponent_answer
+    unless question.answers.include?(opponent_answer)
+      errors.add(:opponent_answer, "doesn't belong to the question")
+    end
   end
 end
