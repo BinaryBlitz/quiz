@@ -1,7 +1,24 @@
 h2 = 'Category: ' + @category.name
 
-/ Render topics partial here
-= link_to 'Edit', edit_admin_category_path(@category), class: 'btn btn-default'
+table.table
+  thead
+    tr
+      td id
+      td Name
+      td Actions
+  tbody
+    = render 'category', category: @category
+
+/ div.row
+/   - if @category.background?
+/     div.col-xs-3
+/       h4 Background
+/       = image_tag @category.background.thumb.url, class: 'img-rounded'
+
+/   - if @category.banner?
+/     div.col-xs-3
+/       h4 Banner
+/       = image_tag @category.banner.thumb.url, class: 'img-rounded'
 
 h3 Topics
 = render 'admin/topics/topics', topics: @category.topics

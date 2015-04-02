@@ -11,6 +11,9 @@
 class Category < ActiveRecord::Base
   has_many :topics, dependent: :destroy
 
+  mount_uploader :background, BackgroundUploader
+  mount_uploader :banner, BackgroundUploader
+
   validates :name, presence: true
 
   def to_s

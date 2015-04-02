@@ -39,6 +39,7 @@ gem 'houston'
 gem 'merit'
 gem 'carrierwave'
 gem 'carrierwave-base64'
+gem 'mini_magick'
 
 # Use Unicorn as the app server
 gem 'unicorn'
