@@ -15,9 +15,10 @@ class Question < ActiveRecord::Base
   has_many :answers, -> { order(id: :asc) }, dependent: :destroy
   has_many :game_session_questions, dependent: :destroy
 
+  mount_uploader :image, QuestionImageUploader
+
   validates :content, presence: true
   validates :topic, presence: true
-  validates :image_url, format: { with: URI.regexp }, allow_blank: true
 
   accepts_nested_attributes_for :answers,
                                 reject_if: -> (a) { a[:content].blank? }, allow_destroy: true

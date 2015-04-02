@@ -12,6 +12,18 @@
       div
         = collection_select(:question, :topic_id, Topic.all, :id, :name, prompt: 'Select topic')
 
+  .form-group
+    = f.label :image
+    = f.file_field :image
+
+  = image_tag @question.image.thumb.url if @question.image?
+
+  - if @question.image?
+    .checkbox
+      label
+        = f.check_box :remove_image
+        | Remove image
+
   h3 Answers
   ol.answers-form
     = f.nested_fields_for :answers do |answers_form|
