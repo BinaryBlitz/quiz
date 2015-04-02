@@ -48,10 +48,10 @@ class PlayersController < ApplicationController
 
   # POST /players/authenticate
   def authenticate
-    @player = Player.find_by(email: params[:email])
+    @player = Player.find_by(username: params[:username])
 
     unless @player && @player.password_digest == params[:password_digest]
-      render json: { error: 'Invalid email/password combination' }, status: :unauthorized
+      render json: { error: 'Invalid username / password combination' }, status: :unauthorized
       return
     end
   end
@@ -81,6 +81,6 @@ class PlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:player).permit(:name, :email, :password_digest, :points, :avatar)
+    params.require(:player).permit(:name, :username, :email, :password_digest, :points, :avatar)
   end
 end

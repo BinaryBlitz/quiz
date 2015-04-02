@@ -183,9 +183,11 @@ ActiveRecord::Schema.define(version: 20150412024034) do
     t.integer  "sash_id"
     t.integer  "level",           default: 0
     t.string   "avatar"
+    t.string   "username"
   end
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
+  add_index "players", ["username"], name: "index_players_on_username", unique: true, using: :btree
 
   create_table "purchase_types", force: :cascade do |t|
     t.string   "identifier"
