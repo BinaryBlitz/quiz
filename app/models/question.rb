@@ -22,6 +22,7 @@ class Question < ActiveRecord::Base
 
   accepts_nested_attributes_for :answers,
                                 reject_if: -> (a) { a[:content].blank? }, allow_destroy: true
+  validates :answers, length: { is: 4, wrong_length: 'count must be equal to 4' }
 
   # Finds the first answer and updates it to be the correct one
   def set_correct_answer

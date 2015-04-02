@@ -15,9 +15,9 @@ class Admin::QuestionsController < Admin::AdminController
 
   def create
     @question = Question.new(question_params)
-    @question.set_correct_answer
 
     if @question.save
+      @question.set_correct_answer
       redirect_to [:admin, @question.topic], notice: 'Question was successfully created.'
     else
       puts @question.errors.full_messages
