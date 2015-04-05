@@ -2,7 +2,6 @@ class LobbiesController < ApplicationController
   before_action :restrict_access
   before_action :find_lobby, only: [:show, :find, :close, :accept_challenge, :decline_challenge]
 
-  include Challenges
   include LobbySessions
 
   # POST /lobbies
@@ -38,7 +37,7 @@ class LobbiesController < ApplicationController
     @lobby = Lobby.new(player: current_player, topic: topic, challenge: true)
     @lobby.generate_session(opponent)
 
-    push_challenge(opponent)
+    opponent.push_challenge(@lobby)
     render partial: 'game_sessions/game_session', locals: { game_session: @lobby.game_session }
   end
 
@@ -60,7 +59,7 @@ class LobbiesController < ApplicationController
 
     # Notify host
     Pusher.trigger("player-session-#{@lobby.game_session.host.id}", 'challenge-declined', {})
-    push_decline
+    @lobby.game_session.host.push_decline(@lobby)
 
     head :no_content
   end

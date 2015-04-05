@@ -18,7 +18,7 @@
 class Player < ActiveRecord::Base
   include VkAuthorization
   include Achievements
-  include Notifications
+  include Notifiable
   include PlayerRankings
   include PlayerTopics
 
