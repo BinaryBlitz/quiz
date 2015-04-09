@@ -11,7 +11,7 @@
 #
 
 class Purchase < ActiveRecord::Base
-  before_create :set_expires_at
+  before_validation :set_expires_at
 
   belongs_to :player
   belongs_to :purchase_type

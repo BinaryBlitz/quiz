@@ -42,8 +42,9 @@ questions = {
 }
 
 questions.each do |question, answers|
-  q = Question.create(content: question, topic: topic)
-  answers.each { |answer| q.answers.create(content: answer, correct: answer == answers.first) }
+  q = Question.new(content: question, topic: topic)
+  answers.each { |answer| q.answers.new(content: answer, correct: answer == answers.first) }
+  q.save
 end
 
 # Online and offline session
