@@ -1,2 +1,2 @@
-json.extract! player, :id, :name, :avatar_url
-json.points topic ? player.weekly_topic_points(topic) : player.total_points
+json.partial! 'players/player', player: player
+json.points topic ? player.weekly_topic_points(topic) : player.weekly_points

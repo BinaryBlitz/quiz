@@ -6,6 +6,10 @@ module PlayerRankings
     # scope :order_by_weekly_points, -> { order(weekly_points: :desc) }
   end
 
+  def weekly_points
+    topic_results.sum(:weekly_points)
+  end
+
   def topic_points(topic)
     topic_results.find_by(topic: topic).points rescue 0
   end
