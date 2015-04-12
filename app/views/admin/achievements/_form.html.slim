@@ -1,0 +1,18 @@
+h2 Edit achievement
+
+= form_for [:admin, @achievement] do |f|
+  = render 'shared/error_messages', object: @achievement
+
+  .form-group
+    = f.label :icon
+    = f.file_field :icon
+
+  - if @achievement.icon?
+    = image_tag @achievement.icon_url
+
+    .checkbox
+      label
+        = f.check_box :remove_icon
+        | Remove icon
+
+  = f.submit class: 'btn btn-default'

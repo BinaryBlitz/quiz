@@ -13,6 +13,7 @@
 #  sash_id         :integer
 #  level           :integer          default(0)
 #  avatar          :string
+#  username        :string
 #
 
 class Player < ActiveRecord::Base

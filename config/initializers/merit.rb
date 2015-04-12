@@ -32,7 +32,7 @@ end
 #   Merit::Badge.create! attrs
 # end
 
-[
+badges = [
   { id: 1, name: 'winner', description: 'Win 100 games.' },
   { id: 2, name: 'faithful', description: 'Play 10 days in a row.' },
   { id: 3, name: 'lightning', description: 'Answer all questions in 12 seconds or less.' },
@@ -41,6 +41,24 @@ end
   { id: 6, name: 'supercomputer', description: 'Win 50 games ahead of time.' },
   { id: 7, name: 'friendly', description: 'Add a friend.' },
   { id: 42, name: 'test-badge', description: 'Fuck you.' }
-].each do |attrs|
+]
+
+badges.each do |attrs|
   Merit::Badge.create!(attrs)
+end
+
+begin
+  if Achievement.count != badges.count
+    badges.each { |badge| Achievement.create(badge_id: badge[:id]) }
+  end
+rescue ActiveRecord::StatementInvalid
+  puts 'Achievements table undefined'
+end
+
+class Merit::Badge
+  def icon_url
+    achievement = Achievement.find_by(badge_id: id)
+    return unless achievement
+    achievement.icon_url
+  end
 end

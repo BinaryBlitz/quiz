@@ -1,0 +1,16 @@
+h2 = "Badge: #{Merit::Badge.find(@achievement.badge_id).name}"
+
+table.table
+  thead
+    tr
+      td id
+      td Name
+      td Description
+      td Icon
+      td Actions
+  tbody
+    = render @achievement
+
+- if @achievement.icon?
+  h3 Icon
+  = image_tag @achievement.icon_url
