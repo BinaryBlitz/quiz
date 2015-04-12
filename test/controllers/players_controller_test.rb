@@ -21,7 +21,7 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   test 'should create player' do
-    player = { name: 'Foo', email: 'foo1@bar.com', password_digest: 'foobar' }
+    player = { name: 'Foo', username: 'foo1', email: 'foo1@bar.com', password_digest: 'foobar' }
     post :create, format: :json, player: player
     assert_response :created
   end
@@ -44,5 +44,12 @@ class PlayersControllerTest < ActionController::TestCase
     get :search, token: token, format: :json, query: 'Foo'
     assert_response :success
     assert_equal @player.name, json_response.first['name']
+  end
+
+  test 'should authenticate by name' do
+    post :authenticate,
+         format: :json, username: @player.username, password_digest: @player.password_digest
+    assert_response :success
+    assert_not_nil json_response['token']
   end
 end

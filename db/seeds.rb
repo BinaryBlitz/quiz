@@ -8,10 +8,10 @@
 
 # Players
 host = Player.create(
-  name: 'Foo', email: 'foo@bar.com',
+  name: 'Foo', username: 'foo', email: 'foo@bar.com',
   password_digest: Digest::MD5.hexdigest('foobar'))
 opponent = Player.create(
-  name: 'Bar', email: 'bar@foo.com',
+  name: 'Bar', username: 'bar', email: 'bar@foo.com',
   password_digest: Digest::MD5.hexdigest('barfoo'))
 # API keys
 host.api_key.update(token: 'foobar')

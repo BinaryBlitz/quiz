@@ -47,10 +47,10 @@ class Player < ActiveRecord::Base
   # Validations
   has_secure_password validations: false
   validates :name, presence: true
+  validates :username, presence: true, uniqueness: { case_sensitive: false }, unless: :vk_user?
   validates :password_digest, presence: true, unless: :vk_user?
-  validates :email, presence: true, uniqueness: { case_sensitive: false },
-                    format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
-                    unless: :vk_user?
+  validates :email, uniqueness: { case_sensitive: false }, allow_blank: true,
+                    format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
 
   TOP_SIZE = 20
 
@@ -110,6 +110,10 @@ class Player < ActiveRecord::Base
 
   def purchase_types
     purchases.map(&:purchase_type)
+  end
+
+  def self.search(query)
+    where('name ILIKE :query OR username ILIKE :query', query: "%#{query}%")
   end
 
   private

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :players, except: [:new, :edit] do
       post 'authenticate', on: :collection
       post 'authenticate_vk', on: :collection
+      get 'username_availability', on: :collection
       get 'friends', on: :member
       get 'search', on: :collection
       get 'report', on: :member

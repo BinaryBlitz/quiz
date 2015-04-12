@@ -13,6 +13,7 @@
 #  sash_id         :integer
 #  level           :integer          default(0)
 #  avatar          :string
+#  username        :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -20,16 +21,19 @@
 foo:
   name: Foo
   email: foo@bar.com
+  username: foo
   password_digest: <%= Digest::MD5.hexdigest("foobar123") %>
 
 bar:
   name: Bar
   email: bar@foo.com
+  username: bar
   password_digest: <%= Digest::MD5.hexdigest("barfoo123") %>
 
 vk_player:
   name: VK user
   email:
+  username: vk_user
   password_digest:
   vk_id: 1
   vk_token: foobar
@@ -37,4 +41,5 @@ vk_player:
 baz:
   name: baz
   email: baz@qux.com
+  username: baz
   password_digest: <%= Digest::MD5.hexdigest("bazqux123") %>

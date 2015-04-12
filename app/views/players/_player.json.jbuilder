@@ -1,1 +1,1 @@
-json.extract! player, :id, :name, :email, :avatar_url
+json.extract! player, :id, :name, :username, :email, :avatar_url

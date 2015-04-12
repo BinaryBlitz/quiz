@@ -1,5 +1,6 @@
 class PlayersController < ApplicationController
-  skip_before_filter :restrict_access, only: [:create, :authenticate, :authenticate_vk]
+  skip_before_filter :restrict_access,
+                     only: [:create, :authenticate, :authenticate_vk, :username_availability]
   before_action :set_player, only: [:show, :update, :destroy, :friends, :report]
 
   # GET /players
@@ -48,10 +49,10 @@ class PlayersController < ApplicationController
 
   # POST /players/authenticate
   def authenticate
-    @player = Player.find_by(email: params[:email])
+    @player = Player.find_by(username: params[:username])
 
     unless @player && @player.password_digest == params[:password_digest]
-      render json: { error: 'Invalid email/password combination' }, status: :unauthorized
+      render json: { error: 'Invalid username / password combination' }, status: :unauthorized
       return
     end
   end
@@ -65,13 +66,18 @@ class PlayersController < ApplicationController
   end
 
   def search
-    @players = Player.where(name: params[:query])
+    @players = Player.search(params[:query])
   end
 
   # GET /players/1/report
   def report
     @player.reports.create(message: params[:message])
     head :created
+  end
+
+  def username_availability
+    @available = Player.find_by(username: params[:username]).nil?
+    render json: { available: @available }
   end
 
   private
@@ -81,6 +87,6 @@ class PlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:player).permit(:name, :email, :password_digest, :points, :avatar)
+    params.require(:player).permit(:name, :username, :email, :password_digest, :points, :avatar)
   end
 end
