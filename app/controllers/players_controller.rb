@@ -66,7 +66,7 @@ class PlayersController < ApplicationController
   end
 
   def search
-    @players = Player.where(name: params[:query])
+    @players = Player.search(params[:query])
   end
 
   # GET /players/1/report

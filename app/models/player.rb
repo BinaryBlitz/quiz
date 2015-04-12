@@ -112,6 +112,10 @@ class Player < ActiveRecord::Base
     purchases.map(&:purchase_type)
   end
 
+  def self.search(query)
+    where('name ILIKE :query OR username ILIKE :query', query: "%#{query}%")
+  end
+
   private
 
   def create_key

@@ -76,4 +76,9 @@ class PlayerTest < ActiveSupport::TestCase
     @vk_player.password_digest = ''
     assert @vk_player.valid?
   end
+
+  test 'search' do
+    result = Player.search(@foo.name.downcase[0..-2])
+    assert result.include?(@foo)
+  end
 end
