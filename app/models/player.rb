@@ -50,8 +50,9 @@ class Player < ActiveRecord::Base
   validates :name, presence: true
   validates :username, presence: true, uniqueness: { case_sensitive: false }, unless: :vk_user?
   validates :password_digest, presence: true, unless: :vk_user?
-  validates :email, uniqueness: { case_sensitive: false }, allow_blank: true,
-                    format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
+  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
+  validates :email,
+            format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_nil: true
 
   TOP_SIZE = 20
 

@@ -34,13 +34,13 @@ class PlayerTest < ActiveSupport::TestCase
 
   test 'valid without email' do
     player = Player.new(@foo.attributes)
-    player.email = ''
+    player.email = nil
     player.username = 'new'
     assert player.valid?
   end
 
   test 'should allow empty email if vk' do
-    @vk_player.email = ''
+    @vk_player.email = nil
     assert @vk_player.valid?
   end
 
