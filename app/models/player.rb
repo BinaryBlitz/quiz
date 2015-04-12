@@ -109,6 +109,10 @@ class Player < ActiveRecord::Base
     lobbies.where(challenge: true).where(closed: false)
   end
 
+  def purchase_types
+    purchases.map(&:purchase_type)
+  end
+
   private
 
   def create_key
