@@ -1,5 +1,4 @@
 json.array! @friendships do |friendship|
-  json.id friendship.player_id
-  json.name friendship.player.name
+  json.partial! 'players/player', player: friendship.player
   json.extract! friendship, :viewed
 end
