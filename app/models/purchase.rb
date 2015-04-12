@@ -18,10 +18,11 @@ class Purchase < ActiveRecord::Base
 
   validates :purchase_type, presence: true
   validates :player, presence: true
-  validates :expires_at, presence: true
+  validates :expires_at, presence: true, unless: 'purchase_type.topic'
   validate :purchase_present
 
   scope :unexpired, -> { where('expires_at >= ? OR expires_at IS NULL', Time.zone.now) }
+  default_scope -> { order(expires_at: :desc) }
 
   def identifier
     purchase_type.identifier
@@ -30,7 +31,7 @@ class Purchase < ActiveRecord::Base
   private
 
   def set_expires_at
-    self.expires_at = Time.zone.now + 10.days
+    self.expires_at = Time.zone.now + 10.days unless purchase_type.topic
   end
 
   def purchase_present
