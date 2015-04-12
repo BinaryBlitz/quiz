@@ -4,9 +4,8 @@
 #
 #  id          :integer          not null, primary key
 #  name        :string
-#  visible     :boolean          default(FALSE)
+#  visible     :boolean          default(TRUE)
 #  expires_at  :date
-#  price       :integer          default(0)
 #  category_id :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -27,7 +26,6 @@ class Topic < ActiveRecord::Base
   default_scope { order(created_at: :asc) }
 
   validates :name, presence: true
-  validates :price, numericality: { greater_than_or_equal_to: 0 }
   validates :category, presence: true
 
   accepts_nested_attributes_for :purchase_type, reject_if: -> (a) { a[:identifier].blank? }
@@ -35,6 +33,6 @@ class Topic < ActiveRecord::Base
   private
 
   def associate_with_purchase_type
-    PurchaseType.create(identifier: "topic-#{id}", topic: self) if price > 0 && !purchase_type
+    PurchaseType.create(identifier: "topic-#{id}", topic: self) unless purchase_type
   end
 end

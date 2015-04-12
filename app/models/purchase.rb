@@ -22,7 +22,7 @@ class Purchase < ActiveRecord::Base
   validate :purchase_present
 
   scope :unexpired, -> { where('expires_at >= ? OR expires_at IS NULL', Time.zone.now) }
-  default_scope -> { order(expires_at: :desc) }
+  default_scope -> { order(created_at: :desc) }
 
   def identifier
     purchase_type.identifier

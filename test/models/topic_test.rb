@@ -4,9 +4,8 @@
 #
 #  id          :integer          not null, primary key
 #  name        :string
-#  visible     :boolean          default(FALSE)
+#  visible     :boolean          default(TRUE)
 #  expires_at  :date
-#  price       :integer          default(0)
 #  category_id :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -24,10 +23,5 @@ class TopicTest < ActiveSupport::TestCase
   test 'invalid without category' do
     @geography.category = nil
     assert @geography.invalid?
-  end
-
-  test 'invalid when price is negative' do
-    @paid.price = -1
-    assert @paid.invalid?
   end
 end

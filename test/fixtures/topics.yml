@@ -4,9 +4,8 @@
 #
 #  id          :integer          not null, primary key
 #  name        :string
-#  visible     :boolean          default(FALSE)
+#  visible     :boolean          default(TRUE)
 #  expires_at  :date
-#  price       :integer          default(0)
 #  category_id :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -26,4 +25,3 @@ geometry:
 paid:
   name: Paid
   category: general
-  price: 1

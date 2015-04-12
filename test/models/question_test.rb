@@ -4,10 +4,10 @@
 #
 #  id         :integer          not null, primary key
 #  content    :text
-#  image_url  :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  topic_id   :integer
+#  image      :string
 #
 
 require 'test_helper'
