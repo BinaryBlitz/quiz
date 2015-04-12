@@ -9,7 +9,10 @@ module Notifiable
 
   def push_achievement(badge)
     message = "You received an achievement: #{badge.name}"
-    options = { action: 'ACHIEVEMENT', badge: { id: badge.id, name: badge.name } }
+    options = {
+      action: 'ACHIEVEMENT',
+      badge: { id: badge.id, name: badge.name, icon_url: badge.icon_url }
+    }
     push_notification(message, options)
   end
 
