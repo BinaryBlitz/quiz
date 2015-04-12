@@ -107,6 +107,11 @@ class GameSession < ActiveRecord::Base
     end
   end
 
+  def challenge?
+    lobby = lobbies.first
+    lobby && lobby.challenge?
+  end
+
   private
 
   def generate

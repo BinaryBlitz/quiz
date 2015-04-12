@@ -25,6 +25,12 @@ module Notifiable
     push_notification(message, options)
   end
 
+  def push_challenge_results(game_session)
+    message = "#{game_session.opponent} has played your challenge."
+    options = { action: 'CHALLENGE_FINISHED', game_session: { id: game_session.id } }
+    push_notification(message, options)
+  end
+
   def push_notification(message, options = {})
     push_tokens.each do |push_token|
       push_token.push(message, options)
