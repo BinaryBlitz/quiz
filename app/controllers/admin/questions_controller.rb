@@ -50,7 +50,7 @@ class Admin::QuestionsController < Admin::AdminController
 
   def question_params
     params.require(:question).permit(
-      :content, :topic_id, :image, :remove_image,
+      :content, :topic_id, :image, :remove_image, :image_cache,
       answers_attributes: [:id, :content, :correct, :_destroy])
   end
 end
