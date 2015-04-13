@@ -18,5 +18,7 @@ json.favorite_topics @player.favorite_topics do |topic|
 end
 
 json.achievements do
-  json.array! @player.badges, :id, :name, :description
+  json.array! @player.badges do |achievement|
+    json.partial! 'achievements/achievement', achievement: achievement
+  end
 end
