@@ -18,8 +18,8 @@ class Topic < ActiveRecord::Base
   belongs_to :category
   has_many :questions, dependent: :destroy
   has_many :game_sessions, dependent: :destroy
-  has_many :lobbies
-  has_many :topic_results
+  has_many :lobbies, dependent: :destroy
+  has_many :topic_results, dependent: :destroy
   has_many :players, -> { uniq }, through: :topic_results
   has_one :purchase_type, dependent: :destroy
 
