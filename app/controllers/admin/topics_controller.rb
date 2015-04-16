@@ -25,6 +25,7 @@ class Admin::TopicsController < Admin::AdminController
   end
 
   def edit
+    @topic.build_purchase_type unless @topic.purchase_type
   end
 
   def update
@@ -48,7 +49,7 @@ class Admin::TopicsController < Admin::AdminController
 
   def topic_params
     params.require(:topic).permit(
-      :name, :visible, :expires_at, :price, :featured,
+      :name, :visible, :expires_at, :featured,
       :category_id, purchase_type_attributes: [:id, :identifier])
   end
 end

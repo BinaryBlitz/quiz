@@ -13,7 +13,7 @@
 #
 
 class Topic < ActiveRecord::Base
-  after_create :associate_with_purchase_type
+  before_save :verify_purchase_type
 
   belongs_to :category
   has_many :questions, dependent: :destroy
@@ -32,7 +32,7 @@ class Topic < ActiveRecord::Base
 
   private
 
-  def associate_with_purchase_type
-    PurchaseType.create(identifier: "topic-#{id}", topic: self) unless purchase_type
+  def verify_purchase_type
+    self.purchase_type = nil if purchase_type && purchase_type.identifier.empty?
   end
 end
