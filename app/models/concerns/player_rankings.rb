@@ -29,16 +29,14 @@ module PlayerRankings
   module ClassMethods
     def order_by_points
       joins(:topic_results)
-        .select('players.id, players.name, players.avatar,
-          sum(topic_results.points) as total_points')
+        .select('players.*, sum(topic_results.points) as total_points')
         .group('players.id')
         .order('total_points desc')
     end
 
     def order_by_weekly_points
       joins(:topic_results)
-        .select('players.id, players.name, players.avatar,
-          sum(topic_results.weekly_points) as total_points')
+        .select('players.*, sum(topic_results.weekly_points) as total_points')
         .group('players.id')
         .order('total_points desc')
     end
