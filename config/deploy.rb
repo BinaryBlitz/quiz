@@ -34,6 +34,7 @@ after 'deploy:update_code', :roles => :app do
   # run "rm -f #{current_release}/config/initializers/app_constants.rb"
   # run "ln -nfs #{deploy_to}/shared/config/initializers/app_constants.rb #{current_release}/config/initializers/app_constants.rb"
   # run "ln -nfs #{deploy_to}/shared/secret_token.rb #{current_release}/config/initializers/secret_token.rb"
+  run "cd #{current_release}; rake init_achievements RAILS_ENV=#{rails_env}"
 end
 
 before "deploy:assets:precompile", "deploy:link_db"

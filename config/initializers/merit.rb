@@ -47,14 +47,6 @@ badges.each do |attrs|
   Merit::Badge.create!(attrs)
 end
 
-begin
-  if Achievement.count != badges.count
-    badges.each { |badge| Achievement.create(badge_id: badge[:id]) }
-  end
-rescue ActiveRecord::StatementInvalid
-  puts 'Achievements table undefined'
-end
-
 class Merit::Badge
   def icon_url
     achievement = Achievement.find_by(badge_id: id)
