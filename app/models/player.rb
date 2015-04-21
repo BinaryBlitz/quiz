@@ -49,7 +49,7 @@ class Player < ActiveRecord::Base
   has_secure_password validations: false
   validates :name, presence: true
   validates :username, presence: true, unless: :vk_user?
-  validates :username, uniqueness: { case_sensitive: false }
+  validates :username, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :password_digest, presence: true, unless: :vk_user?
   validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :email,
