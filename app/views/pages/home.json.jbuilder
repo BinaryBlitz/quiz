@@ -9,8 +9,8 @@ json.favorite_topics do
 end
 
 json.challenges do
-  json.partial! 'home_challenges', lobbies: @challenges
+  json.partial! 'challenges', lobbies: @challenges
 end
 json.challenged do
-  json.partial! 'home_challenges', lobbies: @challenged
+  json.partial! 'challenged', lobbies: @challenged
 end
