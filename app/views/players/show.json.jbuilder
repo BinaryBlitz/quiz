@@ -13,7 +13,7 @@ json.score do
 end
 
 json.favorite_topics @player.favorite_topics do |topic|
-  json.extract! topic, :id, :name
+  json.partial! 'topics/topic', topic: topic
   json.points @player.topic_points(topic)
 end
 
