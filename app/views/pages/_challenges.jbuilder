@@ -1,6 +1,8 @@
 json.array! lobbies do |lobby|
-  json.extract! lobby, :id, :player_id, :topic_id
-  json.topic lobby.topic.name
-  json.category lobby.topic.category.name
-  json.extract! lobby.player, :name, :avatar_url
+  json.extract! lobby, :id, :player_id
+  json.topic do
+    json.partial! 'topics/topic', topic: lobby.topic
+    json.category lobby.topic.category.name
+  end
+  json.extract! lobby.player, :name, :username, :avatar_url
 end
