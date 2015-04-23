@@ -30,7 +30,7 @@ class PushToken < ActiveRecord::Base
   def push_to_android(message, options = {})
     data = { data: { title: 'iQuiz', message: message } }
     data[:data].merge!(options)
-    GCM_INSTANCE.send(token, data)
+    GCM_INSTANCE.send(token, data) rescue logger.debug "Android push to #{player} failed"
 
     logger.debug "Android push sent to #{player}"
   end
@@ -39,7 +39,7 @@ class PushToken < ActiveRecord::Base
     notification = Houston::Notification.new(device: token)
     notification.alert = message
     notification.custom_data = options
-    APN.push(notification)
+    APN.push(notification) rescue logger.debug "iOS push to #{player} failed"
 
     logger.debug "iOS push sent to #{player}"
   end

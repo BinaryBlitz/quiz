@@ -69,6 +69,10 @@ class Player < ActiveRecord::Base
     pluck(:name).sample
   end
 
+  def self.random_username
+    pluck(:username).sample
+  end
+
   def to_s
     name
   end
