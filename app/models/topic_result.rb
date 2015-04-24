@@ -24,12 +24,14 @@ class TopicResult < ActiveRecord::Base
 
   def add(result)
     result *= player.multiplier
-    update!(points: points + result, count: count + 1)
-    if updated_at < DateTime.now.beginning_of_week
-      update!(weekly_points: result)
+    if updated_at < Time.zone.now.beginning_of_week
+      self.weekly_points = result
     else
-      update!(weekly_points: weekly_points + result)
+      self.weekly_points += result
     end
+    self.points += result
+    self.count += 1
+    save
   end
 
   def assign_category
