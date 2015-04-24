@@ -112,7 +112,7 @@ class Player < ActiveRecord::Base
   end
 
   def challenged
-    lobbies.where(challenge: true).where(closed: false)
+    lobbies.where(challenge: true)
   end
 
   def purchase_types
