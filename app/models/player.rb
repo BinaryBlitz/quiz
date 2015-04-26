@@ -123,6 +123,18 @@ class Player < ActiveRecord::Base
     where('name ILIKE :query OR username ILIKE :query', query: "%#{query}%")
   end
 
+  def send_password_reset
+    generate_reset_password_token
+    update!(password_reset_sent_at: Time.zone.now)
+    PlayerMailer.password_reset(self).deliver
+  end
+
+  def update_password(password, password_confirmation)
+    return false unless password == password_confirmation
+
+    update(password_digest: Digest::MD5.hexdigest(password))
+  end
+
   private
 
   def create_key
@@ -131,5 +143,9 @@ class Player < ActiveRecord::Base
 
   def vk_user?
     vk_id && vk_token
+  end
+
+  def generate_reset_password_token
+    update(password_reset_token: SecureRandom.hex)
   end
 end

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     sessions: 'admins/sessions'
   }
 
+  resources :password_resets, except: [:show, :destroy]
+
   # Dashboard
   namespace :admin do
     get '/', to: 'dashboard#index'
