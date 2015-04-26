@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412112212) do
+ActiveRecord::Schema.define(version: 20150426103144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,14 +183,16 @@ ActiveRecord::Schema.define(version: 20150412112212) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "vk_token"
     t.integer  "vk_id"
     t.integer  "sash_id"
-    t.integer  "level",           default: 0
+    t.integer  "level",                  default: 0
     t.string   "avatar"
     t.string   "username"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree

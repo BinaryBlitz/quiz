@@ -1,0 +1,9 @@
+h1 Reset your password
+
+= form_tag password_resets_path, method: :post do
+  .form-group
+    = label_tag :email
+    = email_field_tag :email, '', class: 'form-control'
+
+  = submit_tag 'Reset password', class: 'btn btn-default'
+
