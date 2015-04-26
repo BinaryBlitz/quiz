@@ -49,7 +49,7 @@ Rails.application.routes.draw do
     resources :achievements, only: [:index]
 
     # Online sessions
-    resources :lobbies, only: [:create] do
+    resources :lobbies, only: [:create, :destroy] do
       get 'find', on: :member
       get 'challenges', on: :collection
       get 'challenged', on: :collection

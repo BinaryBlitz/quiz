@@ -1,6 +1,6 @@
 class LobbiesController < ApplicationController
   before_action :restrict_access
-  before_action :find_lobby, only: [:show, :find, :close, :accept_challenge, :decline_challenge]
+  before_action :find_lobby, only: [:show, :find, :destroy, :close, :accept_challenge, :decline_challenge]
 
   include LobbySessions
 
@@ -15,6 +15,11 @@ class LobbiesController < ApplicationController
     else
       render json: @lobby.errors, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @lobby.destroy
+    head :no_content
   end
 
   def challenges
