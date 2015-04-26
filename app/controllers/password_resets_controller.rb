@@ -12,7 +12,13 @@ class PasswordResetsController < ApplicationController
   def create
     player = Player.find_by(email: params[:email])
     player.send_password_reset if player
-    redirect_to password_resets_path, notice: 'Email sent with password reset instructions.'
+
+    respond_to do |format|
+      format.html {
+        redirect_to password_resets_path, notice: 'Email sent with password reset instructions.'
+      }
+      format.json { head :created }
+    end
   end
 
   def edit
