@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FriendshipsControllerTest < ActionController::TestCase
+class FriendsTest < ActionDispatch::IntegrationTest
   def setup
     @foo = players(:foo)
     @bar = players(:bar)
@@ -8,24 +8,24 @@ class FriendshipsControllerTest < ActionController::TestCase
   end
 
   test 'should get index' do
-    get :index, token: token, format: :json
+    get '/api/friendships', token: token
     assert_response :success
   end
 
   test 'should create friendship' do
-    post :create, token: token, format: :json, friend_id: @baz.id
+    post '/api/friendships', token: token, friend_id: @baz.id
     assert_response :created
-    post :create, token: token, format: :json, friend_id: @baz.id
+    post '/api/friendships', token: token, friend_id: @baz.id
     assert_response :unprocessable_entity
   end
 
   test 'should destroy friendship' do
-    post :unfriend, token: token, format: :json, friend_id: @bar.id
+    delete '/api/friendships/unfriend', token: token, friend_id: @bar.id
     assert_response :no_content
   end
 
   test 'should get requests' do
-    get :requests, token: @bar.token, format: :json
+    get '/api/friendships/requests', token: @bar.token
     assert_response :success
     assert_equal @foo.id, json_response.first['id']
     assert_equal @foo.name, json_response.first['name']

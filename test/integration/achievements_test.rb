@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class AchievementsControllerTest < ActionController::TestCase
+class AchievementsTest < ActionDispatch::IntegrationTest
   test 'should get index' do
-    get :index, format: :json, token: token
+    get "/api/achievements", token: token
     assert_response :success
     assert_not_nil assigns(:achievements)
   end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PurchasesControllerTest < ActionController::TestCase
+class PurchasesTest < ActionDispatch::IntegrationTest
   def setup
     @player = players(:foo)
     @booster = purchase_types(:booster)
@@ -8,7 +8,7 @@ class PurchasesControllerTest < ActionController::TestCase
   end
 
   test 'should get index' do
-    get :index, token: token, format: :json
+    get "/api/purchases", token: token
     assert_response :success
     assert_equal @booster.identifier, json_response.first['identifier']
     assert json_response.first['purchased']
@@ -16,7 +16,7 @@ class PurchasesControllerTest < ActionController::TestCase
   end
 
   test 'should purchase item' do
-    post :create, token: token, format: :json, identifier: @unlocker.identifier
+    post "/api/purchases", token: token, identifier: @unlocker.identifier
     assert_response :created
     assert_equal @unlocker.identifier, @player.reload.purchases.first.identifier
   end
