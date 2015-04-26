@@ -1,8 +1,10 @@
 json.array! lobbies do |lobby|
-  json.extract! lobby, :id, :player_id, :topic_id
-  json.topic lobby.topic.name
-  json.category lobby.topic.category.name
+  json.extract! lobby, :id, :player_id
   json.extract! lobby.player, :name, :avatar_url
+  json.topic do
+    json.extract! lobby.topic, :id, :name, :category_id
+    json.category_name lobby.topic.category.name
+  end
 
   if lobby.game_session.closed
     json.results do
