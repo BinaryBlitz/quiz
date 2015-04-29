@@ -36,10 +36,11 @@ class PlayerTest < ActiveSupport::TestCase
     player = Player.new(@foo.attributes)
     player.email = nil
     player.username = 'new'
+    player.password = 'foobar'
     assert player.valid?
   end
 
-  test 'should allow empty email if vk' do
+  test 'should allow empty email' do
     @vk_player.email = nil
     assert @vk_player.valid?
   end
@@ -58,7 +59,7 @@ class PlayerTest < ActiveSupport::TestCase
   end
 
   test 'invalid without password' do
-    @foo.password_digest = ''
+    @foo.password = nil
     assert @foo.invalid?
   end
 
@@ -70,11 +71,6 @@ class PlayerTest < ActiveSupport::TestCase
   test 'username uniqueness' do
     @bar.username = @foo.username
     assert @bar.invalid?
-  end
-
-  test 'should allow empty password if vk ' do
-    @vk_player.password_digest = ''
-    assert @vk_player.valid?
   end
 
   test 'search' do

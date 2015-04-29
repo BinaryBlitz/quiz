@@ -22,19 +22,19 @@ foo:
   name: Foo
   email: foo@bar.com
   username: foo
-  password_digest: <%= Digest::MD5.hexdigest("foobar123") %>
+  password_digest: <%= BCrypt::Password.create("foobar", cost: 4) %>
 
 bar:
   name: Bar
   email: bar@foo.com
   username: bar
-  password_digest: <%= Digest::MD5.hexdigest("barfoo123") %>
+  password_digest: <%= BCrypt::Password.create("barfoo", cost: 4) %>
 
 vk_player:
   name: VK user
   email:
   username: vk_user
-  password_digest:
+  password_digest: <%= BCrypt::Password.create(SecureRandom.hex, cost: 4) %>
   vk_id: 1
   vk_token: foobar
 
@@ -42,4 +42,4 @@ baz:
   name: baz
   email: baz@qux.com
   username: baz
-  password_digest: <%= Digest::MD5.hexdigest("bazqux123") %>
+  password_digest: <%= BCrypt::Password.create("bazqux", cost: 4) %>

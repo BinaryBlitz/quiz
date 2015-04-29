@@ -38,7 +38,6 @@ class PlayersController < ApplicationController
   # DELETE /players/1
   def destroy
     @player.destroy
-
     head :no_content
   end
 
@@ -51,18 +50,20 @@ class PlayersController < ApplicationController
   def authenticate
     @player = Player.find_by(username: params[:username])
 
-    unless @player && @player.password_digest == params[:password_digest]
+    if @player.try(:authenticate, params[:password])
+      render :authenticate
+    else
       render json: { error: 'Invalid username / password combination' }, status: :unauthorized
-      return
     end
   end
 
+  # POST /players/authenticate_vk
   def authenticate_vk
     return unless params[:token].present?
     vk = VkontakteApi::Client.new(params[:token])
     @player = Player.find_or_create_from_vk(vk)
 
-    render action: :authenticate, location: @player
+    render :authenticate, location: @player
   end
 
   def search
@@ -87,6 +88,8 @@ class PlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:player).permit(:name, :username, :email, :password_digest, :points, :avatar)
+    params.require(:player).permit(
+      :name, :username, :email, :password, :password_confirmation, :points, :avatar
+    )
   end
 end

@@ -46,11 +46,11 @@ class Player < ActiveRecord::Base
   mount_base64_uploader :avatar, AvatarUploader
 
   # Validations
-  has_secure_password validations: false
+  has_secure_password
+
   validates :name, presence: true
   validates :username, presence: true, unless: :vk_user?
   validates :username, uniqueness: { case_sensitive: false }, allow_nil: true
-  validates :password_digest, presence: true, unless: :vk_user?
   validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :email,
             format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_nil: true
@@ -129,11 +129,11 @@ class Player < ActiveRecord::Base
     PlayerMailer.password_reset(self).deliver_now
   end
 
-  def update_password(password, password_confirmation)
-    return false unless password == password_confirmation
+  # def update_password(password, password_confirmation)
+  #   return false unless password == password_confirmation
 
-    update(password_digest: Digest::MD5.hexdigest(password))
-  end
+  #   update(password_digest: Digest::MD5.hexdigest(password))
+  # end
 
   private
 
@@ -142,7 +142,7 @@ class Player < ActiveRecord::Base
   end
 
   def vk_user?
-    vk_id && vk_token
+    vk_id.present?
   end
 
   def generate_reset_password_token

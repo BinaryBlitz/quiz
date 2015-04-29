@@ -8,7 +8,7 @@ module Player::VkAuthorization
 
       unless player
         player = create!(
-          name: format_name(user),
+          name: format_name(user), password: SecureRandom.hex,
           vk_token: vk.token, vk_id: user.uid, remote_avatar_url: user.photo)
         add_friends(player, vk.friends.get)
       end
