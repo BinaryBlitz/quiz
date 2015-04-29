@@ -15,4 +15,9 @@ class Achievement < ActiveRecord::Base
   default_scope -> { order(id: :asc) }
 
   mount_uploader :icon, IconUploader
+
+  def self.icon_url_for(badge)
+    achievement = find_by(badge_id: badge.id)
+    achievement.try(:icon_url)
+  end
 end

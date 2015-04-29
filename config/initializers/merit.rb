@@ -46,11 +46,3 @@ badges = [
 badges.each do |attrs|
   Merit::Badge.create!(attrs)
 end
-
-class Merit::Badge
-  def icon_url
-    achievement = Achievement.find_by(badge_id: id)
-    return unless achievement
-    achievement.icon_url
-  end
-end
