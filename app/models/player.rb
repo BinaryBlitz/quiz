@@ -126,7 +126,7 @@ class Player < ActiveRecord::Base
   def send_password_reset
     generate_reset_password_token
     update!(password_reset_sent_at: Time.zone.now)
-    PlayerMailer.password_reset(self).deliver
+    PlayerMailer.password_reset(self).deliver_now
   end
 
   def update_password(password, password_confirmation)

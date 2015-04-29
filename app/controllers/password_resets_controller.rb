@@ -1,5 +1,5 @@
 class PasswordResetsController < ApplicationController
-  skip_before_action :restrict_access
+  skip_before_filter :restrict_access
   before_action :set_player, only: [:edit, :update]
   layout 'layouts/password_resets'
 
@@ -14,10 +14,16 @@ class PasswordResetsController < ApplicationController
     player.send_password_reset if player
 
     respond_to do |format|
-      format.html {
-        redirect_to password_resets_path, notice: 'Email sent with password reset instructions.'
-      }
-      format.json { head :created }
+      if player
+        format.json { head :created }
+        format.html do
+          redirect_to password_resets_path,
+                      notice: 'Email with password reset instructions has been sent.'
+        end
+      else
+        format.json { head :not_found }
+        format.html { redirect_to password_resets_path, alert: 'User with this email not found.' }
+      end
     end
   end
 
