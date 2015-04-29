@@ -36,7 +36,7 @@ class PasswordResetsController < ApplicationController
       return
     end
 
-    if @player.update_password(params[:player][:password], params[:player][:password_confirmation])
+    if @player.update(player_params) && password_present
       redirect_to password_resets_path, notice: 'Password has been reset.'
     else
       render :edit
@@ -47,5 +47,13 @@ class PasswordResetsController < ApplicationController
 
   def set_player
     @player = Player.find_by_password_reset_token!(params[:id])
+  end
+
+  def player_params
+    params.require(:player).permit(:password, :password_confirmation)
+  end
+
+  def password_present
+    player_params[:password].present? && player_params[:password_confirmation].present?
   end
 end

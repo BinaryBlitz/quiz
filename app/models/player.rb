@@ -47,6 +47,7 @@ class Player < ActiveRecord::Base
 
   # Validations
   has_secure_password
+  validates :password, length: { minimum: 6 }, allow_nil: true
 
   validates :name, presence: true
   validates :username, presence: true, unless: :vk_user?
@@ -128,12 +129,6 @@ class Player < ActiveRecord::Base
     update!(password_reset_sent_at: Time.zone.now)
     PlayerMailer.password_reset(self).deliver_now
   end
-
-  # def update_password(password, password_confirmation)
-  #   return false unless password == password_confirmation
-
-  #   update(password_digest: Digest::MD5.hexdigest(password))
-  # end
 
   private
 
