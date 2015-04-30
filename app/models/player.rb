@@ -130,6 +130,11 @@ class Player < ActiveRecord::Base
     PlayerMailer.password_reset(self).deliver_now
   end
 
+  def purchased?(purchase_type)
+    purchases.unexpired
+      .where(purchase_type: purchase_type).any?
+  end
+
   private
 
   def create_key

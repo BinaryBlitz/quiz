@@ -1,6 +1,5 @@
 class PurchasesController < ApplicationController
   def index
-    @purchases = current_player.purchases.includes(:purchase_type)
     @purchase_types = PurchaseType.all
   end
 
