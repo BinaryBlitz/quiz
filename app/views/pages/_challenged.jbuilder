@@ -6,7 +6,7 @@ json.array! lobbies do |lobby|
     json.category_name lobby.topic.category.name
   end
 
-  if lobby.game_session.closed
+  if lobby.game_session.closed && lobby.game_session.offline?
     json.results do
       json.host do
         json.partial! 'players/player', player: lobby.game_session.host
