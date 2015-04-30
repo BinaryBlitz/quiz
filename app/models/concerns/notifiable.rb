@@ -2,8 +2,8 @@ module Notifiable
   extend ActiveSupport::Concern
 
   def push_friend_request_from(player)
-    message = "#{player.name} added you as a friend."
-    options = { action: 'FRIEND_REQUEST', player: { id: player.id, name: player.name } }
+    message = "#{player.username} added you as a friend."
+    options = { action: 'FRIEND_REQUEST', player: { id: player.id, username: player.username } }
     push_notification(message, options)
   end
 
@@ -17,7 +17,7 @@ module Notifiable
   end
 
   def push_challenge(lobby)
-    message = "#{lobby.player.name} has challenged you."
+    message = "#{lobby.player.username} has challenged you."
     options = { action: 'CHALLENGE', lobby: { id: lobby.id } }
     push_notification(message, options)
   end
