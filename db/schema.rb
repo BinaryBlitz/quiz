@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150501123804) do
+ActiveRecord::Schema.define(version: 20150501134434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,15 +50,6 @@ ActiveRecord::Schema.define(version: 20150501123804) do
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
-
-  create_table "api_keys", force: :cascade do |t|
-    t.string   "token"
-    t.integer  "player_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "api_keys", ["player_id"], name: "index_api_keys_on_player_id", using: :btree
 
   create_table "badges_sashes", force: :cascade do |t|
     t.integer  "badge_id"
@@ -193,6 +184,7 @@ ActiveRecord::Schema.define(version: 20150501123804) do
     t.string   "username"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
+    t.string   "token"
   end
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
@@ -296,7 +288,6 @@ ActiveRecord::Schema.define(version: 20150501123804) do
   add_index "topics", ["category_id"], name: "index_topics_on_category_id", using: :btree
 
   add_foreign_key "answers", "questions"
-  add_foreign_key "api_keys", "players"
   add_foreign_key "category_results", "categories"
   add_foreign_key "category_results", "players"
   add_foreign_key "friendships", "players"

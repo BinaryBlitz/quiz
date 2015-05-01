@@ -14,8 +14,8 @@ opponent = Player.create(
   name: 'Bar', username: 'bar', email: 'bar@foo.com',
   password_digest: Digest::MD5.hexdigest('barfoo'))
 # API keys
-host.api_key.update(token: 'foobar')
-opponent.api_key.update(token: 'barfoo')
+host.token.update(token: 'foobar')
+opponent.token.update(token: 'barfoo')
 # Push tokens
 host.push_tokens.create(token: 'apple')
 host.push_tokens.create(token: 'android', android: true)

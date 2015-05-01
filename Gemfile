@@ -12,12 +12,10 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # Use Slim
 gem 'slim-rails'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+# Turbolinks makes following links in your web application faster
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -27,6 +25,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'has_secure_token'
+
+# Dashboard
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
@@ -37,6 +38,8 @@ gem 'vkontakte_api'
 gem 'gcm'
 gem 'houston'
 gem 'merit'
+
+# File processing
 gem 'carrierwave'
 gem 'carrierwave-base64'
 gem 'mini_magick'

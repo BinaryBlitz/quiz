@@ -16,6 +16,7 @@
 #  username               :string
 #  password_reset_token   :string
 #  password_reset_sent_at :datetime
+#  token                  :string
 #
 
 class Player < ActiveRecord::Base
@@ -25,12 +26,10 @@ class Player < ActiveRecord::Base
   include PlayerRankings
   include PlayerTopics
 
-  after_create :create_key
   after_create :create_stats
 
   # Associations
   has_merit
-  has_one :api_key, dependent: :destroy
   has_one :stats, dependent: :destroy
   has_many :lobbies, dependent: :destroy
   has_many :host_game_sessions, class_name: 'GameSession', foreign_key: 'host_id'
@@ -47,8 +46,11 @@ class Player < ActiveRecord::Base
 
   mount_base64_uploader :avatar, AvatarUploader
 
-  # Validations
   has_secure_password
+  has_secure_token
+  has_secure_token :password_reset_token
+
+  # Validations
   validates :password, length: { minimum: 6 }, allow_nil: true
 
   validates :name, presence: true
@@ -62,10 +64,6 @@ class Player < ActiveRecord::Base
 
   def game_sessions
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
-  end
-
-  def token
-    api_key.token
   end
 
   def self.random_name
@@ -106,9 +104,7 @@ class Player < ActiveRecord::Base
   end
 
   def challenges
-    Lobby.joins(:game_session)
-      .where(game_sessions: { opponent_id: id })
-      .where(closed: false)
+    Lobby.joins(:game_session).where(game_sessions: { opponent_id: id }).where(closed: false)
   end
 
   def challenged
@@ -138,10 +134,6 @@ class Player < ActiveRecord::Base
   end
 
   private
-
-  def create_key
-    create_api_key
-  end
 
   def vk_user?
     vk_id.present?

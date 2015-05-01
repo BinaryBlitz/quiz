@@ -8,7 +8,7 @@ class PurchasesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get "/api/purchases", token: token
+    get '/api/purchases', token: token
     assert_response :success
     assert_equal @booster.identifier, json_response.first['identifier']
     assert json_response.first['purchased']
@@ -16,7 +16,7 @@ class PurchasesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should purchase item' do
-    post "/api/purchases", token: token, identifier: @unlocker.identifier
+    post '/api/purchases', token: token, identifier: @unlocker.identifier
     assert_response :created
     assert_equal @unlocker.identifier, @player.reload.purchases.first.identifier
   end

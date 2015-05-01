@@ -22,7 +22,7 @@ class PlayersTest < ActionDispatch::IntegrationTest
 
   test 'should create player' do
     player = { name: 'Foo', username: 'foo1', email: 'foo1@bar.com', password: 'foobar' }
-    post "/api/players", player: player
+    post '/api/players', player: player
     assert_response :created
   end
 
@@ -41,13 +41,13 @@ class PlayersTest < ActionDispatch::IntegrationTest
   end
 
   test 'should find player by name' do
-    get "/api/players", token: token, query: 'Foo'
+    get '/api/players', token: token, query: 'Foo'
     assert_response :success
     assert_equal @player.name, json_response.first['name']
   end
 
   test 'should authenticate by username' do
-    post "/api/players/authenticate", username: @player.username, password: 'foobar'
+    post '/api/players/authenticate', username: @player.username, password: 'foobar'
     assert_response :success
     assert_not_nil json_response['token']
   end
