@@ -2,18 +2,20 @@
 #
 # Table name: players
 #
-#  id              :integer          not null, primary key
-#  name            :string
-#  email           :string
-#  password_digest :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  vk_token        :string
-#  vk_id           :integer
-#  sash_id         :integer
-#  level           :integer          default(0)
-#  avatar          :string
-#  username        :string
+#  id                     :integer          not null, primary key
+#  name                   :string
+#  email                  :string
+#  password_digest        :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  vk_token               :string
+#  vk_id                  :integer
+#  sash_id                :integer
+#  level                  :integer          default(0)
+#  avatar                 :string
+#  username               :string
+#  password_reset_token   :string
+#  password_reset_sent_at :datetime
 #
 
 class Player < ActiveRecord::Base
@@ -91,13 +93,10 @@ class Player < ActiveRecord::Base
   end
 
   def total_score
-    wins = 0
-    draws = 0
-    game_sessions.each do |session|
-      draws += 1 and next if session.draw?
-      wins += 1 if session.winner?(self)
-    end
-    [wins, draws, game_sessions.count - wins - draws]
+    wins = topic_results.sum(:wins)
+    draws = topic_results.sum(:draws)
+    losses = topic_results.sum(:losses)
+    [wins, draws, losses]
   end
 
   def multiplier
@@ -131,8 +130,11 @@ class Player < ActiveRecord::Base
   end
 
   def purchased?(purchase_type)
-    purchases.unexpired
-      .where(purchase_type: purchase_type).any?
+    purchases.unexpired.where(purchase_type: purchase_type).any?
+  end
+
+  def add_result(session)
+    topic_results.find_or_create_by(topic: session.topic).add(session)
   end
 
   private

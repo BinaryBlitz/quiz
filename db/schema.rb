@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426103144) do
+ActiveRecord::Schema.define(version: 20150501123804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -274,6 +274,9 @@ ActiveRecord::Schema.define(version: 20150426103144) do
     t.datetime "updated_at",                null: false
     t.integer  "category_id"
     t.integer  "count",         default: 0
+    t.integer  "wins",          default: 0
+    t.integer  "draws",         default: 0
+    t.integer  "losses",        default: 0
   end
 
   add_index "topic_results", ["category_id"], name: "index_topic_results_on_category_id", using: :btree

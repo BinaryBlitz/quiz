@@ -26,9 +26,7 @@ class GameSessionsController < ApplicationController
     end
 
     @game_session.update!(closed: true, finisher: current_player)
-    current_player.topic_results
-      .find_or_create_by(topic: @game_session.topic)
-      .add(@game_session.player_points(current_player))
+    current_player.add_result(@game_session)
     head :no_content
   end
 

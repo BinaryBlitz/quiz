@@ -11,6 +11,9 @@
 #  updated_at    :datetime         not null
 #  category_id   :integer
 #  count         :integer          default(0)
+#  wins          :integer          default(0)
+#  draws         :integer          default(0)
+#  losses        :integer          default(0)
 #
 
 class TopicResult < ActiveRecord::Base
@@ -22,19 +25,41 @@ class TopicResult < ActiveRecord::Base
 
   validates :topic, presence: true
 
-  def add(result)
-    result *= player.multiplier
-    if updated_at < Time.zone.now.beginning_of_week
-      self.weekly_points = result
-    else
-      self.weekly_points += result
-    end
-    self.points += result
-    self.count += 1
+  def add(session)
+    add_points(session.player_points(player) * player.multiplier)
+    update_score(session)
     save
   end
 
   def assign_category
     update!(category: topic.category)
+  end
+
+  private
+
+  def older_than_week?
+    updated_at < Time.zone.now.beginning_of_week
+  end
+
+  def add_points(total_points)
+    if older_than_week?
+      self.weekly_points = total_points
+    else
+      self.weekly_points += total_points
+    end
+    self.points += total_points
+    self.count += 1
+  end
+
+  def update_score(session)
+    if session.draw?
+      self.draws += 1
+    else
+      if session.winner?(player)
+        self.wins += 1
+      else
+        self.losses += 1
+      end
+    end
   end
 end
