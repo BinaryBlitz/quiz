@@ -3,7 +3,6 @@
 # Table name: players
 #
 #  id                     :integer          not null, primary key
-#  name                   :string
 #  email                  :string
 #  password_digest        :string
 #  created_at             :datetime         not null
@@ -53,7 +52,6 @@ class Player < ActiveRecord::Base
   # Validations
   validates :password, length: { minimum: 6 }, allow_nil: true
 
-  validates :name, presence: true
   validates :username, presence: true, unless: :vk_user?
   validates :username, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
@@ -66,16 +64,12 @@ class Player < ActiveRecord::Base
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
   end
 
-  def self.random_name
-    pluck(:name).sample
-  end
-
   def self.random_username
     pluck(:username).sample
   end
 
   def to_s
-    name
+    username
   end
 
   def score_against(opponent)
@@ -113,7 +107,7 @@ class Player < ActiveRecord::Base
   end
 
   def self.search(query)
-    where('name ILIKE :query OR username ILIKE :query', query: "%#{query}%")
+    where('username ILIKE :query', query: "%#{query}%")
   end
 
   def send_password_reset

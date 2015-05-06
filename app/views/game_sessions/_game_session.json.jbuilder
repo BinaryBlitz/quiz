@@ -10,7 +10,6 @@ end
 json.opponent do
   if game_session.offline?
     json.id nil
-    json.name Player.random_name
     json.username Player.random_username
     json.email nil
     json.avatar_url nil

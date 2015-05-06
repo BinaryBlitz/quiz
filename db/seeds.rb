@@ -6,10 +6,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Players
-host = Player.create(
-  name: 'Foo', username: 'foo', email: 'foo@bar.com', password: 'foobar')
-opponent = Player.create(
-  name: 'Bar', username: 'bar', email: 'bar@foo.com', password: 'barfoo')
+host = Player.create(username: 'foo', email: 'foo@bar.com', password: 'foobar')
+opponent = Player.create(username: 'bar', email: 'bar@foo.com', password: 'barfoo')
 # API keys
 host.update(token: 'foobar')
 opponent.update(token: 'barfoo')

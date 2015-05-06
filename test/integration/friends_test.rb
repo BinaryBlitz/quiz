@@ -28,6 +28,6 @@ class FriendsTest < ActionDispatch::IntegrationTest
     get '/api/friendships/requests', token: @bar.token
     assert_response :success
     assert_equal @foo.id, json_response.first['id']
-    assert_equal @foo.name, json_response.first['name']
+    assert_equal @foo.username, json_response.first['username']
   end
 end

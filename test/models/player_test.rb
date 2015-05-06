@@ -2,20 +2,20 @@
 #
 # Table name: players
 #
-#  id              :integer          not null, primary key
-#  name            :string
-#  email           :string
-#  password_digest :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  imei            :string
-#  points          :integer          default(0)
-#  weekly_points   :integer          default(0)
-#  vk_token        :string
-#  vk_id           :integer
-#  sash_id         :integer
-#  level           :integer          default(0)
-#  avatar          :string
+#  id                     :integer          not null, primary key
+#  email                  :string
+#  password_digest        :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  vk_token               :string
+#  vk_id                  :integer
+#  sash_id                :integer
+#  level                  :integer          default(0)
+#  avatar                 :string
+#  username               :string
+#  password_reset_token   :string
+#  password_reset_sent_at :datetime
+#  token                  :string
 #
 
 require 'test_helper'
@@ -25,11 +25,6 @@ class PlayerTest < ActiveSupport::TestCase
     @foo = players(:foo)
     @bar = players(:bar)
     @vk_player = players(:vk_player)
-  end
-
-  test 'invalid without name' do
-    @foo.name = ''
-    assert @foo.invalid?
   end
 
   test 'valid without email' do
@@ -74,7 +69,7 @@ class PlayerTest < ActiveSupport::TestCase
   end
 
   test 'search' do
-    result = Player.search(@foo.name.downcase[0..-2])
+    result = Player.search(@foo.username.downcase[0..-2])
     assert result.include?(@foo)
   end
 end

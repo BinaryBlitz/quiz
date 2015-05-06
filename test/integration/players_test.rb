@@ -6,14 +6,14 @@ class PlayersTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get "/api/players", token: token
+    get '/api/players', token: token
     assert_response :success
   end
 
   test 'should show player' do
     get "/api/players/#{@player.id}", token: token
     assert_response :success
-    assert_equal @player.name, json_response['name']
+    assert_equal @player.username, json_response['username']
     assert_not_nil json_response['score']
     assert_not_nil json_response['total_score']
     assert_not_nil json_response['favorite_topics']
@@ -21,16 +21,16 @@ class PlayersTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create player' do
-    player = { name: 'Foo', username: 'foo1', email: 'foo1@bar.com', password: 'foobar' }
+    player = { username: 'foo1', email: 'foo1@bar.com', password: 'foobar' }
     post '/api/players', player: player
     assert_response :created
   end
 
   test 'should update player' do
-    new_name = 'New name'
-    patch "/api/players/#{@player.id}", token: token, player: { name: new_name }
+    new_username = 'New username'
+    patch "/api/players/#{@player.id}", token: token, player: { username: new_username }
     assert_response :no_content
-    assert_equal new_name, @player.reload.name
+    assert_equal new_username, @player.reload.username
   end
 
   test 'should destroy player' do
@@ -41,9 +41,9 @@ class PlayersTest < ActionDispatch::IntegrationTest
   end
 
   test 'should find player by name' do
-    get '/api/players', token: token, query: 'Foo'
+    get '/api/players', token: token, query: 'foo'
     assert_response :success
-    assert_equal @player.name, json_response.first['name']
+    assert_equal @player.username, json_response.first['username']
   end
 
   test 'should authenticate by username' do
