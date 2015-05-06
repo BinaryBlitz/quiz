@@ -91,9 +91,6 @@ class Player < ActiveRecord::Base
   end
 
   def total_score
-    wins = topic_results.sum(:wins)
-    draws = topic_results.sum(:draws)
-    losses = topic_results.sum(:losses)
     [wins, draws, losses]
   end
 

@@ -6,6 +6,18 @@ module PlayerRankings
     # scope :order_by_weekly_points, -> { order(weekly_points: :desc) }
   end
 
+  def wins
+    topic_results.sum(:wins)
+  end
+
+  def draws
+    topic_results.sum(:draws)
+  end
+
+  def losses
+    topic_results.sum(:losses)
+  end
+
   def weekly_points
     topic_results.sum(:weekly_points)
   end
