@@ -3,13 +3,13 @@ module Player::VkAuthorization
 
   module ClassMethods
     def find_or_create_from_vk(vk)
-      user = vk.users.get(fields: [:photo]).first
+      user = vk.users.get(fields: [:photo_medium]).first
       player = find_by(vk_id: user.uid)
 
       unless player
         player = create!(
           password: SecureRandom.hex,
-          vk_token: vk.token, vk_id: user.uid, remote_avatar_url: user.photo)
+          vk_token: vk.token, vk_id: user.uid, remote_avatar_url: user.photo_medium)
         add_friends(player, vk.friends.get)
       end
       player
