@@ -48,10 +48,10 @@ class TopicResult < ActiveRecord::Base
       self.weekly_points += total_points
     end
     self.points += total_points
-    self.count += 1
   end
 
   def update_score(session)
+    self.count += 1
     if session.draw?
       self.draws += 1
     else

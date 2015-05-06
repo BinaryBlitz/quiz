@@ -1,4 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 # Examples:
@@ -8,14 +7,12 @@
 
 # Players
 host = Player.create(
-  name: 'Foo', username: 'foo', email: 'foo@bar.com',
-  password_digest: Digest::MD5.hexdigest('foobar'))
+  name: 'Foo', username: 'foo', email: 'foo@bar.com', password: 'foobar')
 opponent = Player.create(
-  name: 'Bar', username: 'bar', email: 'bar@foo.com',
-  password_digest: Digest::MD5.hexdigest('barfoo'))
+  name: 'Bar', username: 'bar', email: 'bar@foo.com', password: 'barfoo')
 # API keys
-host.token.update(token: 'foobar')
-opponent.token.update(token: 'barfoo')
+host.update(token: 'foobar')
+opponent.update(token: 'barfoo')
 # Push tokens
 host.push_tokens.create(token: 'apple')
 host.push_tokens.create(token: 'android', android: true)
