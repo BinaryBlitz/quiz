@@ -8,17 +8,17 @@ json.host do
 end
 
 json.opponent do
-  if game_session.offline?
+  if game_session.opponent
+    json.partial! 'players/player', player: game_session.opponent
+    json.extract! game_session.opponent, :multiplier
+    json.points game_session.opponent.topic_points(game_session.topic)
+  else
     json.id nil
     json.username Player.random_username
     json.email nil
     json.avatar_url nil
     json.points 0
     json.multiplier 1
-  else
-    json.partial! 'players/player', player: game_session.opponent
-    json.extract! game_session.opponent, :multiplier
-    json.points game_session.opponent.topic_points(game_session.topic)
   end
 end
 
