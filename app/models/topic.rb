@@ -23,8 +23,6 @@ class Topic < ActiveRecord::Base
   has_many :players, -> { uniq }, through: :topic_results
   has_one :purchase_type, dependent: :destroy
 
-  default_scope { order(created_at: :asc) }
-
   validates :name, presence: true
   validates :category, presence: true
 

@@ -12,8 +12,6 @@
 class Achievement < ActiveRecord::Base
   validates :badge_id, uniqueness: true
 
-  default_scope -> { order(id: :asc) }
-
   mount_uploader :icon, IconUploader
 
   def self.icon_url_for(badge)
