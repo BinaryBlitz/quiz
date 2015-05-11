@@ -4,9 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   before_filter :restrict_access
 
-  def current_player
-    @current_player
-  end
+  attr_reader :current_player
 
   def restrict_access
     unless restrict_access_by_params || restrict_access_by_header
@@ -14,20 +12,20 @@ class ApplicationController < ActionController::Base
       return
     end
 
-    @current_player = @api_key.player if @api_key
+    @current_player
   end
 
   def restrict_access_by_header
-    return true if @api_key
+    return true if @current_player
 
     authenticate_with_http_token do |token|
-      @api_key = ApiKey.find_by_token(token)
+      @current_player = Player.find_by_token(token)
     end
   end
 
   def restrict_access_by_params
-    return true if @api_key
+    return true if @current_player
 
-    @api_key = ApiKey.find_by_token(params[:token])
+    @current_player = Player.find_by_token(params[:token])
   end
 end

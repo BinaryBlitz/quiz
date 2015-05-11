@@ -1,0 +1,10 @@
+tr
+  td = topic.id
+  td = link_to topic.name, admin_topic_path(topic)
+  td = topic.visible
+  td = link_to topic.category, admin_category_path(topic.category)
+  td = topic.featured?
+  td
+    = link_to 'Edit', edit_admin_topic_path(topic), class: 'btn btn-default'
+    = ' '
+    = link_to 'Delete', admin_topic_path(topic), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

@@ -15,9 +15,9 @@ class Admin::QuestionsController < Admin::AdminController
 
   def create
     @question = Question.new(question_params)
-    @question.set_correct_answer
 
     if @question.save
+      @question.set_correct_answer
       redirect_to [:admin, @question.topic], notice: 'Question was successfully created.'
     else
       puts @question.errors.full_messages
@@ -49,6 +49,8 @@ class Admin::QuestionsController < Admin::AdminController
   end
 
   def question_params
-    params.require(:question).permit(:content, :topic_id, answers_attributes: [:id, :content, :correct, :_destroy])
+    params.require(:question).permit(
+      :content, :topic_id, :image, :remove_image, :image_cache,
+      answers_attributes: [:id, :content, :correct, :_destroy])
   end
 end

@@ -4,4 +4,28 @@
     = f.label :name
     = f.text_field :name, placeholder: 'Category name', class: 'form-control'
 
+  .form-group
+    = f.label :background
+    = f.file_field :background
+
+  = image_tag @category.background.thumb.url if @category.background?
+
+  - if @category.background?
+    .checkbox
+      label
+        = f.check_box :remove_background
+        | Remove background
+
+  .form-group
+    = f.label :banner
+    = f.file_field :banner
+
+  = image_tag @category.banner.thumb.url if @category.banner?
+
+  - if @category.banner?
+    .checkbox
+      label
+        = f.check_box :remove_banner
+        | Remove banner
+
   = f.submit 'Submit', class: 'btn btn-default'

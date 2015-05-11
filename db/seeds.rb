@@ -1,4 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 # Examples:
@@ -7,79 +6,50 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Players
-host = Player.create(name: 'Foo', email: 'foo@bar.com', password_digest: BCrypt::Password.create('foobar'))
-opponent = Player.create(name: 'Bar', email: 'bar@foo.com', password_digest: BCrypt::Password.create('barfoo'))
+host = Player.create(username: 'foo', email: 'foo@bar.com', password: 'foobar')
+opponent = Player.create(username: 'bar', email: 'bar@foo.com', password: 'barfoo')
+# API keys
+host.update(token: 'foobar')
+opponent.update(token: 'barfoo')
+# Push tokens
+host.push_tokens.create(token: 'apple')
+host.push_tokens.create(token: 'android', android: true)
+opponent.push_tokens.create(token: 'apple-2')
+opponent.push_tokens.create(token: 'android-2', android: true)
+
+# Purchases
+PurchaseType.create(
+  [{ identifier: 'booster-x2', multiplier: 2 }, { identifier: 'booster-x3', multiplier: 3 }])
 
 # Categories and topics
 category = Category.create(name: 'General')
 topic = Topic.create(name: 'Geography', category: category)
 
 # Questions
-q1 = Question.create(content: 'What is the capital of the UK?', topic: topic)
-q1.answers << Answer.create(content: 'London', correct: true)
-q1.answers << Answer.create(content: 'New York')
-q1.answers << Answer.create(content: 'Paris')
-q1.answers << Answer.create(content: 'Berlin')
+questions = {
+  'What is the capital of the UK?': %w(London New\ York\ City Paris Berlin),
+  'What is the capital of the US?': %w(Washington\ D.C. New\ York\ City Los\ Angeles Chicago),
+  'What is the largest country in the world?': %w(Russia Canada The\ United\ States Brazil),
+  'What is the largest country in Europe?': %w(Russia Germany Poland The\ United\ Kingdom),
+  'What is the largest country in Americas?': %w(Canada The\ United\ States Mexico Brazil),
+  'What is the largest country in Africa?': %w(Algeria Egypt South\ African\ Republic Ghana),
+  'What is the largest country in Asia?': %w(Russia China India Japan)
+}
 
-q2 = Question.create(content: 'What is the capital of the US?', topic: topic)
-q2.answers << Answer.create(content: 'Washington D.C.', correct: true)
-q2.answers << Answer.create(content: 'New York City')
-q2.answers << Answer.create(content: 'Los Angeles')
-q2.answers << Answer.create(content: 'Chicago')
+questions.each do |question, answers|
+  q = Question.new(content: question, topic: topic)
+  answers.each { |answer| q.answers.new(content: answer, correct: answer == answers.first) }
+  q.save
+end
 
-q3 = Question.create(content: 'What is the largest country in the world?', topic: topic)
-q3.answers << Answer.create(content: 'Russia', correct: true)
-q3.answers << Answer.create(content: 'Canada')
-q3.answers << Answer.create(content: 'United States')
-q3.answers << Answer.create(content: 'Brazil')
+# Online and offline session
+GameSession.create(host: host, opponent: opponent, topic: topic, offline: false)
+offline_session = GameSession.create(host: host, topic: topic, offline: true)
+offline_session.game_session_questions.each do |session_question|
+  session_question.update!(host_answer: session_question.question.correct_answer, host_time: 1)
+end
 
-q4 = Question.create(content: 'What is the largest country in Europe?', topic: topic)
-q4.answers << Answer.create(content: 'Russia', correct: true)
-q4.answers << Answer.create(content: 'Germany')
-q4.answers << Answer.create(content: 'Poland')
-q4.answers << Answer.create(content: 'The United Kingdom')
-
-q5 = Question.create(content: 'What is the largest country in Americas?', topic: topic)
-q5.answers << Answer.create(content: 'Canada', correct: true)
-q5.answers << Answer.create(content: 'The United States')
-q5.answers << Answer.create(content: 'Mexico')
-q5.answers << Answer.create(content: 'Brazil')
-
-q6 = Question.create(content: 'What is the largest country in Africa?', topic: topic)
-q6.answers << Answer.create(content: 'Algeria', correct: true)
-q6.answers << Answer.create(content: 'Egypt')
-q6.answers << Answer.create(content: 'South African Republic')
-q6.answers << Answer.create(content: 'Ghana')
-
-q7 = Question.create(content: 'What is the largest country in Asia?', topic: topic)
-q7.answers << Answer.create(content: 'Russia', correct: true)
-q7.answers << Answer.create(content: 'China')
-q7.answers << Answer.create(content: 'India')
-q7.answers << Answer.create(content: 'Japan')
-
-# Online session
-session = GameSession.create(host: host, opponent: opponent)
-sq1 = GameSessionQuestion.create(game_session: session, question: q1,
-  host_answer: q1.answers.first, opponent_answer: q1.answers.second)
-sq2 = GameSessionQuestion.create(game_session: session, question: q2,
-  host_answer: q2.answers.second, opponent_answer: q2.answers.first)
-sq3 = GameSessionQuestion.create(game_session: session, question: q1,
-  host_answer: q1.answers.first, opponent_answer: q1.answers.second)
-sq4 = GameSessionQuestion.create(game_session: session, question: q2,
-  host_answer: q2.answers.second, opponent_answer: q2.answers.first)
-sq5 = GameSessionQuestion.create(game_session: session, question: q1,
-  host_answer: q1.answers.first, opponent_answer: q1.answers.second)
-sq6 = GameSessionQuestion.create(game_session: session, question: q2,
-  host_answer: q2.answers.second, opponent_answer: q2.answers.first)
-
-# OfflineSession
-offline_session = GameSession.create(host: host, opponent: opponent, offline: true, topic: topic)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q1, opponent_answer: q1.answers.first)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q2, opponent_answer: q1.answers.second)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q3, opponent_answer: q1.answers.first)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q4, opponent_answer: q1.answers.second)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q5, opponent_answer: q1.answers.first)
-offline_session.game_session_questions << GameSessionQuestion.create(question: q6, opponent_answer: q1.answers.second)
-
-# Admins
-admin = Admin.create(email: 'foo@bar.com', password: 'qwerty123', password_confirmation: 'qwerty123')
+# Admin
+Admin.create(
+  email: 'foo@bar.com',
+  password: 'qwerty123', password_confirmation: 'qwerty123')

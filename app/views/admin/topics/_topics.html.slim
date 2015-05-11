@@ -2,24 +2,11 @@
   table.table
     thead
       tr
-        td ID
+        td id
         td Name
         td Visible
-        / td Expires at
-        td Price
-        td Played count
         td Category
+        td Featured
         td Actions
     - for topic in topics
-      tr
-        td = topic.id
-        td = link_to topic.name, admin_topic_path(topic)
-        td = topic.visible
-        / td = topic.expires_at
-        td = topic.price
-        td = topic.played_count
-        td = link_to topic.category, admin_category_path(topic.category)
-        td
-          = link_to 'Edit', edit_admin_topic_path(topic), class: 'btn btn-default'
-          = ' '
-          = link_to 'Delete', admin_topic_path(topic), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+      = render topic

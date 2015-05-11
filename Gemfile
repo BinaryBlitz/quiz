@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '2.2.0'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -14,12 +12,10 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # Use Slim
 gem 'slim-rails'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+# Turbolinks makes following links in your web application faster
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -29,13 +25,24 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-# Use Devise for authentication
+gem 'has_secure_token'
+
+# Dashboard
 gem 'devise'
-# Use Bootstrap as a CSS framework
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
-
 gem 'nested_form_fields'
+
+gem 'pusher'
+gem 'vkontakte_api'
+gem 'gcm'
+gem 'houston'
+gem 'merit'
+
+# File processing
+gem 'carrierwave'
+gem 'carrierwave-base64'
+gem 'mini_magick'
 
 # Use Unicorn as the app server
 gem 'unicorn'
@@ -46,18 +53,13 @@ gem 'unicorn'
 gem 'rails_12factor', group: :production
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'mocha'
+  gem 'capistrano'
+  gem "rvm-capistrano", require: false
   gem 'byebug'
   gem 'pry-rails'
-  # Use RSpec for testing
-  gem 'rspec-rails'
-  # Use FactoryGirl for factories
-  gem 'factory_girl'
-  gem 'factory_girl_rails'
-  # Improved error pages
   gem 'better_errors'
   gem 'pry-byebug'
-  gem 'shoulda-matchers'
   gem 'annotate', '~> 2.6.5'
   gem 'spring'
 end

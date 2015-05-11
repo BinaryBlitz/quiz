@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   root 'admin/dashboard#index'
 
-  devise_for :admins, path: 'admin'
+  # Devise
+  devise_for :admins, path: 'admin', controllers: {
+    sessions: 'admins/sessions'
+  }
 
+  resources :password_resets, except: [:show, :destroy]
+
+  # Dashboard
   namespace :admin do
     get '/', to: 'dashboard#index'
     get 'manage', to: 'admins#index'
@@ -10,15 +16,58 @@ Rails.application.routes.draw do
     resources :categories
     resources :topics
     resources :questions
+    resources :achievements
   end
 
-  resources :topics, only: [:index, :show], defaults: { format: :json }
-  resources :categories, only: [:index, :show], defaults: { format: :json }
-  resources :game_session_questions, only: [:show, :update], defaults: { format: :json }
-  resources :game_sessions, except: [:new, :edit], defaults: { format: :json }
-  resources :questions, except: [:new, :edit], defaults: { format: :json }
-  resources :players, except: [:new, :edit], defaults: { format: :json } do
-    post 'authenticate', on: :collection
+  scope '/api', defaults: { format: :json } do
+    # Resources
+    resources :topics, only: [:index, :show]
+    resources :categories, only: [:index, :show]
+    resources :game_session_questions, only: [:update]
+    resources :game_sessions, except: [:new, :edit] do
+      patch 'close', on: :member
+    end
+    resources :questions, except: [:new, :edit]
+    resources :players, except: [:new, :edit] do
+      post 'authenticate', on: :collection
+      post 'authenticate_vk', on: :collection
+      get 'username_availability', on: :collection
+      get 'friends', on: :member
+      get 'search', on: :collection
+      get 'report', on: :member
+    end
+    resources :friendships, only: [:index, :create] do
+      get 'requests', on: :collection
+      patch 'mark_requests_as_viewed', on: :collection
+      delete 'unfriend', on: :collection
+    end
+    resources :push_tokens, only: [:create] do
+      patch 'replace', on: :collection
+      delete 'delete', on: :collection
+    end
+    resources :purchases do
+      get 'available', on: :collection
+    end
+    resources :achievements, only: [:index]
+
+    # Online sessions
+    resources :lobbies, only: [:create, :destroy] do
+      get 'find', on: :member
+      get 'challenges', on: :collection
+      get 'challenged', on: :collection
+      post 'challenge', on: :collection
+      post 'accept_challenge', on: :member
+      post 'decline_challenge', on: :member
+      patch 'close', on: :member
+    end
+
+    # Rankings
+    get 'rankings/general'
+    get 'rankings/weekly'
+    get 'rankings/general_by_category'
+    get 'rankings/weekly_by_category'
+
+    get 'pages/home'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,0 +1,17 @@
+# == Schema Information
+#
+# Table name: purchases
+#
+#  id               :integer          not null, primary key
+#  player_id        :integer
+#  purchase_type_id :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  expires_at       :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+booster:
+  player: foo
+  purchase_type: booster

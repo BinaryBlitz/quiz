@@ -1,11 +1,9 @@
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.all
-    render formats: :json
+    @categories = Category.all.includes(:topics)
   end
 
   def show
     @category = Category.find(params[:id])
-    render formats: :json
   end
 end

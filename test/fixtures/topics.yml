@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: topics
+#
+#  id          :integer          not null, primary key
+#  name        :string
+#  visible     :boolean          default(TRUE)
+#  expires_at  :date
+#  category_id :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  featured    :boolean          default(FALSE)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+geography:
+  name: Geography
+  category: general
+
+geometry:
+  name: Geometry
+  category: math
+
+paid:
+  name: Paid
+  category: general

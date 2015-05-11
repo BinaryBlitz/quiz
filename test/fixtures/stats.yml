@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: stats
+#
+#  id            :integer          not null, primary key
+#  days_in_a_row :integer          default(0)
+#  played_at     :date
+#  player_id     :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  early_wins    :integer          default(0)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  days_in_a_row: 9
+  played_at: <%= Date.today - 1 %>
+  early_wins: 49
+  player: foo

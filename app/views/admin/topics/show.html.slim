@@ -1,6 +1,19 @@
 h2 = 'Topic: ' + @topic.name
+
 strong Questions:
 = ' ' + @topic.questions.count.to_s
+
+table.table
+  thead
+    tr
+      td id
+      td Name
+      td Visible
+      td Category
+      td Featured
+      td Actions
+  tbody
+    = render @topic
 
 h3 Questions
 = link_to 'New question', new_admin_question_path(topic_id: @topic.id), class: 'btn btn-default'

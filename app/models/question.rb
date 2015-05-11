@@ -4,34 +4,33 @@
 #
 #  id         :integer          not null, primary key
 #  content    :text
-#  image_url  :string
-#  bounty     :integer          default("1")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  topic_id   :integer
+#  image      :string
 #
 
 class Question < ActiveRecord::Base
+  belongs_to :topic
   has_many :answers, -> { order(id: :asc) }, dependent: :destroy
   has_many :game_session_questions, dependent: :destroy
-  belongs_to :topic
+
+  mount_uploader :image, QuestionImageUploader
 
   validates :content, presence: true
   validates :topic, presence: true
-  validates :bounty, numericality: { greater_than_or_equal_to: 0 }
-  validates :image_url, format: { with: URI.regexp }, allow_blank: true
 
-  accepts_nested_attributes_for :answers, allow_destroy: true,
-    reject_if: lambda { |a| a[:content].blank? }
+  accepts_nested_attributes_for :answers,
+                                reject_if: -> (a) { a[:content].blank? }, allow_destroy: true
+  validates :answers, length: { is: 4, wrong_length: 'count must be equal to 4' }
 
   # Finds the first answer and updates it to be the correct one
   def set_correct_answer
     # Skip if there're no answers
-    if answers.any?
-      answers.first.update(correct: true)
-      # Set other answers to incorrect, skip if new record
-      set_incorrect_answers unless new_record?
-    end
+    return unless answers.any?
+    answers.first.update(correct: true)
+    # Set other answers to incorrect, skip if new record
+    set_incorrect_answers unless new_record?
   end
 
   # Get correct answer
@@ -44,18 +43,20 @@ class Question < ActiveRecord::Base
     answers.where(correct: false).sample if answers.any?
   end
 
+  def valid_answer?(answer)
+    answers.include?(answer)
+  end
+
   private
 
   # Finds and updates correct answers to incorrect
   def set_incorrect_answers
     # Get all answers (except the first one)
-    if other_answers = answers.drop(1)
-      # debugger
-      other_answers.each do |answer|
-        # Set to incorrect if it was correct
-        answer.update(correct: true) if answer.correct?
-      end
+    other_answers = answers.drop(1)
+    return unless other_answers
+    other_answers.each do |answer|
+      # Set to incorrect if it was correct
+      answer.update(correct: true) if answer.correct?
     end
   end
-
 end

@@ -1,0 +1,33 @@
+# == Schema Information
+#
+# Table name: game_sessions
+#
+#  id          :integer          not null, primary key
+#  host_id     :integer
+#  opponent_id :integer
+#  offline     :boolean          default(TRUE)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  topic_id    :integer
+#  closed      :boolean
+#  finisher_id :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+offline:
+  host: foo
+  opponent:
+  offline: true
+  topic: geography
+
+online:
+  host: foo
+  opponent: bar
+  offline: false
+  topic: geography
+
+empty:
+  host: foo
+  offline: true
+  topic: geography
