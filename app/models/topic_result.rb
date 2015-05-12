@@ -37,11 +37,11 @@ class TopicResult < ActiveRecord::Base
     update!(category: topic.category)
   end
 
+  private
+
   def older_than_week?
     updated_at < Time.zone.now.beginning_of_week
   end
-
-  private
 
   def add_points(total_points)
     if older_than_week?
