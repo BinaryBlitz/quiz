@@ -19,7 +19,7 @@ module PlayerRankings
   end
 
   def weekly_points
-    topic_results.sum(:weekly_points)
+    topic_results.recent.sum(:weekly_points)
   end
 
   def topic_points(topic)
@@ -27,7 +27,9 @@ module PlayerRankings
   end
 
   def weekly_topic_points(topic)
-    topic_results.find_by(topic: topic).weekly_points
+    topic_result = topic_results.find_by(topic: topic)
+    return 0 unless topic_result
+    topic_result.older_than_week? ? 0 : topic_result.weekly_points
   end
 
   def category_points(category)
@@ -35,7 +37,9 @@ module PlayerRankings
   end
 
   def weekly_category_points(category)
-    topic_results.where(category: category).sum(:weekly_points)
+    topic_results.where(category: category)
+      .where('updated_at > ?', Time.zone.now.beginning_of_week)
+      .sum(:weekly_points)
   end
 
   module ClassMethods
@@ -48,6 +52,7 @@ module PlayerRankings
 
     def order_by_weekly_points
       joins(:topic_results)
+        .where('topic_results.updated_at > ?', Time.zone.now.beginning_of_week)
         .select('players.*, sum(topic_results.weekly_points) as total_points')
         .group('players.id')
         .order('total_points desc')
@@ -60,14 +65,14 @@ module PlayerRankings
     def order_by_weekly_topic(topic)
       joins(:topic_results)
         .where('topic_id = ?', topic.id)
+        .where('topic_results.updated_at > ?', Time.zone.now.beginning_of_week)
         .order('topic_results.weekly_points DESC')
     end
 
     def order_by_category(category)
       joins(:topic_results)
         .where('category_id = ?', category.id)
-        .select('players.id, players.name, players.avatar,
-          sum(topic_results.points) as total_points')
+        .select('players.*, sum(topic_results.points) as total_points')
         .group('players.id')
         .order('total_points desc')
     end
@@ -75,8 +80,8 @@ module PlayerRankings
     def order_by_weekly_category(category)
       joins(:topic_results)
         .where('category_id = ?', category.id)
-        .select('players.id, players.name, players.avatar,
-          sum(topic_results.weekly_points) as total_points')
+        .where('topic_results.updated_at > ?', Time.zone.now.beginning_of_week)
+        .select('players.*, sum(topic_results.weekly_points) as total_points')
         .group('players.id')
         .order('total_points desc')
     end
