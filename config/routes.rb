@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :topics
     resources :questions
     resources :achievements
+    resources :imports, only: [:new, :create]
   end
 
   scope '/api', defaults: { format: :json } do
