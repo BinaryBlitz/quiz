@@ -3,7 +3,9 @@ h2 = link_to 'Categories', admin_categories_path
 = render 'admin/categories/categories', categories: @categories
 
 h2 = link_to 'Topics', admin_topics_path
-= link_to 'New topic', new_admin_topic_path, class: 'btn btn-default'
+.btn-group
+  = link_to 'New topic', new_admin_topic_path, class: 'btn btn-default'
+  = link_to 'Import', new_admin_import_path, class: 'btn btn-default'
 = render 'admin/topics/topics', topics: @topics
 
 h2 = link_to 'Achievements', admin_achievements_path

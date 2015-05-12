@@ -5,6 +5,9 @@ class Admin::ImportsController < Admin::AdminController
   def create
     file = params[:file].open
     import(file)
+    redirect_to admin_topics_path, notice: 'Imported successfully.'
+  rescue
+    render :new, alert: 'Incorrect file format.'
   end
 
   private
