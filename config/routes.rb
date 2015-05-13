@@ -30,21 +30,29 @@ Rails.application.routes.draw do
     end
     resources :questions, except: [:new, :edit]
     resources :players, except: [:new, :edit] do
-      post 'authenticate', on: :collection
-      post 'authenticate_vk', on: :collection
-      get 'username_availability', on: :collection
-      get 'friends', on: :member
-      get 'search', on: :collection
-      get 'report', on: :member
+      collection do
+        post 'authenticate'
+        post 'authenticate_vk'
+        get 'username_availability'
+        get 'search'
+      end
+      member do
+        get 'friends'
+        get 'report'
+      end
     end
     resources :friendships, only: [:index, :create] do
-      get 'requests', on: :collection
-      patch 'mark_requests_as_viewed', on: :collection
-      delete 'unfriend', on: :collection
+      collection do
+        get 'requests'
+        patch 'mark_requests_as_viewed'
+        delete 'unfriend'
+      end
     end
     resources :push_tokens, only: [:create] do
-      patch 'replace', on: :collection
-      delete 'delete', on: :collection
+      collection do
+        patch 'replace'
+        delete 'delete'
+      end
     end
     resources :purchases do
       get 'available', on: :collection
@@ -53,13 +61,17 @@ Rails.application.routes.draw do
 
     # Online sessions
     resources :lobbies, only: [:create, :destroy] do
-      get 'find', on: :member
-      get 'challenges', on: :collection
-      get 'challenged', on: :collection
-      post 'challenge', on: :collection
-      post 'accept_challenge', on: :member
-      post 'decline_challenge', on: :member
-      patch 'close', on: :member
+      collection do
+        get 'challenges'
+        get 'challenged'
+        post 'challenge'
+      end
+      member do
+        get 'find'
+        post 'accept_challenge'
+        post 'decline_challenge'
+        patch 'close'
+      end
     end
 
     # Rankings
