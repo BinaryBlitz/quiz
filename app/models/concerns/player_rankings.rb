@@ -57,14 +57,18 @@ module PlayerRankings
     end
 
     def order_by_topic(topic)
-      joins(:topic_results).where('topic_id = ?', topic.id).order('topic_results.points DESC')
+      joins(:topic_results)
+        .where('topic_id = ?', topic.id)
+        .select('players.*, topic_results.points AS total_points')
+        .order('total_points DESC')
     end
 
     def order_by_weekly_topic(topic)
       joins(:topic_results)
         .where('topic_id = ?', topic.id)
         .recent_results
-        .order('topic_results.weekly_points DESC')
+        .select('players.*, topic_results.weekly_points AS total_points')
+        .order('total_points DESC')
     end
 
     def order_by_category(category)

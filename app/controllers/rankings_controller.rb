@@ -1,41 +1,41 @@
 class RankingsController < ApplicationController
-  before_action :find_topic, only: [:general, :weekly]
-  before_action :find_category, only: [:general_by_category, :weekly_by_category]
+  before_action :set_topic, only: :topic
+  before_action :set_category, only: :category
 
   def general
-    top_players = @topic ? Player.order_by_topic(@topic) : Player.order_by_points
-    set_up_rankings(top_players)
+    if weekly?
+      set_up_rankings(Player.order_by_weekly_points)
+    else
+      set_up_rankings(Player.order_by_points)
+    end
+    render :rankings
   end
 
-  def weekly
-    top_players = @topic ? Player.order_by_weekly_topic(@topic) : Player.order_by_weekly_points
-    set_up_rankings(top_players)
+  def topic
+    if weekly?
+      set_up_rankings(Player.order_by_weekly_topic(@topic))
+    else
+      set_up_rankings(Player.order_by_topic(@topic))
+    end
+    render :rankings
   end
 
-  def general_by_category
-    top_players = Player.order_by_category(@category)
-    set_up_rankings(top_players)
-    render template: 'rankings/category_rankings'
-  end
-
-  def weekly_by_category
-    top_players = Player.order_by_weekly_category(@category)
-    set_up_rankings(top_players)
-    @weekly = true
-    render template: 'rankings/category_rankings'
+  def category
+    if weekly?
+      set_up_rankings(Player.order_by_weekly_category(@category))
+    else
+      set_up_rankings(Player.order_by_category(@category))
+    end
+    render :rankings
   end
 
   private
 
-  def rankings_params
-    params.permit(:topic_id)
-  end
-
-  def find_topic
+  def set_topic
     @topic = Topic.find_by(id: params[:topic_id])
   end
 
-  def find_category
+  def set_category
     @category = Category.find(params[:category_id])
   end
 
@@ -52,5 +52,9 @@ class RankingsController < ApplicationController
     @rankings = top_players.limit(Player::TOP_SIZE)
     @position = top_players.index(current_player)
     @player_rankings = player_rankings(top_players) if @position.to_i >= Player::TOP_SIZE
+  end
+
+  def weekly?
+    params.key?(:weekly)
   end
 end
