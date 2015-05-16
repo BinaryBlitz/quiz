@@ -40,8 +40,11 @@ class Player < ActiveRecord::Base
   has_many :topic_results, dependent: :destroy
   has_many :topics, -> { uniq }, through: :topic_results
 
+  has_many :friend_requests, dependent: :destroy
+  has_many :pending_friends, through: :friend_requests, source: :friend
+
   has_many :friendships, dependent: :destroy
-  has_many :friends, -> { uniq }, through: :friendships
+  has_many :friends, through: :friendships
 
   mount_base64_uploader :avatar, AvatarUploader
 
@@ -128,9 +131,5 @@ class Player < ActiveRecord::Base
 
   def vk_user?
     vk_id.present?
-  end
-
-  def generate_reset_password_token
-    update(password_reset_token: SecureRandom.hex)
   end
 end

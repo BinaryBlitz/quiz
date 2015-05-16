@@ -21,19 +21,20 @@ Rails.application.routes.draw do
   end
 
   scope '/api', defaults: { format: :json } do
-    # Resources
+    # Topics & categories
     resources :topics, only: [:index, :show]
     resources :categories, only: [:index, :show]
+
     resources :game_session_questions, only: [:update]
     resources :game_sessions, except: [:new, :edit] do
       patch 'close', on: :member
     end
-    resources :questions, except: [:new, :edit]
+
+    # Players & friends
     resources :players, except: [:new, :edit] do
       collection do
         post 'authenticate'
         post 'authenticate_vk'
-        get 'username_availability'
         get 'search'
       end
       member do
@@ -41,13 +42,11 @@ Rails.application.routes.draw do
         get 'report'
       end
     end
-    resources :friendships, only: [:index, :create] do
-      collection do
-        get 'requests'
-        patch 'mark_requests_as_viewed'
-        delete 'unfriend'
-      end
-    end
+    resources :friend_requests, except: [:new, :edit]
+    resources :friends, only: [:index, :destroy]
+    resources :achievements, only: [:index]
+
+    # Mobile
     resources :push_tokens, only: [:create] do
       collection do
         patch 'replace'
@@ -57,9 +56,8 @@ Rails.application.routes.draw do
     resources :purchases do
       get 'available', on: :collection
     end
-    resources :achievements, only: [:index]
 
-    # Online sessions
+    # Game
     resources :lobbies, only: [:create, :destroy] do
       collection do
         get 'challenges'
@@ -79,6 +77,7 @@ Rails.application.routes.draw do
     get 'rankings/topic'
     get 'rankings/category'
 
+    # Pages
     get 'pages/home'
   end
 
