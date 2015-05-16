@@ -23,10 +23,14 @@ module QuizApp
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.generators.stylesheets = false
-    config.generators.javascripts = false
-    config.generators.helper = false
+    config.generators do |g|
+      g.assets = false
+      g.helper = false
+      g.mailer = false
+      g.test_framework nil
+      g.template_engine = :jbuilder
+    end
 
-    config.autoload_paths << Rails.root.join("app", "services")
+    config.autoload_paths << Rails.root.join('app', 'services')
   end
 end
