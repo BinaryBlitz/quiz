@@ -1,0 +1,8 @@
+h2 Import questions from file
+
+= form_tag admin_imports_path, multipart: true do
+  .form-group
+    = label_tag :hello
+    = file_field_tag 'file'
+
+  = submit_tag 'Import', class: 'btn btn-default'

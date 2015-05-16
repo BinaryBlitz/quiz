@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506061027) do
+ActiveRecord::Schema.define(version: 20150516195321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,12 +82,22 @@ ActiveRecord::Schema.define(version: 20150506061027) do
   add_index "category_results", ["category_id"], name: "index_category_results_on_category_id", using: :btree
   add_index "category_results", ["player_id"], name: "index_category_results_on_player_id", using: :btree
 
+  create_table "friend_requests", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "friend_requests", ["friend_id"], name: "index_friend_requests_on_friend_id", using: :btree
+  add_index "friend_requests", ["player_id", "friend_id"], name: "index_friend_requests_on_player_id_and_friend_id", unique: true, using: :btree
+  add_index "friend_requests", ["player_id"], name: "index_friend_requests_on_player_id", using: :btree
+
   create_table "friendships", force: :cascade do |t|
     t.integer  "player_id"
     t.integer  "friend_id"
-    t.boolean  "viewed",     default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "friendships", ["player_id"], name: "index_friendships_on_player_id", using: :btree
@@ -289,6 +299,7 @@ ActiveRecord::Schema.define(version: 20150506061027) do
   add_foreign_key "answers", "questions"
   add_foreign_key "category_results", "categories"
   add_foreign_key "category_results", "players"
+  add_foreign_key "friend_requests", "players"
   add_foreign_key "friendships", "players"
   add_foreign_key "game_session_questions", "game_sessions"
   add_foreign_key "game_session_questions", "questions"

@@ -25,6 +25,8 @@ class TopicResult < ActiveRecord::Base
 
   validates :topic, presence: true
 
+  scope :recent, -> { where('updated_at > ?', Time.zone.now.beginning_of_week) }
+
   def add(session)
     add_points(session.player_points(player) * player.multiplier)
     update_score(session)

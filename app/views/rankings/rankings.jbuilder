@@ -1,6 +1,6 @@
 json.rankings do
   json.array!(@rankings) do |player|
-    json.partial! 'player', player: player, topic: @topic
+    json.partial! 'player', player: player
   end
 end
 
@@ -9,7 +9,7 @@ json.position @position if @position
 if @player_rankings
   json.player_rankings do
     json.array!(@player_rankings) do |player|
-      json.partial! 'player', player: player, topic: @topic
+      json.partial! 'player', player: player
     end
   end
 end

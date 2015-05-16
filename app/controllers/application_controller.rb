@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :restrict_access
 
   attr_reader :current_player
+  helper_method :current_player
 
   def restrict_access
     unless restrict_access_by_params || restrict_access_by_header
