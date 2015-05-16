@@ -19,7 +19,6 @@ class GameSessionsTest < ActionDispatch::IntegrationTest
   test 'should close game session' do
     patch "/api/game_sessions/#{@game_session.id}/close", token: token
     assert_response :no_content
-    game_session = assigns(:game_session)
-    assert game_session.closed?
+    assert @game_session.reload.closed?
   end
 end

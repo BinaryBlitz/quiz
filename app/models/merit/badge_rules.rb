@@ -45,25 +45,25 @@ module Merit
       #   user.name.length > 4
       # end
 
-      grant_on 'game_sessions#close', badge: 'winner' do |game_session|
+      grant_on 'game_sessions#close', badge: 'Победитель' do |game_session|
         game_session.finisher.wins == 100
       end
 
-      grant_on 'game_sessions#close', badge: 'faithful' do |game_session|
+      grant_on 'game_sessions#close', badge: 'Верный делу' do |game_session|
         game_session.finisher.stats.days_in_a_row == 10
       end
 
-      grant_on 'game_sessions#close', badge: 'erudite' do |game_session|
+      grant_on 'game_sessions#close', badge: 'Эрудит' do |game_session|
         game_session.finisher.erudite?
       end
 
-      grant_on 'game_sessions#close', badge: 'supercomputer' do |game_session|
+      grant_on 'game_sessions#close', badge: 'Суперкомпьютер' do |game_session|
         game_session.finisher.stats.early_wins == 50
       end
 
-      grant_on 'friendships#create', badge: 'friendly'
+      grant_on 'friend_requests#create', badge: 'Дружелюбный'
 
-      grant_on 'game_sessions#close', badge: 'lightning' do |game_session|
+      grant_on 'game_sessions#close', badge: 'Молния' do |game_session|
         sum = 0
         eligible = true
         game_session.player_answers(game_session.finisher).each do |time|
@@ -75,8 +75,6 @@ module Merit
         end
         eligible && sum <= 12
       end
-
-      grant_on 'game_sessions#close', badge: 'test-badge'
     end
   end
 end
