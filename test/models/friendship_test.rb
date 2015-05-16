@@ -5,7 +5,6 @@
 #  id         :integer          not null, primary key
 #  player_id  :integer
 #  friend_id  :integer
-#  viewed     :boolean          default(FALSE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -14,7 +13,7 @@ require 'test_helper'
 
 class FriendshipTest < ActiveSupport::TestCase
   def setup
-    @friendship = friendships(:friendship)
+    @friendship = Friendship.new(player: players(:foo), friend: players(:bar))
   end
 
   test 'invalid without player' do

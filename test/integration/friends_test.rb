@@ -4,30 +4,30 @@ class FriendsTest < ActionDispatch::IntegrationTest
   def setup
     @foo = players(:foo)
     @bar = players(:bar)
-    @baz = players(:baz)
   end
 
-  test 'should get index' do
-    get '/api/friendships', token: token
-    assert_response :success
-  end
-
-  test 'should create friendship' do
-    post '/api/friendships', token: token, friend_id: @baz.id
+  test 'friends' do
+    # Create friend request
+    post '/api/friend_requests', token: token, friend_id: @bar.id
     assert_response :created
-    post '/api/friendships', token: token, friend_id: @baz.id
-    assert_response :unprocessable_entity
-  end
+    assert @foo.pending_friends.include?(@bar)
 
-  test 'should destroy friendship' do
-    delete '/api/friendships/unfriend', token: token, friend_id: @bar.id
-    assert_response :no_content
-  end
-
-  test 'should get requests' do
-    get '/api/friendships/requests', token: @bar.token
+    # List friend requests
+    get '/api/friend_requests', token: token
     assert_response :success
-    assert_equal @foo.id, json_response.first['id']
-    assert_equal @foo.username, json_response.first['username']
+
+    # Accept friend request
+    patch "/api/friend_requests/#{FriendRequest.last.id}", token: @bar.token
+    assert_response :no_content
+    assert @foo.friends.include?(@bar)
+
+    # List friends
+    get '/api/friends', token: token
+    assert_response :success
+
+    # Remove friends
+    delete "/api/friends/#{@bar.id}", token: token
+    assert_response :no_content
+    assert_not @foo.friends.include?(@bar)
   end
 end
