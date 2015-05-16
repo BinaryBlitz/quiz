@@ -32,15 +32,34 @@ end
 #   Merit::Badge.create! attrs
 # end
 
+id = 0
 badges = [
-  { id: 1, name: 'winner', description: 'Win 100 games.' },
-  { id: 2, name: 'faithful', description: 'Play 10 days in a row.' },
-  { id: 3, name: 'lightning', description: 'Answer all questions in 12 seconds or less.' },
-  { id: 4, name: 'columbus', description: 'Top in Geography.', custom_fields: { topic_id: 1 } },
-  { id: 5, name: 'erudite', description: 'At least 1 win in all topics.' },
-  { id: 6, name: 'supercomputer', description: 'Win 50 games ahead of time.' },
-  { id: 7, name: 'friendly', description: 'Add a friend.' },
-  { id: 42, name: 'test-badge', description: 'Fuck you.' }
+  { id: id += 1, name: 'Победитель', description: 'Win 100 games.' },
+  { id: id += 1, name: 'Верный делу', description: 'Play 10 days in a row.' },
+  { id: id += 1, name: 'Молния', description: 'Answer all questions in 12 seconds or less.' },
+  { id: id += 1, name: 'Эрудит', description: 'At least 1 win in all topics.' },
+  { id: id += 1, name: 'Суперкомпьютер', description: 'Win 50 games ahead of time.' },
+  { id: id += 1, name: 'Дружелюбный', description: 'Add a friend.' },
+  {
+    id: id += 1, name: 'Колумб', description: 'Топ в географии.',
+    custom_fields: { category_name: 'География' }
+  },
+  {
+    id: id += 1, name: 'Чайковский', description: 'Топ в музыке.',
+    custom_fields: { category_name: 'Музыка' }
+  },
+  {
+    id: id += 1, name: 'Яшин', description: 'Топ в спорте.',
+    custom_fields: { category_name: 'Спорт' }
+  },
+  {
+    id: id += 1, name: 'Ломоносов', description: 'Топ в образовании.',
+    custom_fields: { category_name: 'Образование' }
+  },
+  {
+    id: id += 1, name: 'Геродот', description: 'Топ в истории.',
+    custom_fields: { category_name: 'История' }
+  }
 ]
 
 badges.each do |attrs|
