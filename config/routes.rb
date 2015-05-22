@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :topics
     resources :questions
     resources :achievements
+    resources :facts
     resources :imports, only: [:new, :create]
   end
 

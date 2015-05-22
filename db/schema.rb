@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150516195321) do
+ActiveRecord::Schema.define(version: 20150522084311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,12 @@ ActiveRecord::Schema.define(version: 20150516195321) do
 
   add_index "category_results", ["category_id"], name: "index_category_results_on_category_id", using: :btree
   add_index "category_results", ["player_id"], name: "index_category_results_on_player_id", using: :btree
+
+  create_table "facts", force: :cascade do |t|
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "friend_requests", force: :cascade do |t|
     t.integer  "player_id"
