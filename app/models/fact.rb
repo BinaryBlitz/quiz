@@ -9,4 +9,9 @@
 #
 
 class Fact < ActiveRecord::Base
+  validates :content, presence: true
+
+  def self.random
+    order('RANDOM()').first.try(:content)
+  end
 end
