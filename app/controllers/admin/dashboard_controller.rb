@@ -3,6 +3,7 @@ class Admin::DashboardController < Admin::AdminController
     @categories = Category.all
     @topics = Topic.all
     @achievements = Achievement.all
+    @facts = Fact.all
   end
 
   def manage

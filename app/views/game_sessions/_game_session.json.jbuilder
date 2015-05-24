@@ -1,5 +1,6 @@
 json.extract! game_session, :id, :offline
 json.lobby_id game_session.player_lobby_id(current_player)
+json.fact Fact.random
 
 json.host do
   json.partial! 'players/player', player: game_session.host

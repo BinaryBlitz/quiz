@@ -1,6 +1,7 @@
 class LobbiesController < ApplicationController
   before_action :restrict_access
-  before_action :find_lobby, only: [:show, :find, :destroy, :close, :accept_challenge, :decline_challenge]
+  before_action :find_lobby,
+                only: [:show, :find, :destroy, :close, :accept_challenge, :decline_challenge]
 
   include LobbySessions
 
