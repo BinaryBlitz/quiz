@@ -137,8 +137,9 @@ class Player < ActiveRecord::Base
 
   def register_xmpp
     jid = "id#{id}"
-    self.xmpp_password = SecureRandom.hex
+    xmpp_password = SecureRandom.hex
     `sudo ejabberdctl register #{jid} localhost #{xmpp_password}`
+    update(xmpp_password: xmpp_password)
   rescue
     logger.debug 'XMPP registration failed.'
   end
