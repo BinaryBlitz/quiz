@@ -16,6 +16,7 @@
 #  password_reset_token   :string
 #  password_reset_sent_at :datetime
 #  token                  :string
+#  xmpp_password          :string
 #
 
 class Player < ActiveRecord::Base
@@ -26,6 +27,7 @@ class Player < ActiveRecord::Base
   include PlayerTopics
 
   after_create :create_stats
+  after_create :register_xmpp
 
   # Associations
   has_merit
@@ -131,5 +133,13 @@ class Player < ActiveRecord::Base
 
   def vk_user?
     vk_id.present?
+  end
+
+  def register_xmpp
+    jid = "id#{id}"
+    self.xmpp_password = SecureRandom.hex
+    `sudo ejabberdctl register #{jid} localhost #{xmpp_password}`
+  rescue
+    logger.debug 'XMPP registration failed.'
   end
 end

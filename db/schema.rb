@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522084311) do
+ActiveRecord::Schema.define(version: 20150528132722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 20150522084311) do
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
     t.string   "token"
+    t.string   "xmpp_password"
   end
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
