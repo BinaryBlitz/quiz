@@ -7,6 +7,9 @@ end
 json.favorite_topics do
   json.partial! 'home_topics', topics: @favorite_topics
 end
+json.random_topics do
+  json.partial! 'home_topics', topics: Topic.all.sample(3)
+end
 
 json.challenges do
   json.partial! 'challenges', lobbies: @challenges
