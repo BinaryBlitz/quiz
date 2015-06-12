@@ -51,4 +51,9 @@ class PlayersTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_not_nil json_response['token']
   end
+
+  test 'should notify players' do
+    post "/api/players/#{@player.id}/notify", token: token, message: 'Hello!'
+    assert_response :created
+  end
 end

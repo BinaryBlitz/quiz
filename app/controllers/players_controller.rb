@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
   skip_before_filter :restrict_access,
-                     only: [:create, :authenticate, :authenticate_vk, :username_availability]
-  before_action :set_player, only: [:show, :update, :destroy, :friends, :report]
+                     only: [:create, :authenticate, :authenticate_vk]
+  before_action :set_player, only: [:show, :update, :destroy, :friends, :report, :notify]
 
   # GET /players
   def index
@@ -76,9 +76,13 @@ class PlayersController < ApplicationController
     head :created
   end
 
-  def username_availability
-    @available = Player.find_by(username: params[:username]).nil?
-    render json: { available: @available }
+  # POST /players/1/notify
+  def notify
+    message = params[:message].present?
+    return unless message
+
+    @player.push_notification(message)
+    head :created
   end
 
   private

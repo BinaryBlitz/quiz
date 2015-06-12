@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       member do
         get 'friends'
         get 'report'
+        post 'notify'
       end
     end
     resources :friend_requests, except: [:new, :edit]

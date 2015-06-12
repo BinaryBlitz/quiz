@@ -43,6 +43,7 @@ class Player < ActiveRecord::Base
   has_many :topics, -> { uniq }, through: :topic_results
 
   has_many :friend_requests, dependent: :destroy
+  has_many :incoming_requests, class_name: 'FriendRequest', foreign_key: 'friend_id', dependent: :destroy
   has_many :pending_friends, through: :friend_requests, source: :friend
 
   has_many :friendships, dependent: :destroy
