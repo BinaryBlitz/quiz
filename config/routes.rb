@@ -30,6 +30,12 @@ Rails.application.routes.draw do
     resources :game_sessions, except: [:new, :edit] do
       patch 'close', on: :member
     end
+    resources :rooms, except: [:new, :edit] do
+      member do
+        post 'join'
+        delete 'leave'
+      end
+    end
 
     # Players & friends
     resources :players, except: [:new, :edit] do

@@ -31,21 +31,28 @@ class Player < ActiveRecord::Base
 
   # Associations
   has_merit
+  has_many :reports, dependent: :destroy
+
+  # Game
   has_one :stats, dependent: :destroy
   has_many :lobbies, dependent: :destroy
   has_many :host_game_sessions, class_name: 'GameSession', foreign_key: 'host_id'
   has_many :opponent_game_sessions, class_name: 'GameSession', foreign_key: 'opponent_id'
+  has_many :owned_rooms, dependent: :destroy, class_name: 'Room'
+  has_many :participations, dependent: :destroy
+  has_many :rooms, through: :participations
+
+  # Device
   has_many :push_tokens, dependent: :destroy
   has_many :purchases, dependent: :destroy
-  has_many :reports, dependent: :destroy
 
   has_many :topic_results, dependent: :destroy
   has_many :topics, -> { uniq }, through: :topic_results
 
+  # Social
   has_many :friend_requests, dependent: :destroy
   has_many :incoming_requests, class_name: 'FriendRequest', foreign_key: 'friend_id', dependent: :destroy
   has_many :pending_friends, through: :friend_requests, source: :friend
-
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
 
