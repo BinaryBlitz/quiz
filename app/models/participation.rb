@@ -15,4 +15,11 @@ class Participation < ActiveRecord::Base
 
   validates :player, presence: true
   validates :room, presence: true, uniqueness: { scope: :player, message: 'already joined' }
+  validate :not_owner
+
+  private
+
+  def not_owner
+    errors.add(:player, 'owns this room') if room && player == room.player
+  end
 end

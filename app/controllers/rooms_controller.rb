@@ -42,8 +42,13 @@ class RoomsController < ApplicationController
   end
 
   def join
-    @room.players << current_player
-    head :created
+    participation = current_player.participations.build(room: @room)
+
+    if participation.save
+      head :created
+    else
+      render json: participation.errors, status: :unprocessable_entity
+    end
   end
 
   def leave

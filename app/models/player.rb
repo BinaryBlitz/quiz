@@ -38,6 +38,7 @@ class Player < ActiveRecord::Base
   has_many :lobbies, dependent: :destroy
   has_many :host_game_sessions, class_name: 'GameSession', foreign_key: 'host_id'
   has_many :opponent_game_sessions, class_name: 'GameSession', foreign_key: 'opponent_id'
+
   has_many :owned_rooms, dependent: :destroy, class_name: 'Room'
   has_many :participations, dependent: :destroy
   has_many :rooms, through: :participations
