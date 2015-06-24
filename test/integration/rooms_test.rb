@@ -13,7 +13,7 @@ class RoomsTest < ActionDispatch::IntegrationTest
 
     # Create
     assert_difference 'Room.count' do
-      post '/api/rooms', token: token
+      post '/api/rooms', token: token, room: { topic_id: topics(:geography).id }
     end
     assert_response :created
 
@@ -25,7 +25,7 @@ class RoomsTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     # Join
-    post "/api/rooms/#{room.id}/join", token: @guest.token
+    post "/api/rooms/#{room.id}/join", token: @guest.token, topic_id: topics(:geography).id
     assert_response :created
     assert @guest.rooms.include?(room)
 

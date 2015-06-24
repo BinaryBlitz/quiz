@@ -17,7 +17,7 @@ class RoomsController < ApplicationController
 
   # POST /rooms
   def create
-    @room = current_player.owned_rooms.build
+    @room = current_player.owned_rooms.build(room_params)
 
     if @room.save
       render :show, status: :created, location: @room
@@ -42,7 +42,8 @@ class RoomsController < ApplicationController
   end
 
   def join
-    participation = current_player.participations.build(room: @room)
+    topic = Topic.find_by(id: params[:topic_id])
+    participation = current_player.participations.build(room: @room, topic: topic)
 
     if participation.save
       head :created
@@ -65,5 +66,6 @@ class RoomsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def room_params
+    params.require(:room).permit(:topic_id)
   end
 end
