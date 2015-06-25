@@ -57,6 +57,16 @@ class RoomsController < ApplicationController
     head :no_content
   end
 
+  def start
+    # Create room session
+    # Push game start event
+    # Push room session
+  end
+
+  def close
+    # Add points
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
