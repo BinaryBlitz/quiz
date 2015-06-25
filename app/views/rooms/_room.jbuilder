@@ -1,7 +1,8 @@
 json.extract! room, :id, :player_id, :created_at
 
-json.player do
-  json.partial! 'players/player', player: room.player
+json.owner do
+  json.player { json.partial! 'players/player', player: room.player }
+  json.topic { json.partial! 'topics/topic', topic: room.topic }
 end
 
 json.participations room.participations do |participation|
