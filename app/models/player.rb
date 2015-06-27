@@ -64,6 +64,8 @@ class Player < ActiveRecord::Base
   validates :email,
             format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_nil: true
 
+  scope :online, -> { where('visited_at > ?', 1.minute.ago) }
+
   TOP_SIZE = 20
 
   def game_sessions
@@ -128,6 +130,10 @@ class Player < ActiveRecord::Base
 
   def add_result(session)
     topic_results.find_or_create_by(topic: session.topic).add(session)
+  end
+
+  def online?
+    visited_at && visited_at > 1.minute.ago
   end
 
   private
