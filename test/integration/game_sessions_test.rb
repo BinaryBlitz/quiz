@@ -6,7 +6,7 @@ class GameSessionsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get "/api/game_sessions", token: token
+    get '/api/game_sessions', token: token
     assert_response :success
     assert_not_nil assigns(:game_sessions)
   end

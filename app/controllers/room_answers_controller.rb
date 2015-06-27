@@ -1,2 +1,0 @@
-class RoomAnswersController < ApplicationController
-end

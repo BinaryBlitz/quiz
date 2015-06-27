@@ -25,7 +25,7 @@ class RoomQuestion < ActiveRecord::Base
   end
 
   def question_results
-    result = Hash.new
+    result = {}
     room_answers.each { |answer| result[answer.player] = answer.points }
     result
   end
@@ -38,4 +38,3 @@ class RoomQuestion < ActiveRecord::Base
     logger.debug "#{Time.zone.now}: New answer notification sent to room \##{room_session.room.id}"
   end
 end
-

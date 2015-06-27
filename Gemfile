@@ -58,7 +58,7 @@ gem 'rails_12factor', group: :production
 group :development, :test do
   gem 'mocha'
   gem 'capistrano'
-  gem "rvm-capistrano", require: false
+  gem 'rvm-capistrano', require: false
   gem 'byebug'
   gem 'pry-rails'
   gem 'better_errors'

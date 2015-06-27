@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "support@binaryblitz.ru"
+  default from: 'support@binaryblitz.ru'
   layout 'mailer'
 end

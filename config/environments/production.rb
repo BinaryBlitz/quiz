@@ -77,12 +77,12 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.smtp_settings = {
-    :port           => Rails.application.secrets.mailgun_smtp_port,
-    :address        => Rails.application.secrets.mailgun_smtp_server,
-    :user_name      => Rails.application.secrets.mailgun_smtp_login,
-    :password       => Rails.application.secrets.mailgun_smtp_password,
-    :domain         => 'partyapp.herokuapp.com',
-    :authentication => :plain,
+    port: Rails.application.secrets.mailgun_smtp_port,
+    address: Rails.application.secrets.mailgun_smtp_server,
+    user_name: Rails.application.secrets.mailgun_smtp_login,
+    password: Rails.application.secrets.mailgun_smtp_password,
+    domain: 'partyapp.herokuapp.com',
+    authentication: :plain
   }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'quizapp.binaryblitz.ru' }
