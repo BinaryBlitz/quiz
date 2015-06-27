@@ -56,4 +56,10 @@ class PlayersTest < ActionDispatch::IntegrationTest
     post "/api/players/#{@player.id}/notify", token: token, message: 'Hello!'
     assert_response :created
   end
+
+  test 'online status' do
+    get "/api/players/#{@player.id}", token: token
+    assert_response :success
+    assert @player.reload.online?
+  end
 end

@@ -17,6 +17,7 @@
 #  password_reset_sent_at :datetime
 #  token                  :string
 #  xmpp_password          :string
+#  visited_at             :datetime
 #
 
 require 'test_helper'

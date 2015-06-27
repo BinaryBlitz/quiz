@@ -17,6 +17,7 @@
 #  password_reset_sent_at :datetime
 #  token                  :string
 #  xmpp_password          :string
+#  visited_at             :datetime
 #
 
 class Player < ActiveRecord::Base
@@ -28,6 +29,7 @@ class Player < ActiveRecord::Base
 
   after_create :create_stats
   after_create :register_xmpp
+  after_create :set_online
 
   # Associations
   has_merit
@@ -63,6 +65,8 @@ class Player < ActiveRecord::Base
   validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :email,
             format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_nil: true
+
+  scope :online, -> { where('visited_at > ?', 1.minute.ago) }
 
   TOP_SIZE = 20
 
@@ -130,7 +134,15 @@ class Player < ActiveRecord::Base
     topic_results.find_or_create_by(topic: session.topic).add(session)
   end
 
+  def online?
+    visited_at > 1.minute.ago
+  end
+
   private
+
+  def set_online
+    touch(:visited_at)
+  end
 
   def vk_user?
     vk_id.present?
