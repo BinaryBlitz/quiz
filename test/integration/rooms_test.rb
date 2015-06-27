@@ -2,6 +2,7 @@ require 'test_helper'
 
 class RoomsTest < ActionDispatch::IntegrationTest
   setup do
+    Pusher.stubs(trigger: {})
     @owner = players(:foo)
     @guest = players(:baz)
   end
@@ -28,6 +29,10 @@ class RoomsTest < ActionDispatch::IntegrationTest
     post "/api/rooms/#{room.id}/join", token: @guest.token, topic_id: topics(:geography).id
     assert_response :created
     assert @guest.rooms.include?(room)
+
+    post "/api/rooms/#{room.id}/start", token: token
+    assert_response :created
+    assert_not_nil room.room_session
 
     # Leave
     delete "/api/rooms/#{room.id}/leave", token: @guest.token

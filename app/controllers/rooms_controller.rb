@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: [:show, :update, :destroy, :join, :leave]
+  before_action :set_room, except: [:index, :create]
 
   # GET /rooms
   def index
@@ -8,11 +8,6 @@ class RoomsController < ApplicationController
 
   # GET /rooms/1
   def show
-  end
-
-  # GET /rooms/new
-  def new
-    @room = Room.new
   end
 
   # POST /rooms
@@ -58,14 +53,13 @@ class RoomsController < ApplicationController
   end
 
   def start
-    # Start and create room session
     @room.start
-    # Push game start event
-    # Push room session
+    head :created
   end
 
   def close
     # Add points
+    # Push results
   end
 
   private

@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     resources :rooms, except: [:new, :edit] do
       member do
         post 'join'
+        post 'start'
         delete 'leave'
       end
     end

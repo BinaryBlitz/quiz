@@ -19,7 +19,7 @@ class Room < ActiveRecord::Base
 
   validates :player, presence: true
 
-  attr_accessor :topic
+  attr_accessor :topic, :topic_id
 
   def join(new_player, selected_topic)
     participation = participations.build(player: new_player, topic: selected_topic)
@@ -35,6 +35,7 @@ class Room < ActiveRecord::Base
   private
 
   def add_owner_to_participants
+    self.topic ||= Topic.find(topic_id)
     participations.create(player: player, topic: topic)
   end
 
