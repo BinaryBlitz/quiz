@@ -186,6 +186,19 @@ ActiveRecord::Schema.define(version: 20150627165933) do
     t.string  "category", default: "default"
   end
 
+  create_table "participations", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "topic_id"
+  end
+
+  add_index "participations", ["player_id", "room_id"], name: "index_participations_on_player_id_and_room_id", unique: true, using: :btree
+  add_index "participations", ["player_id"], name: "index_participations_on_player_id", using: :btree
+  add_index "participations", ["room_id"], name: "index_participations_on_room_id", using: :btree
+  add_index "participations", ["topic_id"], name: "index_participations_on_topic_id", using: :btree
+
   create_table "players", force: :cascade do |t|
     t.string   "email"
     t.string   "password_digest"
@@ -258,6 +271,46 @@ ActiveRecord::Schema.define(version: 20150627165933) do
 
   add_index "reports", ["player_id"], name: "index_reports_on_player_id", using: :btree
 
+  create_table "room_answers", force: :cascade do |t|
+    t.integer  "room_question_id"
+    t.integer  "player_id"
+    t.integer  "time"
+    t.integer  "answer_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "room_answers", ["answer_id"], name: "index_room_answers_on_answer_id", using: :btree
+  add_index "room_answers", ["player_id"], name: "index_room_answers_on_player_id", using: :btree
+  add_index "room_answers", ["room_question_id"], name: "index_room_answers_on_room_question_id", using: :btree
+
+  create_table "room_questions", force: :cascade do |t|
+    t.integer  "room_session_id"
+    t.integer  "question_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "room_questions", ["question_id"], name: "index_room_questions_on_question_id", using: :btree
+  add_index "room_questions", ["room_session_id"], name: "index_room_questions_on_room_session_id", using: :btree
+
+  create_table "room_sessions", force: :cascade do |t|
+    t.integer  "room_id"
+    t.boolean  "closed",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "room_sessions", ["room_id"], name: "index_room_sessions_on_room_id", using: :btree
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer  "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "rooms", ["player_id"], name: "index_rooms_on_player_id", using: :btree
+
   create_table "sashes", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -315,12 +368,22 @@ ActiveRecord::Schema.define(version: 20150627165933) do
   add_foreign_key "lobbies", "game_sessions"
   add_foreign_key "lobbies", "players"
   add_foreign_key "lobbies", "topics"
+  add_foreign_key "participations", "players"
+  add_foreign_key "participations", "rooms"
+  add_foreign_key "participations", "topics"
   add_foreign_key "purchase_types", "topics"
   add_foreign_key "purchases", "players"
   add_foreign_key "purchases", "purchase_types"
   add_foreign_key "push_tokens", "players"
   add_foreign_key "questions", "topics"
   add_foreign_key "reports", "players"
+  add_foreign_key "room_answers", "answers"
+  add_foreign_key "room_answers", "players"
+  add_foreign_key "room_answers", "room_questions"
+  add_foreign_key "room_questions", "questions"
+  add_foreign_key "room_questions", "room_sessions"
+  add_foreign_key "room_sessions", "rooms"
+  add_foreign_key "rooms", "players"
   add_foreign_key "stats", "players"
   add_foreign_key "topic_results", "categories"
   add_foreign_key "topic_results", "players"

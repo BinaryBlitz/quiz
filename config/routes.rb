@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :room_answers
+  resources :room_questions
+  resources :room_sessions
   root 'admin/dashboard#index'
 
   # Devise
@@ -29,6 +32,19 @@ Rails.application.routes.draw do
     resources :game_session_questions, only: [:update]
     resources :game_sessions, except: [:new, :edit] do
       patch 'close', on: :member
+    end
+    resources :rooms, except: [:new, :edit] do
+      member do
+        post 'join'
+        post 'start'
+        delete 'leave'
+      end
+    end
+    resources :room_sessions, only: [:show]
+    resources :room_questions, only: [] do
+      member do
+        post 'answer'
+      end
     end
 
     # Players & friends
