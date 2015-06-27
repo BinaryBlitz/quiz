@@ -78,11 +78,14 @@ class PlayersController < ApplicationController
 
   # POST /players/1/notify
   def notify
-    message = params[:message].present?
-    return unless message
+    message = params[:message]
 
-    @player.push_notification(message)
-    head :created
+    if message
+      @player.push_notification(message)
+      head :created
+    else
+      render json: { error: 'No message present' }, status: :unprocessable_entity
+    end
   end
 
   private
