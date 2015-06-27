@@ -39,6 +39,12 @@ Rails.application.routes.draw do
         delete 'leave'
       end
     end
+    resources :room_sessions, only: [:show]
+    resources :room_questions, only: [] do
+      member do
+        post 'answer'
+      end
+    end
 
     # Players & friends
     resources :players, except: [:new, :edit] do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625183007) do
+ActiveRecord::Schema.define(version: 20150627091607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,15 +272,15 @@ ActiveRecord::Schema.define(version: 20150625183007) do
 
   create_table "room_answers", force: :cascade do |t|
     t.integer  "room_question_id"
-    t.integer  "participation_id"
-    t.integer  "time",             default: 0
+    t.integer  "player_id"
+    t.integer  "time"
     t.integer  "answer_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   add_index "room_answers", ["answer_id"], name: "index_room_answers_on_answer_id", using: :btree
-  add_index "room_answers", ["participation_id"], name: "index_room_answers_on_participation_id", using: :btree
+  add_index "room_answers", ["player_id"], name: "index_room_answers_on_player_id", using: :btree
   add_index "room_answers", ["room_question_id"], name: "index_room_answers_on_room_question_id", using: :btree
 
   create_table "room_questions", force: :cascade do |t|
@@ -306,11 +306,9 @@ ActiveRecord::Schema.define(version: 20150625183007) do
     t.integer  "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "topic_id"
   end
 
   add_index "rooms", ["player_id"], name: "index_rooms_on_player_id", using: :btree
-  add_index "rooms", ["topic_id"], name: "index_rooms_on_topic_id", using: :btree
 
   create_table "sashes", force: :cascade do |t|
     t.datetime "created_at"
@@ -379,13 +377,12 @@ ActiveRecord::Schema.define(version: 20150625183007) do
   add_foreign_key "questions", "topics"
   add_foreign_key "reports", "players"
   add_foreign_key "room_answers", "answers"
-  add_foreign_key "room_answers", "participations"
+  add_foreign_key "room_answers", "players"
   add_foreign_key "room_answers", "room_questions"
   add_foreign_key "room_questions", "questions"
   add_foreign_key "room_questions", "room_sessions"
   add_foreign_key "room_sessions", "rooms"
   add_foreign_key "rooms", "players"
-  add_foreign_key "rooms", "topics"
   add_foreign_key "stats", "players"
   add_foreign_key "topic_results", "categories"
   add_foreign_key "topic_results", "players"

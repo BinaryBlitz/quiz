@@ -18,14 +18,24 @@ class RoomQuestion < ActiveRecord::Base
   validates :room_session, presence: true
   validates :question, presence: true
 
+  def answer(answer_params)
+    answer = room_answers.build(answer_params)
+    notify_new_answer(answer) if answer.valid?
+    answer
+  end
+
   def question_results
     result = Hash.new
     room_answers.each { |answer| result[answer.player] = answer.points }
     result
   end
 
-  def answer(new_answer, time)
-    room_answers.create(answer: new_answer, time: time)
+  private
+
+  # New answer notification
+  def notify_new_answer(answer)
+    Pusher.trigger("room-#{room_session.room.id}", 'new-answer', answer.as_json)
+    logger.debug "#{Time.zone.now}: New answer notification sent to room \##{room_session.room.id}"
   end
 end
 

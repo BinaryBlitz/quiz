@@ -3,4 +3,10 @@ class RoomSessionsController < ApplicationController
 
   def show
   end
+
+  private
+
+  def set_room_session
+    @room_session = RoomSession.find(params[:id])
+  end
 end

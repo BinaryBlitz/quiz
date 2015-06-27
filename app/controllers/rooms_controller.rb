@@ -42,8 +42,8 @@ class RoomsController < ApplicationController
   end
 
   def join
-    topic = Topic.find_by(id: params[:topic_id])
-    participation = current_player.participations.build(room: @room, topic: topic)
+    topic = Topic.find(params[:topic_id])
+    participation = @room.join(current_player, topic)
 
     if participation.save
       head :created
@@ -58,7 +58,8 @@ class RoomsController < ApplicationController
   end
 
   def start
-    # Create room session
+    # Start and create room session
+    @room.start
     # Push game start event
     # Push room session
   end

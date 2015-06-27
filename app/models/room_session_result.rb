@@ -1,3 +1,4 @@
+# Encapsulates player and corresponding points value
 class RoomSessionResult
   def initialize
     @results = Hash.new(0)

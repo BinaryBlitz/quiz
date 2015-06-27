@@ -42,6 +42,7 @@ class Player < ActiveRecord::Base
   has_many :owned_rooms, dependent: :destroy, class_name: 'Room'
   has_many :participations, dependent: :destroy
   has_many :rooms, through: :participations
+  has_many :room_answers, dependent: :destroy
 
   # Device
   has_many :push_tokens, dependent: :destroy
