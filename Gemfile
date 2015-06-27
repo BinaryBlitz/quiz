@@ -27,6 +27,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'has_secure_token'
 
+# Use old version because of the manifest bug
+gem 'sprockets', '2.12.3'
+
 # Dashboard
 gem 'devise'
 gem 'bootstrap-sass'
