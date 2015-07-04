@@ -30,15 +30,15 @@ class RoomTest < ActiveSupport::TestCase
     player = players(:bar)
     topic = topics(:geometry)
 
-    @room.join(player, topic).save
+    @room.participations.build(player: player, topic: topic).save
     assert @room.players.include?(player)
   end
 
   test 'starts the game' do
     bar = players(:bar)
     baz = players(:baz)
-    @room.join(bar, @topic)
-    @room.join(baz, @topic)
+    @room.participations.build(player: bar, topic: @topic)
+    @room.participations.build(player: baz, topic: @topic)
 
     @room.start
 

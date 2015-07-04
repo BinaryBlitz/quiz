@@ -21,12 +21,6 @@ class Room < ActiveRecord::Base
 
   attr_accessor :topic, :topic_id
 
-  def join(new_player, selected_topic)
-    participation = participations.build(player: new_player, topic: selected_topic)
-    notify_new_participant if participation.valid?
-    participation
-  end
-
   def start
     create_room_session
     notify_session_start
@@ -44,11 +38,5 @@ class Room < ActiveRecord::Base
     session_data = JSON.parse(room_session.as_json)
     Pusher.trigger("room-#{id}", 'game-start', session_data)
     logger.debug "#{Time.zone.now}: Session sent to room \##{id}"
-  end
-
-  # Notify about new participant
-  def notify_new_participant
-    Pusher.trigger("room-#{id}", 'new-participant', {})
-    logger.debug "#{Time.zone.now}: New participant notification sent to room \##{id}"
   end
 end

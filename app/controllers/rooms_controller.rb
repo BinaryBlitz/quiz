@@ -38,7 +38,7 @@ class RoomsController < ApplicationController
 
   def join
     topic = Topic.find(params[:topic_id])
-    participation = @room.join(current_player, topic)
+    participation = @room.participations.build(player: current_player, topic: topic)
 
     if participation.save
       head :created
