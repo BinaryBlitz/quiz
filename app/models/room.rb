@@ -7,6 +7,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  friends_only :boolean          default(FALSE)
+#  started      :boolean          default(FALSE)
 #
 
 class Room < ActiveRecord::Base
@@ -25,6 +26,7 @@ class Room < ActiveRecord::Base
   def start
     create_room_session
     notify_session_start
+    update(started: true)
   end
 
   def visible_for?(current_player)
@@ -35,6 +37,18 @@ class Room < ActiveRecord::Base
 
   def invite(new_player)
     new_player.push_notification("Вас пригласили в комнату", action: 'ROOM_INVITE' , room: as_json)
+  end
+
+  def player_finished?(current_player)
+    participation = participations.find_by(player: player)
+    participation && participation.finished?
+  end
+
+  def finish_as(current_player)
+    participations.find_by(player: current_player).update(finished: true)
+    options = { player_id: current_player.id, points: room_session.points_for(current_player) }
+    Pusher.trigger("room-#{id}", 'player-finished', options)
+    logger.debug "#{Time.zone.now} #{current_player} has finished the game in room \##{id}"
   end
 
   private

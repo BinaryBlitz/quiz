@@ -38,9 +38,11 @@ Rails.application.routes.draw do
         post 'join'
         post 'start'
         post 'invite'
+        post 'finish'
         delete 'leave'
       end
     end
+    resources :participations, except: [:new, :create, :edit]
     resources :room_sessions, only: [:show]
     resources :room_questions, only: [] do
       member do

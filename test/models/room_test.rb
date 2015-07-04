@@ -7,6 +7,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  friends_only :boolean          default(FALSE)
+#  started      :boolean          default(FALSE)
 #
 
 require 'test_helper'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150704100917) do
+ActiveRecord::Schema.define(version: 20150704121801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,9 +189,11 @@ ActiveRecord::Schema.define(version: 20150704100917) do
   create_table "participations", force: :cascade do |t|
     t.integer  "player_id"
     t.integer  "room_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "topic_id"
+    t.boolean  "ready",      default: false
+    t.boolean  "finished",   default: false
   end
 
   add_index "participations", ["player_id", "room_id"], name: "index_participations_on_player_id_and_room_id", unique: true, using: :btree
@@ -308,6 +310,7 @@ ActiveRecord::Schema.define(version: 20150704100917) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.boolean  "friends_only", default: false
+    t.boolean  "started",      default: false
   end
 
   add_index "rooms", ["player_id"], name: "index_rooms_on_player_id", using: :btree

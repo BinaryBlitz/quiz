@@ -30,6 +30,11 @@ class RoomQuestion < ActiveRecord::Base
     result
   end
 
+  def points_for(player)
+    answer = room_answers.find_by(player: player)
+    answer ? answer.points : 0
+  end
+
   private
 
   # New answer notification
