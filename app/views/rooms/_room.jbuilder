@@ -1,4 +1,4 @@
-json.extract! room, :id, :player_id, :created_at
+json.extract! room, :id, :player_id, :created_at, :friends_only
 
 json.participations room.participations do |participation|
   json.topic do

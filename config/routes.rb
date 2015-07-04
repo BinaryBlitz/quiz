@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       member do
         post 'join'
         post 'start'
+        post 'invite'
         delete 'leave'
       end
     end

@@ -5,7 +5,7 @@
 #  id               :integer          not null, primary key
 #  room_question_id :integer
 #  player_id        :integer
-#  time             :integer          default(0)
+#  time             :integer
 #  answer_id        :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null

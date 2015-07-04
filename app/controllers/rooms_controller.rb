@@ -52,6 +52,12 @@ class RoomsController < ApplicationController
     head :no_content
   end
 
+  def invite
+    player = Player.find_by(params[:player_id])
+    @room.invite(player)
+    head :created
+  end
+
   def start
     @room.start
     head :created
@@ -71,6 +77,6 @@ class RoomsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def room_params
-    params.require(:room).permit(:topic_id)
+    params.require(:room).permit(:topic_id, :friends_only)
   end
 end

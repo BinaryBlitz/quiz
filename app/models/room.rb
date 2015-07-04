@@ -2,10 +2,11 @@
 #
 # Table name: rooms
 #
-#  id         :integer          not null, primary key
-#  player_id  :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :integer          not null, primary key
+#  player_id    :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  friends_only :boolean          default(FALSE)
 #
 
 class Room < ActiveRecord::Base
@@ -24,6 +25,16 @@ class Room < ActiveRecord::Base
   def start
     create_room_session
     notify_session_start
+  end
+
+  def visible_for?(current_player)
+    return true unless friends_only
+
+    player.friends.include?(current_player)
+  end
+
+  def invite(new_player)
+    new_player.push_notification("Вас пригласили в комнату", action: 'ROOM_INVITE' , room: as_json)
   end
 
   private

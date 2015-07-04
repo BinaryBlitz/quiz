@@ -2,10 +2,11 @@
 #
 # Table name: rooms
 #
-#  id         :integer          not null, primary key
-#  player_id  :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :integer          not null, primary key
+#  player_id    :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  friends_only :boolean          default(FALSE)
 #
 
 require 'test_helper'
