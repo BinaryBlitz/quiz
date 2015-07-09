@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :room_answers
-  resources :room_questions
-  resources :room_sessions
   root 'admin/dashboard#index'
 
   # Devise

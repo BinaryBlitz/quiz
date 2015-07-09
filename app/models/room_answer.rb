@@ -17,7 +17,8 @@ class RoomAnswer < ActiveRecord::Base
   belongs_to :answer
 
   validates :time, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :answer, presence: true, uniqueness: { scope: :player }
+  validates :answer, presence: true
+  validates :player, presence: true
   validate :answer_belongs_to_question
 
   def points
