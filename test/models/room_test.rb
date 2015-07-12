@@ -8,6 +8,7 @@
 #  updated_at   :datetime         not null
 #  friends_only :boolean          default(FALSE)
 #  started      :boolean          default(FALSE)
+#  size         :integer
 #
 
 require 'test_helper'
