@@ -40,6 +40,7 @@ Rails.application.routes.draw do
         delete 'leave'
       end
     end
+    resources :invites, except: [:new, :edit]
     resources :participations, except: [:new, :create, :edit]
     resources :room_sessions, only: [:show]
     resources :room_questions, only: [] do

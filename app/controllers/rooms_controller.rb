@@ -52,12 +52,6 @@ class RoomsController < ApplicationController
     head :no_content
   end
 
-  def invite
-    player = Player.find_by(params[:player_id])
-    @room.invite(player)
-    head :created
-  end
-
   def start
     @room.start
     head :created

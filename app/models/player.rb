@@ -46,6 +46,9 @@ class Player < ActiveRecord::Base
   has_many :rooms, through: :participations
   has_many :room_answers, dependent: :destroy
 
+  has_many :invites, dependent: :destroy
+  has_many :invited_rooms, through: :invites, source: :room
+
   # Device
   has_many :push_tokens, dependent: :destroy
   has_many :purchases, -> { where('purchases.updated_at >= ?', Time.zone.now - 10.days) }, dependent: :destroy

@@ -13,8 +13,6 @@
 #
 
 class Topic < ActiveRecord::Base
-  before_save :verify_purchase_type
-
   belongs_to :category
   has_many :questions, dependent: :destroy
   has_many :game_sessions, dependent: :destroy

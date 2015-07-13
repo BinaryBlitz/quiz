@@ -5,5 +5,6 @@ class PagesController < ApplicationController
     @favorite_topics = current_player.favorite_topics
     @challenges = current_player.challenges
     @challenged = current_player.challenged
+    @invites = current_player.invites
   end
 end

@@ -36,10 +36,6 @@ class Room < ActiveRecord::Base
     player.friends.include?(current_player)
   end
 
-  def invite(new_player)
-    new_player.push_notification("Вас пригласили в комнату", action: 'ROOM_INVITE' , room: as_json)
-  end
-
   def player_finished?(current_player)
     participation = participations.find_by(player: player)
     participation && participation.finished?
