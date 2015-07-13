@@ -25,7 +25,6 @@ class Admin::TopicsController < Admin::AdminController
   end
 
   def edit
-    @topic.build_purchase_type unless @topic.purchase_type
   end
 
   def update

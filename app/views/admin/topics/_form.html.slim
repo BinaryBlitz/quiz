@@ -9,11 +9,6 @@
       = f.check_box :visible, checked: true
       | Visible
 
-  / .form-group
-  /   = f.label :expires_at
-  /   div
-  /     = f.date_select :expires_at, default: 1.month.from_now, class: 'form-control'
-
   .form-group
     = label_tag :category
     div
@@ -23,10 +18,5 @@
     label
       = f.check_box :featured
       | Featured
-
-  = f.fields_for :purchase_type do |ff|
-    .form-group
-      = ff.label :identifier
-      = ff.text_field :identifier, class: 'form-control'
 
   = f.submit 'Submit', class: 'btn btn-default'
