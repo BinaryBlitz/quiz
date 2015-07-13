@@ -17,3 +17,7 @@ end
 json.challenged do
   json.partial! 'challenged', lobbies: @challenged
 end
+
+json.invites @invites do |invite|
+  json.partial! 'invites/invite', invite: invite
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713151824) do
+ActiveRecord::Schema.define(version: 20150713151825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,17 @@ ActiveRecord::Schema.define(version: 20150713151824) do
   add_index "game_sessions", ["host_id"], name: "index_game_sessions_on_host_id", using: :btree
   add_index "game_sessions", ["opponent_id"], name: "index_game_sessions_on_opponent_id", using: :btree
   add_index "game_sessions", ["topic_id"], name: "index_game_sessions_on_topic_id", using: :btree
+
+  create_table "invites", force: :cascade do |t|
+    t.integer  "room_id"
+    t.integer  "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "invites", ["player_id"], name: "index_invites_on_player_id", using: :btree
+  add_index "invites", ["room_id", "player_id"], name: "index_invites_on_room_id_and_player_id", unique: true, using: :btree
+  add_index "invites", ["room_id"], name: "index_invites_on_room_id", using: :btree
 
   create_table "lobbies", force: :cascade do |t|
     t.integer  "query_count",     default: 0
@@ -367,6 +378,8 @@ ActiveRecord::Schema.define(version: 20150713151824) do
   add_foreign_key "game_session_questions", "game_sessions"
   add_foreign_key "game_session_questions", "questions"
   add_foreign_key "game_sessions", "topics"
+  add_foreign_key "invites", "players"
+  add_foreign_key "invites", "rooms"
   add_foreign_key "lobbies", "game_sessions"
   add_foreign_key "lobbies", "players"
   add_foreign_key "lobbies", "topics"
