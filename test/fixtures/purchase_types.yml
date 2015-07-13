@@ -5,9 +5,9 @@
 #  id         :integer          not null, primary key
 #  identifier :string
 #  multiplier :integer
-#  topic_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  topic      :boolean
 #
 
 booster:
@@ -16,4 +16,4 @@ booster:
 
 unlocker:
   identifier: unlocker
-  topic: paid
+  topic: true

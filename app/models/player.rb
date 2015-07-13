@@ -48,7 +48,8 @@ class Player < ActiveRecord::Base
 
   # Device
   has_many :push_tokens, dependent: :destroy
-  has_many :purchases, dependent: :destroy
+  has_many :purchases, -> { where('purchases.updated_at >= ?', Time.zone.now - 10.days) }, dependent: :destroy
+  has_many :purchase_types, through: :purchases
 
   has_many :topic_results, dependent: :destroy
   has_many :topics, -> { uniq }, through: :topic_results
@@ -108,9 +109,8 @@ class Player < ActiveRecord::Base
   end
 
   def multiplier
-    multipliers = purchases.unexpired.joins(:purchase_type).where('multiplier > 0')
-    return 1 if multipliers.empty?
-    multipliers.map { |purchase| purchase.purchase_type.multiplier }.max
+    purchase = purchase_types.order(multiplier: :desc).first
+    purchase ? purchase.multiplier : 1
   end
 
   def challenges
@@ -119,10 +119,6 @@ class Player < ActiveRecord::Base
 
   def challenged
     lobbies.where(challenge: true)
-  end
-
-  def purchase_types
-    purchases.map(&:purchase_type)
   end
 
   def self.search(query)
@@ -145,6 +141,10 @@ class Player < ActiveRecord::Base
 
   def online?
     visited_at > 1.minute.ago
+  end
+
+  def topics_unlocked?
+    purchase_types.where(topic: true).any?
   end
 
   private

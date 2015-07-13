@@ -5,11 +5,8 @@ class PurchasesController < ApplicationController
 
   def create
     purchase_type = PurchaseType.find_by(identifier: params[:identifier])
-    unless purchase_type
-      head :unprocessable_entity and return unless purchase_type
-    end
+    @purchase = current_player.purchases.build(purchase_type: purchase_type)
 
-    @purchase = Purchase.new(purchase_type: purchase_type, player: current_player)
     if @purchase.save
       head :created
     else

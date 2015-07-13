@@ -4,6 +4,7 @@ class Admin::DashboardController < Admin::AdminController
     @topics = Topic.all
     @achievements = Achievement.all
     @facts = Fact.all
+    @purchase_types = PurchaseType.all
   end
 
   def manage

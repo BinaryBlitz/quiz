@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :questions
     resources :achievements
     resources :facts
+    resources :purchase_types
     resources :imports, only: [:new, :create]
   end
 

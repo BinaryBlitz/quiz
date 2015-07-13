@@ -7,7 +7,6 @@
 #  purchase_type_id :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  expires_at       :datetime
 #
 
 require 'test_helper'
@@ -20,9 +19,7 @@ class PurchaseTest < ActiveSupport::TestCase
 
   test 'invalid without purchase type' do
     @purchase.purchase_type = nil
-    assert_raise NoMethodError do
-      @purchase.invalid?
-    end
+    @purchase.invalid?
   end
 
   test 'only unique purchases allowed' do

@@ -10,14 +10,13 @@ class PurchasesTest < ActionDispatch::IntegrationTest
   test 'should get index' do
     get '/api/purchases', token: token
     assert_response :success
-    assert_equal @booster.identifier, json_response.first['identifier']
-    assert json_response.first['purchased']
-    assert_not json_response.second['purchased']
   end
 
   test 'should purchase item' do
-    post '/api/purchases', token: token, identifier: @unlocker.identifier
+    assert_difference 'Purchase.count' do
+      post '/api/purchases', token: token, identifier: @unlocker.identifier
+    end
     assert_response :created
-    assert_equal @unlocker.identifier, @player.reload.purchases.first.identifier
+    assert @player.purchase_types.include?(@unlocker)
   end
 end
