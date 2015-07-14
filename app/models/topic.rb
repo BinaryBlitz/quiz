@@ -10,6 +10,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  featured    :boolean          default(FALSE)
+#  paid        :boolean          default(FALSE)
 #
 
 class Topic < ActiveRecord::Base
