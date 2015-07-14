@@ -138,10 +138,6 @@ class Player < ActiveRecord::Base
     purchases.unexpired.where(purchase_type: purchase_type).any?
   end
 
-  def add_result(session)
-    topic_results.find_or_create_by(topic: session.topic).add(session)
-  end
-
   def online?
     visited_at > 1.minute.ago
   end

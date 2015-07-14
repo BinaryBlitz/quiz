@@ -98,21 +98,27 @@ class GameSession < ActiveRecord::Base
   def early_winner?(player)
     return false unless winner?(player)
 
-    if player == host
-      host_points - 40 > opponent_points
-    elsif player == opponent
-      opponent_points - 40 > host_points
-    else
-      0
-    end
+    (host_points - opponent_points).abs > 40
   end
 
   def challenge?
-    lobby = lobbies.first
-    lobby && lobby.challenge?
+    lobbies.first.try(:challenge?)
+  end
+
+  def close(current_player)
+    host.push_challenge_results(self) if challenge? && offline?
+
+    update(closed: true, finisher: current_player)
+    finisher.topic_results.find_or_create_by(topic: topic).add_session_results(self)
+    update_stats
   end
 
   private
+
+  def update_stats
+    finisher.stats.increment_consecutive_days
+    finisher.stats.increment_early_winner(self)
+  end
 
   def generate
     questions = Question.where(topic: topic).sample(6)

@@ -27,9 +27,21 @@ class TopicResult < ActiveRecord::Base
 
   scope :recent, -> { where('updated_at > ?', Time.zone.now.beginning_of_week) }
 
-  def add(session)
+  def add_session_results(session)
     add_points(session.player_points(player) * player.multiplier)
     update_score(session)
+  end
+
+  def add_points(points)
+    total_points = points * player.multiplier
+
+    if older_than_week?
+      self.weekly_points = total_points
+    else
+      self.weekly_points += total_points
+    end
+    self.points += total_points
+    self.count += 1
     save
   end
 
@@ -43,17 +55,7 @@ class TopicResult < ActiveRecord::Base
     updated_at < Time.zone.now.beginning_of_week
   end
 
-  def add_points(total_points)
-    if older_than_week?
-      self.weekly_points = total_points
-    else
-      self.weekly_points += total_points
-    end
-    self.points += total_points
-  end
-
   def update_score(session)
-    self.count += 1
     if session.draw?
       self.draws += 1
     else
