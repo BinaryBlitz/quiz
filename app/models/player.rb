@@ -115,7 +115,7 @@ class Player < ActiveRecord::Base
   end
 
   def multiplier
-    purchase = purchase_types.order(multiplier: :desc).first
+    purchase = purchase_types.where.not(multiplier: nil).order(multiplier: :desc).first
     purchase ? purchase.multiplier : 1
   end
 

@@ -28,7 +28,7 @@ class TopicResult < ActiveRecord::Base
   scope :recent, -> { where('updated_at > ?', Time.zone.now.beginning_of_week) }
 
   def add_session_results(session)
-    add_points(session.player_points(player) * player.multiplier)
+    add_points(session.player_points(player))
     update_score(session)
   end
 
@@ -65,5 +65,6 @@ class TopicResult < ActiveRecord::Base
         self.losses += 1
       end
     end
+    save
   end
 end
