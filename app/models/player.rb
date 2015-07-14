@@ -62,6 +62,7 @@ class Player < ActiveRecord::Base
   has_many :incoming_requests, class_name: 'FriendRequest', foreign_key: 'friend_id', dependent: :destroy
   has_many :pending_friends, through: :friend_requests, source: :friend
   has_many :friendships, dependent: :destroy
+  has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id', dependent: :destroy
   has_many :friends, through: :friendships
 
   has_many :created_messages, dependent: :destroy, class_name: 'Message', foreign_key: 'creator_id'

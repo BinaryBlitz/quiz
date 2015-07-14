@@ -11,7 +11,6 @@
 
 class Friendship < ActiveRecord::Base
   after_create :create_inverse_relationship
-  after_destroy :destroy_inverse_relationship
 
   belongs_to :player
   belongs_to :friend, class_name: 'Player'
@@ -28,9 +27,5 @@ class Friendship < ActiveRecord::Base
 
   def create_inverse_relationship
     friend.friends << player
-  end
-
-  def destroy_inverse_relationship
-    friend.friends.destroy(player)
   end
 end
