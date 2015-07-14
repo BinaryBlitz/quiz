@@ -9,6 +9,7 @@ json.participations room.participations do |participation|
 
   json.player do
     json.partial! 'players/player', player: participation.player
+    json.is_friend current_player.friends.include?(participation.player)
     json.is_admin room.player_id == participation.player_id
   end
 end
