@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     end
     resources :friend_requests, except: [:new, :edit]
     resources :friends, only: [:index, :destroy]
+    resources :messages, only: [:index, :create]
     resources :achievements, only: [:index]
 
     # Mobile

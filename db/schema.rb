@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714180518) do
+ActiveRecord::Schema.define(version: 20150714184115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -196,6 +196,17 @@ ActiveRecord::Schema.define(version: 20150714180518) do
     t.integer "sash_id"
     t.string  "category", default: "default"
   end
+
+  create_table "messages", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "creator_id"
+    t.integer  "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "messages", ["creator_id"], name: "index_messages_on_creator_id", using: :btree
+  add_index "messages", ["player_id"], name: "index_messages_on_player_id", using: :btree
 
   create_table "participations", force: :cascade do |t|
     t.integer  "player_id"
@@ -384,6 +395,7 @@ ActiveRecord::Schema.define(version: 20150714180518) do
   add_foreign_key "lobbies", "game_sessions"
   add_foreign_key "lobbies", "players"
   add_foreign_key "lobbies", "topics"
+  add_foreign_key "messages", "players"
   add_foreign_key "participations", "players"
   add_foreign_key "participations", "rooms"
   add_foreign_key "participations", "topics"

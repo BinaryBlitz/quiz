@@ -64,6 +64,9 @@ class Player < ActiveRecord::Base
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
 
+  has_many :created_messages, dependent: :destroy, class_name: 'Message', foreign_key: 'creator_id'
+  has_many :unread_messages, dependent: :destroy, class_name: 'Message'
+
   mount_base64_uploader :avatar, AvatarUploader
 
   has_secure_password

@@ -53,7 +53,7 @@ class PlayersTest < ActionDispatch::IntegrationTest
   end
 
   test 'should notify players' do
-    post "/api/players/#{@player.id}/notify", token: token, message: 'Hello!'
+    post "/api/messages", token: token, message: { content: 'Hello!', player_id: @player.id }
     assert_response :created
   end
 
