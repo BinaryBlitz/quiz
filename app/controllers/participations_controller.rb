@@ -1,6 +1,17 @@
 class ParticipationsController < ApplicationController
   before_action :set_participation, except: []
 
+  def create
+    @participation = current_player.participations.build(topic: topic)
+    authorize @participation
+
+    if @participation.save
+      head :created
+    else
+      render json: @participation.errors, status: :unprocessable_entity
+    end
+  end
+
   def update
     if @participation.update(participation_params)
       head :ok
