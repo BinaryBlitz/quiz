@@ -49,8 +49,10 @@ class RoomSession < ActiveRecord::Base
   private
 
   def generate
-    room.participations.each do |participation|
-      questions = Question.where(topic: participation.topic).sample(QUESTIONS_PER_PLAYER)
+    topics = Hash.new(0)
+    room.participations.map(&:topic).each { |topic| topics[topic] += QUESTIONS_PER_PLAYER }
+    topics.each do |topic, number_of_questions|
+      questions = Question.where(topic: topic).sample(number_of_questions)
       questions.each { |question| room_questions.create(question: question) }
     end
   end
