@@ -37,7 +37,7 @@ class RoomSession < ActiveRecord::Base
   end
 
   def points_for(player)
-    return 0 unless room.player_finished?(player)
+    # return 0 unless room.player_finished?(player)
 
     result = 0
     room_questions.each do |question|
