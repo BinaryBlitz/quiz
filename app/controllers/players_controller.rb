@@ -20,7 +20,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      render status: :created
+      render :authenticate, status: :created
     else
       render json: @player.errors, status: :unprocessable_entity
     end
@@ -63,7 +63,7 @@ class PlayersController < ApplicationController
     vk = VkontakteApi::Client.new(params[:token])
     @player = Player.find_or_create_from_vk(vk)
 
-    render :authenticate, location: @player
+    render :authenticate
   end
 
   def search
