@@ -156,7 +156,7 @@ class Player < ActiveRecord::Base
   end
 
   def push_achievement(badge)
-    message = "You received an achievement: #{badge.name}"
+    message = "Вы получили достижение: #{badge.name}"
     options = {
       action: 'ACHIEVEMENT',
       badge: { id: badge.id, name: badge.name, icon_url: Achievement.icon_url_for(badge) }
