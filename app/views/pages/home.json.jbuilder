@@ -21,3 +21,7 @@ end
 json.invites @invites do |invite|
   json.partial! 'invites/invite', invite: invite
 end
+
+json.random_rooms Room.recent.visible.limit(2).order('RANDOM()') do |room|
+  json.partial! 'rooms/room', room: room
+end

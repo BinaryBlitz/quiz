@@ -24,6 +24,9 @@ class Room < ActiveRecord::Base
 
   attr_accessor :topic, :topic_id
 
+  scope :visible, -> { where(friends_only: false).where(started: false) }
+  scope :recent, -> { where('created_at > ?', 1.day.ago) }
+
   def start
     create_room_session
     notify_session_start
