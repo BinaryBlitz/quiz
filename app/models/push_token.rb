@@ -39,6 +39,7 @@ class PushToken < ActiveRecord::Base
     notification = Houston::Notification.new(device: token)
     notification.alert = message
     notification.custom_data = options
+    notification.sound = 'sosumi.aiff'
     APN.push(notification)
     logger.debug "iOS push sent to #{player}"
   rescue
