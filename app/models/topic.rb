@@ -20,6 +20,7 @@ class Topic < ActiveRecord::Base
   has_many :lobbies, dependent: :destroy
   has_many :topic_results, dependent: :destroy
   has_many :players, -> { uniq }, through: :topic_results
+  has_many :participations, dependent: :destroy
 
   validates :name, presence: true
   validates :category, presence: true
