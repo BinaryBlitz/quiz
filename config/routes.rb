@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :admins
     resources :categories
     resources :topics
-    resources :questions
+    resources :questions, except: [:index, :show]
     resources :achievements
     resources :facts
     resources :purchase_types

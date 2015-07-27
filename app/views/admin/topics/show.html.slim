@@ -21,4 +21,19 @@ h3
   | &nbsp;
   = link_to 'Новый', new_admin_question_path(topic_id: @topic.id), class: 'btn btn-default'
 
-= render 'admin/questions/questions', questions: @questions
+- unless @questions.empty?
+  table.table
+    thead
+      tr
+        th Содержание
+        th.col-sm-4.col-md-3 Действия
+    tbody
+      - for question in @questions
+        tr
+          td = link_to question.content, edit_admin_question_path(question)
+          td.col-sm-4.col-md-3
+            = link_to 'Изменить', edit_admin_question_path(question), class: 'btn btn-default'
+            = ' '
+            = link_to 'Удалить', [:admin, question], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+
+= paginate @questions
