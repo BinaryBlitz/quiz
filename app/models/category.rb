@@ -12,6 +12,7 @@
 
 class Category < ActiveRecord::Base
   has_many :topics, dependent: :destroy
+  has_many :topic_results, dependent: :destroy
 
   mount_uploader :background, BackgroundUploader
   mount_uploader :banner, BackgroundUploader
