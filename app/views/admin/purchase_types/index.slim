@@ -1,3 +1,6 @@
-h2 Purchase types
+div.page-header
+  h2
+    | Покупки
+    = link_to 'Новый тип', new_admin_purchase_type_path, class: 'btn btn-default'
 
 = render 'purchase_types', purchase_types: @purchase_types

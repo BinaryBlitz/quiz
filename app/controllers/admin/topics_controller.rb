@@ -11,7 +11,6 @@ class Admin::TopicsController < Admin::AdminController
 
   def new
     @topic = Topic.new
-    @topic.build_purchase_type
   end
 
   def create

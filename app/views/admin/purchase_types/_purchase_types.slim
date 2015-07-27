@@ -1,20 +1,18 @@
-= link_to 'New purchase type', new_admin_purchase_type_path, class: 'btn btn-default'
-
 - unless purchase_types.empty?
   table.table
     thead
       tr
-        td Identifier
-        td Multiplier
-        td Topic unlocker
-        td Actions
-    - for purchase_type in purchase_types
-      tbody
-        tr
-          td = purchase_type.identifier
-          td = purchase_type.multiplier
-          td = purchase_type.topic
-          td
-            = link_to 'Edit', edit_admin_purchase_type_path(purchase_type), class: 'btn btn-default'
-            = ' '
-            = link_to 'Delete', [:admin, purchase_type], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+        th Identifier
+        th Multiplier
+        th Topic unlocker
+        th Actions
+    tbody
+      - for purchase_type in purchase_types
+          tr
+            td = purchase_type.identifier
+            td = purchase_type.multiplier
+            td = purchase_type.topic
+            td
+              = link_to 'Edit', edit_admin_purchase_type_path(purchase_type), class: 'btn btn-default'
+              = ' '
+              = link_to 'Delete', [:admin, purchase_type], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

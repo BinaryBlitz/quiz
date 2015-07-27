@@ -20,15 +20,24 @@
 	@extend .alert-danger !optional;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+// Dashboard
+.page-header {
+  h1, h2, h3 {
+    display: inline-block;
+
+    a, .btn-group {
+      margin-left: 15px;
+    }
+  }
+}
+
+// Sticky footer styles
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
 
@@ -36,20 +45,11 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
 }
 
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-
-// body > .container {
-//   padding: 60px 15px 0;
-// }
-
+// Custom page CSS
 .container .text-muted {
   margin: 20px 0;
 }
