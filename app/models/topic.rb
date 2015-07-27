@@ -15,6 +15,7 @@
 
 class Topic < ActiveRecord::Base
   belongs_to :category
+
   has_many :questions, dependent: :destroy
   has_many :game_sessions, dependent: :destroy
   has_many :lobbies, dependent: :destroy
