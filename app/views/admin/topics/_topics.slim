@@ -1,0 +1,12 @@
+- unless topics.empty?
+  table.table
+    thead
+      tr
+        th Название
+        th Видимость
+        th Категория
+        th Отмеченная
+        th Действия
+    tbody
+      - for topic in topics
+        = render topic

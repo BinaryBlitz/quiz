@@ -8,7 +8,7 @@ table.table
       td ID
       td Name
       td Email
-      td Actions
+      td Действия
   tbody
     - @admins.each do |admin|
       tr
@@ -16,6 +16,6 @@ table.table
         td Lal
         td = admin.email
         td
-          = link_to 'Edit', edit_admin_admin_path(admin), class: 'btn btn-default'
+          = link_to 'Изменить', edit_admin_admin_path(admin), class: 'btn btn-default'
           = ' '
-          = link_to 'Delete', [:admin, admin], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+          = link_to 'Удалить', [:admin, admin], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

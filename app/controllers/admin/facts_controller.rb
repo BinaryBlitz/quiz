@@ -1,7 +1,7 @@
 class Admin::FactsController < Admin::AdminController
   before_action :set_fact, except: [:index, :new, :create]
   def index
-    @facts = Fact.all
+    @facts = Fact.all.page(params[:page])
   end
 
   def show

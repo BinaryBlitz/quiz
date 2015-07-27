@@ -35,6 +35,7 @@ gem 'devise'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'nested_form_fields'
+gem 'kaminari'
 
 gem 'pusher'
 gem 'vkontakte_api'

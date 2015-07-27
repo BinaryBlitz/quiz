@@ -3,4 +3,4 @@ tr
   td = link_to Merit::Badge.find(achievement.badge_id).name, [:admin, achievement]
   td = Merit::Badge.find(achievement.badge_id).description
   td = achievement.icon? ? image_tag(achievement.icon.thumb.url) : ''
-  td = link_to 'Edit', edit_admin_achievement_path(achievement), class: 'btn btn-default'
+  td = link_to 'Изменить', edit_admin_achievement_path(achievement), class: 'btn btn-default'

@@ -2,7 +2,7 @@ class Admin::TopicsController < Admin::AdminController
   before_action :find_topic, only: [:show, :edit, :update, :destroy]
 
   def index
-    @topics = Topic.includes(:category).order('categories.name ASC')
+    @topics = Topic.includes(:category).order('categories.name ASC').page(params[:page])
   end
 
   def show

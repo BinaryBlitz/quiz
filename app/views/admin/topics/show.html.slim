@@ -1,20 +1,24 @@
-h2 = 'Topic: ' + @topic.name
-
-strong Questions:
-= ' ' + @topic.questions.count.to_s
+h2
+  = @topic.name
+  small
+    | &nbsp;
+    = @topic.category.name
 
 table.table
   thead
     tr
-      td id
-      td Name
-      td Visible
-      td Category
-      td Featured
-      td Actions
+      th Название
+      th Видимость
+      th Категория
+      th Отмеченная
+      th Действия
   tbody
     = render @topic
 
-h3 Questions
-= link_to 'New question', new_admin_question_path(topic_id: @topic.id), class: 'btn btn-default'
+h3
+  | Вопросы&nbsp;
+  span.label.label-default = @topic.questions.count
+  | &nbsp;
+  = link_to 'Новый', new_admin_question_path(topic_id: @topic.id), class: 'btn btn-default'
+
 = render 'admin/questions/questions', questions: @questions

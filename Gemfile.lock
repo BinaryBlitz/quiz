@@ -125,6 +125,9 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     jwt (1.5.1)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.9.3)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
@@ -290,6 +293,7 @@ DEPENDENCIES
   houston
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   merit
   mini_magick
   mocha
