@@ -6,8 +6,13 @@
 
   .checkbox
     label
-      = f.check_box :visible, checked: true
+      = f.check_box :visible
       | Visible
+
+  .checkbox
+    label
+      = f.check_box :paid
+      | Paid
 
   .form-group
     = label_tag :category

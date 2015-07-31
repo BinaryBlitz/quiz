@@ -1,12 +1,6 @@
 - unless topics.empty?
   table.table
-    thead
-      tr
-        th Название
-        th Видимость
-        th Категория
-        th Отмеченная
-        th Действия
+    = render 'topic_header'
     tbody
       - for topic in topics
         = render topic

@@ -28,7 +28,7 @@ class Admin::TopicsController < Admin::AdminController
 
   def update
     if @topic.update(topic_params)
-      redirect_to [:admin, @topic], notice: 'Topic was successfully updated.'
+      redirect_to [:admin, @topic], notice: 'Тема успешно обновлена.'
     else
       render :new
     end
@@ -47,7 +47,7 @@ class Admin::TopicsController < Admin::AdminController
 
   def topic_params
     params.require(:topic).permit(
-      :name, :visible, :expires_at, :featured,
+      :name, :visible, :paid, :expires_at, :featured,
       :category_id, purchase_type_attributes: [:id, :identifier])
   end
 end
