@@ -2,16 +2,15 @@ class Admin::TopicsController < Admin::AdminController
   before_action :find_topic, only: [:show, :edit, :update, :destroy]
 
   def index
-    @topics = Topic.all
+    @topics = Topic.includes(:category).order('categories.name ASC').page(params[:page])
   end
 
   def show
-    @questions = Question.where(topic: @topic)
+    @questions = Question.where(topic: @topic).page(params[:page])
   end
 
   def new
     @topic = Topic.new
-    @topic.build_purchase_type
   end
 
   def create
@@ -25,12 +24,11 @@ class Admin::TopicsController < Admin::AdminController
   end
 
   def edit
-    @topic.build_purchase_type unless @topic.purchase_type
   end
 
   def update
     if @topic.update(topic_params)
-      redirect_to [:admin, @topic], notice: 'Topic was successfully updated.'
+      redirect_to [:admin, @topic], notice: 'Тема успешно обновлена.'
     else
       render :new
     end
@@ -49,7 +47,7 @@ class Admin::TopicsController < Admin::AdminController
 
   def topic_params
     params.require(:topic).permit(
-      :name, :visible, :expires_at, :featured,
+      :name, :visible, :paid, :expires_at, :featured,
       :category_id, purchase_type_attributes: [:id, :identifier])
   end
 end

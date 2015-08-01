@@ -1,4 +1,5 @@
-json.extract! topic, :id, :name
+json.extract! topic, :id, :name, :paid
 json.background_url topic.category.background_url
 json.points current_player.topic_points(topic)
-json.visible topic.purchase_type ? current_player.purchase_types.include?(topic.purchase_type) : true
+json.available !topic.paid || current_player.topics_unlocked?
+json.visible true

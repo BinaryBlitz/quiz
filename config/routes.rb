@@ -15,8 +15,10 @@ Rails.application.routes.draw do
     resources :admins
     resources :categories
     resources :topics
-    resources :questions
+    resources :questions, except: [:index, :show]
     resources :achievements
+    resources :facts
+    resources :purchase_types
     resources :imports, only: [:new, :create]
   end
 
@@ -29,6 +31,23 @@ Rails.application.routes.draw do
     resources :game_sessions, except: [:new, :edit] do
       patch 'close', on: :member
     end
+    resources :rooms, except: [:new, :edit] do
+      member do
+        post 'join'
+        post 'start'
+        post 'invite'
+        post 'finish'
+        delete 'leave'
+      end
+    end
+    resources :invites, except: [:new, :edit]
+    resources :participations, except: [:new, :create, :edit]
+    resources :room_sessions, only: [:show]
+    resources :room_questions, only: [] do
+      member do
+        post 'answer'
+      end
+    end
 
     # Players & friends
     resources :players, except: [:new, :edit] do
@@ -40,10 +59,12 @@ Rails.application.routes.draw do
       member do
         get 'friends'
         get 'report'
+        post 'notify'
       end
     end
     resources :friend_requests, except: [:new, :edit]
     resources :friends, only: [:index, :destroy]
+    resources :messages, only: [:index, :create]
     resources :achievements, only: [:index]
 
     # Mobile

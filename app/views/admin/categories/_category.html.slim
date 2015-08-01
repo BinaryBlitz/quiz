@@ -1,7 +1,6 @@
 tr
-  td = category.id
   td = link_to category.name, admin_category_path(category)
   td
-    = link_to 'Edit', edit_admin_category_path(category), class: 'btn btn-default'
+    = link_to 'Изменить', edit_admin_category_path(category), class: 'btn btn-default'
     = ' '
-    = link_to 'Delete', admin_category_path(category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+    = link_to 'Удалить', admin_category_path(category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

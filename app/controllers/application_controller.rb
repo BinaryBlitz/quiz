@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
   before_filter :restrict_access
+  after_action :record_activity
 
   attr_reader :current_player
   helper_method :current_player
@@ -28,5 +29,9 @@ class ApplicationController < ActionController::Base
     return true if @current_player
 
     @current_player = Player.find_by_token(params[:token])
+  end
+
+  def record_activity
+    current_player.touch(:visited_at) if current_player
   end
 end

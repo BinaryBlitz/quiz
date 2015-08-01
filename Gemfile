@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -27,11 +27,15 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'has_secure_token'
 
+# Use old version because of the manifest bug
+gem 'sprockets', '2.12.3'
+
 # Dashboard
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'nested_form_fields'
+gem 'kaminari'
 
 gem 'pusher'
 gem 'vkontakte_api'
@@ -55,7 +59,7 @@ gem 'rails_12factor', group: :production
 group :development, :test do
   gem 'mocha'
   gem 'capistrano'
-  gem "rvm-capistrano", require: false
+  gem 'rvm-capistrano', require: false
   gem 'byebug'
   gem 'pry-rails'
   gem 'better_errors'

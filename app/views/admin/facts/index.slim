@@ -1,0 +1,21 @@
+div.page-header
+  h2
+    | Факты
+    = link_to 'Новый', new_admin_fact_path, class: 'btn btn-default'
+
+- unless @facts.empty?
+  table.table
+    thead
+      tr.row
+        th Содержание
+        th.col-sm-4.col-md-3 Действия
+    tbody
+      - for fact in @facts
+        tr.row
+          td = fact.content
+          td.col-sm-4.col-md-3
+            = link_to 'Изменить', edit_admin_fact_path(fact), class: 'btn btn-default'
+            | &nbsp;
+            = link_to 'Удалить', [:admin, fact], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+
+= paginate @facts

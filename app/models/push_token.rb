@@ -16,8 +16,7 @@ class PushToken < ActiveRecord::Base
   validates :token, uniqueness: true
 
   def push(message, options = {})
-    logger.debug "Started pushing notification to #{player}"
-    logger.debug options
+    logger.debug "Started pushing notification to #{player} with options: #{options}"
     if android?
       push_to_android(message, options)
     else
@@ -30,17 +29,20 @@ class PushToken < ActiveRecord::Base
   def push_to_android(message, options = {})
     data = { data: { title: 'iQuiz', message: message } }
     data[:data].merge!(options)
-    GCM_INSTANCE.send([token], data) rescue logger.debug "Android push to #{player} failed"
-
+    GCM_INSTANCE.send([token], data)
     logger.debug "Android push sent to #{player}"
+  rescue
+    logger.debug "Android push to #{player} failed"
   end
 
   def push_to_apple(message, options = {})
     notification = Houston::Notification.new(device: token)
     notification.alert = message
     notification.custom_data = options
-    APN.push(notification) rescue logger.debug "iOS push to #{player} failed"
-
+    notification.sound = 'sosumi.aiff'
+    APN.push(notification)
     logger.debug "iOS push sent to #{player}"
+  rescue
+    logger.debug "iOS push to #{player} failed"
   end
 end

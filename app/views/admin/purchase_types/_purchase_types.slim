@@ -1,0 +1,18 @@
+- unless purchase_types.empty?
+  table.table
+    thead
+      tr
+        th Identifier
+        th Multiplier
+        th Topic unlocker
+        th Действия
+    tbody
+      - for purchase_type in purchase_types
+          tr
+            td = purchase_type.identifier
+            td = purchase_type.multiplier
+            td = purchase_type.topic
+            td
+              = link_to 'Изменить', edit_admin_purchase_type_path(purchase_type), class: 'btn btn-default'
+              = ' '
+              = link_to 'Удалить', [:admin, purchase_type], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

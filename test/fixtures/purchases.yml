@@ -7,7 +7,6 @@
 #  purchase_type_id :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  expires_at       :datetime
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

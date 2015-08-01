@@ -42,11 +42,13 @@ class GameSessionQuestionsController < ApplicationController
 
   # Push player answer to opponent
   def push_answer(player, answer_id, time)
+    logger.debug "#{Time.zone.now}: Started sending answer to #{player.username}."
     Pusher.trigger(
       "player-session-#{player.id}",
       'opponent-answer',
       answer_data(answer_id, time)
     )
+    logger.debug "#{Time.zone.now}: Answer to #{player.username} has been sent."
   end
 
   # Format data for pusher

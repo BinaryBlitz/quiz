@@ -14,6 +14,7 @@ class Answer < ActiveRecord::Base
   belongs_to :question
   has_many :game_session_questions, foreign_key: :host_answer_id, dependent: :destroy
   has_many :game_session_questions, foreign_key: :opponent_answer_id, dependent: :destroy
+  has_many :room_answers, dependent: :destroy
 
   validates :content, presence: true
 end

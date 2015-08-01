@@ -5,17 +5,15 @@
 #  id         :integer          not null, primary key
 #  identifier :string
 #  multiplier :integer
-#  topic_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  topic      :boolean
 #
 
 class PurchaseType < ActiveRecord::Base
-  belongs_to :topic
   has_many :purchases, dependent: :destroy
 
-  validates :identifier, presence: true
-  validates :identifier, uniqueness: true
+  validates :identifier, presence: true, uniqueness: true
 
   def booster?
     multiplier && !topic

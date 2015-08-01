@@ -1,6 +1,5 @@
 class GameSessionsController < ApplicationController
-  before_action :set_game_session, only: [:show, :update, :destroy, :close]
-  before_action :update_stats, only: [:close]
+  before_action :set_game_session, except: [:index]
 
   # GET /game_sessions
   def index
@@ -21,12 +20,7 @@ class GameSessionsController < ApplicationController
 
   # PATCH /game_sessions/1/close
   def close
-    if @game_session.challenge? && @game_session.offline?
-      @game_session.host.push_challenge_results(@game_session)
-    end
-
-    @game_session.update!(closed: true, finisher: current_player)
-    current_player.add_result(@game_session)
+    @game_session.close(current_player)
     head :no_content
   end
 
@@ -38,10 +32,5 @@ class GameSessionsController < ApplicationController
 
   def set_game_session
     @game_session = GameSession.find(params[:id])
-  end
-
-  def update_stats
-    current_player.stats.increment_consecutive_days
-    current_player.stats.increment_early_winner(@game_session)
   end
 end

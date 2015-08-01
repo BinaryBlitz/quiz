@@ -1,3 +1,9 @@
-h1 Topics
+div.page-header
+  h2
+    | Темы
+    .btn-group
+      = link_to 'Новая', new_admin_topic_path, class: 'btn btn-default'
+      = link_to 'Импорт', new_admin_import_path, class: 'btn btn-default'
 
-= render 'topics', topics: @topics
+= render 'admin/topics/topics', topics: @topics
+= paginate @topics

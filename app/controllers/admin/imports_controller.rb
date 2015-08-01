@@ -13,13 +13,17 @@ class Admin::ImportsController < Admin::AdminController
   private
 
   def import(f)
-    category_name = f.gets
+    logger.debug 'Importing topic'
+
+    category_name = f.gets.encode(universal_newline: true).chomp
     category = Category.find_or_create_by(name: category_name)
-    topic_name = f.gets
+    topic_name = f.gets.encode(universal_newline: true).chomp
     topic = Topic.find_or_create_by(name: topic_name, category: category)
 
+    logger.debug "Topic: #{topic.name}, category: #{category.name}"
+
     # Questions are divided by two newlines
-    questions = f.read.split("\n\n")
+    questions = f.read.encode(universal_newline: true).split("\n\n")
 
     questions.each do |question|
       content = question.split("\n")[0]

@@ -12,7 +12,7 @@ default: &default
 development:
   <<: *default
   host: localhost
-  username: danya
+  username: dan
   database: quiz_app
 
 # Warning: The database defined as "test" will be erased and
@@ -21,7 +21,7 @@ development:
 test:
   <<: *default
   host: localhost
-  username: danya
+  username: dan
   database: quiz_app_test
 
 production:

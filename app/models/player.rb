@@ -16,6 +16,8 @@
 #  password_reset_token   :string
 #  password_reset_sent_at :datetime
 #  token                  :string
+#  xmpp_password          :string
+#  visited_at             :datetime
 #
 
 class Player < ActiveRecord::Base
@@ -26,25 +28,45 @@ class Player < ActiveRecord::Base
   include PlayerTopics
 
   after_create :create_stats
+  after_create :register_xmpp
+  after_create :set_online
 
   # Associations
   has_merit
+  has_many :reports, dependent: :destroy
+
+  # Game
   has_one :stats, dependent: :destroy
   has_many :lobbies, dependent: :destroy
   has_many :host_game_sessions, class_name: 'GameSession', foreign_key: 'host_id'
   has_many :opponent_game_sessions, class_name: 'GameSession', foreign_key: 'opponent_id'
+
+  has_many :owned_rooms, dependent: :destroy, class_name: 'Room'
+  has_many :participations, dependent: :destroy
+  has_many :rooms, through: :participations
+  has_many :room_answers, dependent: :destroy
+
+  has_many :invites, dependent: :destroy
+  has_many :invited_rooms, through: :invites, source: :room
+
+  # Device
   has_many :push_tokens, dependent: :destroy
-  has_many :purchases, dependent: :destroy
-  has_many :reports, dependent: :destroy
+  has_many :purchases, -> { where('purchases.updated_at >= ?', Time.zone.now - 10.days) }, dependent: :destroy
+  has_many :purchase_types, through: :purchases
 
   has_many :topic_results, dependent: :destroy
   has_many :topics, -> { uniq }, through: :topic_results
 
+  # Social
   has_many :friend_requests, dependent: :destroy
+  has_many :incoming_requests, class_name: 'FriendRequest', foreign_key: 'friend_id', dependent: :destroy
   has_many :pending_friends, through: :friend_requests, source: :friend
-
   has_many :friendships, dependent: :destroy
+  has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id', dependent: :destroy
   has_many :friends, through: :friendships
+
+  has_many :created_messages, dependent: :destroy, class_name: 'Message', foreign_key: 'creator_id'
+  has_many :unread_messages, dependent: :destroy, class_name: 'Message'
 
   mount_base64_uploader :avatar, AvatarUploader
 
@@ -60,6 +82,8 @@ class Player < ActiveRecord::Base
   validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :email,
             format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_nil: true
+
+  scope :online, -> { where('visited_at > ?', 1.minute.ago) }
 
   TOP_SIZE = 20
 
@@ -92,9 +116,8 @@ class Player < ActiveRecord::Base
   end
 
   def multiplier
-    multipliers = purchases.unexpired.joins(:purchase_type).where('multiplier > 0')
-    return 1 if multipliers.empty?
-    multipliers.map { |purchase| purchase.purchase_type.multiplier }.max
+    purchase = purchase_types.where.not(multiplier: nil).order(multiplier: :desc).first
+    purchase ? purchase.multiplier : 1
   end
 
   def challenges
@@ -103,10 +126,6 @@ class Player < ActiveRecord::Base
 
   def challenged
     lobbies.where(challenge: true)
-  end
-
-  def purchase_types
-    purchases.map(&:purchase_type)
   end
 
   def self.search(query)
@@ -123,13 +142,30 @@ class Player < ActiveRecord::Base
     purchases.unexpired.where(purchase_type: purchase_type).any?
   end
 
-  def add_result(session)
-    topic_results.find_or_create_by(topic: session.topic).add(session)
+  def online?
+    visited_at > 1.minute.ago
+  end
+
+  def topics_unlocked?
+    purchase_types.where(topic: true).any?
   end
 
   private
 
+  def set_online
+    touch(:visited_at)
+  end
+
   def vk_user?
     vk_id.present?
+  end
+
+  def register_xmpp
+    jid = "id#{id}"
+    xmpp_password = SecureRandom.hex
+    `sudo ejabberdctl register #{jid} localhost #{xmpp_password}`
+    update(xmpp_password: xmpp_password)
+  rescue
+    logger.debug 'XMPP registration failed.'
   end
 end

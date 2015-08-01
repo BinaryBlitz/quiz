@@ -1,20 +1,33 @@
-h2 = 'Topic: ' + @topic.name
-
-strong Questions:
-= ' ' + @topic.questions.count.to_s
+h2
+  = @topic.name
+  small
+    | &nbsp;
+    = @topic.category.name
 
 table.table
-  thead
-    tr
-      td id
-      td Name
-      td Visible
-      td Category
-      td Featured
-      td Actions
+  = render 'topic_header'
   tbody
     = render @topic
 
-h3 Questions
-= link_to 'New question', new_admin_question_path(topic_id: @topic.id), class: 'btn btn-default'
-= render 'admin/questions/questions', questions: @questions
+h3
+  | Вопросы&nbsp;
+  span.label.label-default = @topic.questions.count
+  | &nbsp;
+  = link_to 'Новый', new_admin_question_path(topic_id: @topic.id), class: 'btn btn-default'
+
+- unless @questions.empty?
+  table.table
+    thead
+      tr
+        th Содержание
+        th.col-sm-4.col-md-3 Действия
+    tbody
+      - for question in @questions
+        tr
+          td = link_to question.content, edit_admin_question_path(question)
+          td.col-sm-4.col-md-3
+            = link_to 'Изменить', edit_admin_question_path(question), class: 'btn btn-default'
+            = ' '
+            = link_to 'Удалить', [:admin, question], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+
+= paginate @questions

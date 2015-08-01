@@ -1,24 +1,12 @@
-h2 = 'Category: ' + @category.name
+h2 = @category.name
 
 table.table
   thead
     tr
-      td id
-      td Name
-      td Actions
+      th Название
+      th Действия
   tbody
     = render 'category', category: @category
 
-/ div.row
-/   - if @category.background?
-/     div.col-xs-3
-/       h4 Background
-/       = image_tag @category.background.thumb.url, class: 'img-rounded'
-
-/   - if @category.banner?
-/     div.col-xs-3
-/       h4 Banner
-/       = image_tag @category.banner.thumb.url, class: 'img-rounded'
-
-h3 Topics
+h3 Темы
 = render 'admin/topics/topics', topics: @category.topics

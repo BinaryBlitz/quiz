@@ -14,6 +14,7 @@ class Question < ActiveRecord::Base
   belongs_to :topic
   has_many :answers, -> { order(id: :asc) }, dependent: :destroy
   has_many :game_session_questions, dependent: :destroy
+  has_many :room_questions, dependent: :destroy
 
   mount_uploader :image, QuestionImageUploader
 

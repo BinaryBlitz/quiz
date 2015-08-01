@@ -1,0 +1,17 @@
+= form_for [:admin, @purchase_type] do |f|
+  = render 'shared/error_messages', object: @purchase_type
+
+  .form-group
+    = f.label :identifier
+    = f.text_field :identifier, class: 'form-control'
+
+  .form-group
+    = f.label :multiplier
+    = f.number_field :multiplier, class: 'form-control'
+
+  .checkbox
+    = f.label :topic do
+      = f.check_box :topic
+      | Topic unlocker
+
+  = f.submit 'Submit', class: 'btn btn-default'

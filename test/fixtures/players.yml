@@ -16,6 +16,8 @@
 #  password_reset_token   :string
 #  password_reset_sent_at :datetime
 #  token                  :string
+#  xmpp_password          :string
+#  visited_at             :datetime
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -25,12 +27,14 @@ foo:
   username: foo
   password_digest: <%= BCrypt::Password.create("foobar", cost: 4) %>
   token: <%= SecureRandom.base58(24) %>
+  visited_at: <%= Time.zone.now %>
 
 bar:
   email: bar@foo.com
   username: bar
   password_digest: <%= BCrypt::Password.create("barfoo", cost: 4) %>
   token: <%= SecureRandom.base58(24) %>
+  visited_at: <%= Time.zone.now %>
 
 vk_player:
   email:
@@ -39,9 +43,11 @@ vk_player:
   vk_id: 1
   vk_token: foobar
   token: <%= SecureRandom.base58(24) %>
+  visited_at: <%= Time.zone.now %>
 
 baz:
   email: baz@qux.com
   username: baz
   password_digest: <%= BCrypt::Password.create("bazqux", cost: 4) %>
   token: <%= SecureRandom.base58(24) %>
+  visited_at: <%= Time.zone.now %>

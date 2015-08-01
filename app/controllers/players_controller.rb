@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
   skip_before_filter :restrict_access,
-                     only: [:create, :authenticate, :authenticate_vk, :username_availability]
-  before_action :set_player, only: [:show, :update, :destroy, :friends, :report]
+                     only: [:create, :authenticate, :authenticate_vk]
+  before_action :set_player, only: [:show, :update, :destroy, :friends, :report, :notify]
 
   # GET /players
   def index
@@ -20,7 +20,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      render status: :created
+      render :authenticate, status: :created
     else
       render json: @player.errors, status: :unprocessable_entity
     end
@@ -63,7 +63,7 @@ class PlayersController < ApplicationController
     vk = VkontakteApi::Client.new(params[:token])
     @player = Player.find_or_create_from_vk(vk)
 
-    render :authenticate, location: @player
+    render :authenticate
   end
 
   def search
@@ -74,11 +74,6 @@ class PlayersController < ApplicationController
   def report
     @player.reports.create(message: params[:message])
     head :created
-  end
-
-  def username_availability
-    @available = Player.find_by(username: params[:username]).nil?
-    render json: { available: @available }
   end
 
   private

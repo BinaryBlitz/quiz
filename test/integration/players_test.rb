@@ -51,4 +51,15 @@ class PlayersTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_not_nil json_response['token']
   end
+
+  test 'should notify players' do
+    post "/api/messages", token: token, message: { content: 'Hello!', player_id: @player.id }
+    assert_response :created
+  end
+
+  test 'online status' do
+    get "/api/players/#{@player.id}", token: token
+    assert_response :success
+    assert @player.reload.online?
+  end
 end
