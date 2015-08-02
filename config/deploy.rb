@@ -4,7 +4,7 @@ load 'deploy/assets'
 
 set :application, 'quizapp'
 set :rails_env, 'production'
-set :domain, 'quizapp@binaryblitz.ru'
+set :domain, 'quizapp@188.166.14.118'
 set :deploy_to, "/home/quizapp/#{application}"
 set :use_sudo, false
 set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
@@ -16,7 +16,7 @@ set :scm, :git
 set :repository, 'git@github.com:BinaryBlitz/quiz_app.git'
 
 # Branch
-set :branch, 'development'
+set :branch, 'master'
 
 set :deploy_via, :remote_cache
 
@@ -27,10 +27,16 @@ role :db,  domain, primary: true
 before 'deploy:setup', 'rvm:install_rvm', 'rvm:install_ruby'
 
 after 'deploy:update_code', roles: :app do
+  # Config
   run "rm -f #{current_release}/config/secrets.yml"
   run "ln -nfs #{deploy_to}/shared/config/secrets.yml #{current_release}/config/secrets.yml"
+  run "rm -f #{current_release}/config/pushcert.pem"
+  run "ln -nfs #{deploy_to}/shared/config/pushcert.pem #{current_release}/config/pushcert.pem"
+
+  # Uploads
   run "rm -f #{current_release}/public/uploads"
   run "ln -nfs #{deploy_to}/shared/public/uploads #{current_release}/public/uploads"
+
   # run "cd #{current_release}; rake db:schema:load RAILS_ENV=#{rails_env}"
   run "cd #{current_release}; bundle exec rake db:migrate RAILS_ENV=#{rails_env}"
   # run "rm -f #{current_release}/config/initializers/app_constants.rb"
