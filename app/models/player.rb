@@ -48,6 +48,7 @@ class Player < ActiveRecord::Base
   has_many :room_answers, dependent: :destroy
 
   has_many :invites, dependent: :destroy
+  has_many :outgoing_invites, dependent: :destroy, class_name: 'Invite', foreign_key: 'creator_id'
   has_many :invited_rooms, through: :invites, source: :room
 
   # Device

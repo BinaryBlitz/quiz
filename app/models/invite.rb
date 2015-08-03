@@ -14,6 +14,7 @@ class Invite < ActiveRecord::Base
 
   belongs_to :room
   belongs_to :player
+  belongs_to :creator, class_name: 'Player'
 
   validates :room, presence: true, uniqueness: { scope: :player }
   validates :player, presence: true
@@ -21,6 +22,7 @@ class Invite < ActiveRecord::Base
   private
 
   def notify_player
-    player.push_notification('Вас пригласили в комнату', action: 'ROOM_INVITE' , room: as_json)
+    options = { action: 'ROOM_INVITE' , invite: as_json, creator: creator.as_json }
+    player.push_notification('Вас пригласили в комнату', options)
   end
 end

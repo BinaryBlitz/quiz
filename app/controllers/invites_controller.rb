@@ -5,7 +5,7 @@ class InvitesController < ApplicationController
   end
 
   def create
-    @invite = Invite.new(invite_params)
+    @invite = current_player.outgoing_invites.build(invite_params)
 
     if @invite.save
       render :show, status: :created, location: @invite
