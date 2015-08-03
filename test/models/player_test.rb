@@ -18,6 +18,7 @@
 #  token                  :string
 #  xmpp_password          :string
 #  visited_at             :datetime
+#  vk_avatar              :string
 #
 
 require 'test_helper'

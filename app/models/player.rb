@@ -18,6 +18,7 @@
 #  token                  :string
 #  xmpp_password          :string
 #  visited_at             :datetime
+#  vk_avatar              :string
 #
 
 class Player < ActiveRecord::Base
@@ -69,6 +70,7 @@ class Player < ActiveRecord::Base
   has_many :unread_messages, dependent: :destroy, class_name: 'Message'
 
   mount_base64_uploader :avatar, AvatarUploader
+  mount_base64_uploader :vk_avatar, VkUploader
 
   has_secure_password
   has_secure_token
