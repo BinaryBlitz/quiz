@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803134657) do
+ActiveRecord::Schema.define(version: 20150804213352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -384,7 +384,6 @@ ActiveRecord::Schema.define(version: 20150803134657) do
 
   add_index "topics", ["category_id"], name: "index_topics_on_category_id", using: :btree
 
-  add_foreign_key "answers", "questions"
   add_foreign_key "category_results", "categories"
   add_foreign_key "category_results", "players"
   add_foreign_key "friend_requests", "players"
