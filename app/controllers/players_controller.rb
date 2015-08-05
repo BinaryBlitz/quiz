@@ -66,6 +66,11 @@ class PlayersController < ApplicationController
     render :authenticate
   end
 
+  def authenticate_layer
+    token = Layer::IdentityToken.new(current_player.id, params[:nonce])
+    render json: token
+  end
+
   def search
     @players = Player.search(params[:query])
   end
@@ -84,7 +89,8 @@ class PlayersController < ApplicationController
 
   def player_params
     params.require(:player).permit(
-      :name, :username, :email, :password, :password_confirmation, :points, :avatar
+      :name, :username, :email, :password, :password_confirmation, :points, :avatar,
+      :nonce
     )
   end
 end

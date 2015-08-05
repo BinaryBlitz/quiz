@@ -39,6 +39,7 @@ gem 'kaminari'
 
 gem 'pusher'
 gem 'vkontakte_api'
+gem 'layer-identity_token'
 gem 'gcm'
 gem 'houston'
 gem 'merit'

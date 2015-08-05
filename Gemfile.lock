@@ -129,6 +129,8 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.9.3)
+    layer-identity_token (0.1.0)
+      jwt (~> 1.4, >= 1.4.1)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -294,6 +296,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
+  layer-identity_token
   merit
   mini_magick
   mocha

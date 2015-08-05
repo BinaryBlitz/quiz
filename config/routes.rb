@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       collection do
         post 'authenticate'
         post 'authenticate_vk'
+        post 'authenticate_layer'
         get 'search'
       end
       member do
