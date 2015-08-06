@@ -68,7 +68,7 @@ class PlayersController < ApplicationController
 
   def authenticate_layer
     token = Layer::IdentityToken.new(current_player.id, params[:nonce])
-    render json: token
+    render json: { token: token }
   end
 
   def search
