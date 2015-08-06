@@ -34,12 +34,12 @@ end
 
 id = 0
 badges = [
-  { id: id += 1, name: 'Победитель', description: 'Win 100 games.' },
-  { id: id += 1, name: 'Верный делу', description: 'Play 10 days in a row.' },
-  { id: id += 1, name: 'Молния', description: 'Answer all questions in 12 seconds or less.' },
-  { id: id += 1, name: 'Эрудит', description: 'At least 1 win in all topics.' },
-  { id: id += 1, name: 'Суперкомпьютер', description: 'Win 50 games ahead of time.' },
-  { id: id += 1, name: 'Дружелюбный', description: 'Add a friend.' },
+  { id: id += 1, name: 'Победитель', description: 'Выиграть 100 игр.' },
+  { id: id += 1, name: 'Верный делу', description: '10 дней игры подряд.' },
+  { id: id += 1, name: 'Молния', description: 'Ответить на все вопросы менее, чем за 12 секунд.' },
+  { id: id += 1, name: 'Эрудит', description: 'По одной победе в каждой теме.' },
+  { id: id += 1, name: 'Суперкомпьютер', description: '50 побед до окончания игры.' },
+  { id: id += 1, name: 'Дружелюбный', description: 'Отправить запрос в друзья.' },
   {
     id: id += 1, name: 'Колумб', description: 'Топ в географии.',
     custom_fields: { category_name: 'География' }
