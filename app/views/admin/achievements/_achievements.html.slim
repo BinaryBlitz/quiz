@@ -1,11 +1,5 @@
 - unless achievements.empty?
   table.table
-    thead
-      tr
-        td id
-        td Name
-        td Description
-        td Icon
-        td Действия
+    = render 'achievement_header'
     tbody
       = render achievements

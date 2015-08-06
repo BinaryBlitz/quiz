@@ -1,5 +1,4 @@
 tr
-  td = achievement.badge_id
   td = link_to Merit::Badge.find(achievement.badge_id).name, [:admin, achievement]
   td = Merit::Badge.find(achievement.badge_id).description
   td = achievement.icon? ? image_tag(achievement.icon.thumb.url) : ''

@@ -6,12 +6,12 @@ div.page-header
 - unless @facts.empty?
   table.table
     thead
-      tr.row
+      tr
         th Содержание
         th.col-sm-4.col-md-3 Действия
     tbody
       - for fact in @facts
-        tr.row
+        tr
           td = fact.content
           td.col-sm-4.col-md-3
             = link_to 'Изменить', edit_admin_fact_path(fact), class: 'btn btn-default'

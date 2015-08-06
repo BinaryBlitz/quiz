@@ -22,24 +22,24 @@ PurchaseType.create(
   [{ identifier: 'booster-x2', multiplier: 2 }, { identifier: 'booster-x3', multiplier: 3 }])
 
 # Categories and topics
-category = Category.create(name: 'General')
-topic = Topic.create(name: 'Geography', category: category)
+category = Category.create(name: 'Тестовая категория')
+topic = Topic.create(name: 'Тестовая тема', category: category)
 
 # Questions
-questions = {
-  'What is the capital of the UK?': %w(London New\ York\ City Paris Berlin),
-  'What is the capital of the US?': %w(Washington\ D.C. New\ York\ City Los\ Angeles Chicago),
-  'What is the largest country in the world?': %w(Russia Canada The\ United\ States Brazil),
-  'What is the largest country in Europe?': %w(Russia Germany Poland The\ United\ Kingdom),
-  'What is the largest country in Americas?': %w(Canada The\ United\ States Mexico Brazil),
-  'What is the largest country in Africa?': %w(Algeria Egypt South\ African\ Republic Ghana),
-  'What is the largest country in Asia?': %w(Russia China India Japan)
-}
+questions = {}
+10.times do |n|
+  questions["Вопрос #{n + 1}"] = %w(Lorem Ipsum Dolor Sit)
+end
 
 questions.each do |question, answers|
   q = Question.new(content: question, topic: topic)
   answers.each { |answer| q.answers.new(content: answer, correct: answer == answers.first) }
   q.save
+end
+
+# Facts
+5.times do |n|
+  Fact.create(content: "Факт #{n + 1}")
 end
 
 # Online and offline session
