@@ -1,5 +1,6 @@
 require 'rvm/capistrano'
 require 'bundler/capistrano'
+
 load 'deploy/assets'
 
 set :stages, %w(production staging)
