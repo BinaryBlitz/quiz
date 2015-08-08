@@ -60,6 +60,7 @@ gem 'rails_12factor', group: :production
 group :development, :test do
   gem 'mocha'
   gem 'capistrano'
+  gem 'capistrano-ext'
   gem 'rvm-capistrano', require: false
   gem 'byebug'
   gem 'pry-rails'

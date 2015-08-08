@@ -2,9 +2,12 @@ require 'rvm/capistrano'
 require 'bundler/capistrano'
 load 'deploy/assets'
 
+set :stages, %w(production staging)
+set :default_stage, "staging"
+require 'capistrano/ext/multistage'
+
 set :application, 'quizapp'
 set :rails_env, 'production'
-set :domain, 'quizapp@188.166.14.118'
 set :deploy_to, "/home/quizapp/#{application}"
 set :use_sudo, false
 set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
@@ -15,14 +18,7 @@ set :rvm_ruby_string, 'ruby-2.2.0@quizapp'
 set :scm, :git
 set :repository, 'git@github.com:BinaryBlitz/quiz_app.git'
 
-# Branch
-set :branch, 'master'
-
 set :deploy_via, :remote_cache
-
-role :web, domain
-role :app, domain
-role :db,  domain, primary: true
 
 before 'deploy:setup', 'rvm:install_rvm', 'rvm:install_ruby'
 
@@ -36,12 +32,7 @@ after 'deploy:update_code', roles: :app do
   # Uploads
   run "rm -f #{current_release}/public/uploads"
   run "ln -nfs #{deploy_to}/shared/public/uploads #{current_release}/public/uploads"
-
-  # run "cd #{current_release}; rake db:schema:load RAILS_ENV=#{rails_env}"
   run "cd #{current_release}; bundle exec rake db:migrate RAILS_ENV=#{rails_env}"
-  # run "rm -f #{current_release}/config/initializers/app_constants.rb"
-  # run "ln -nfs #{deploy_to}/shared/config/initializers/app_constants.rb #{current_release}/config/initializers/app_constants.rb"
-  # run "ln -nfs #{deploy_to}/shared/secret_token.rb #{current_release}/config/initializers/secret_token.rb"
   run "cd #{current_release}; rake init_achievements RAILS_ENV=#{rails_env}"
 end
 
