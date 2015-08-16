@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
   skip_before_filter :restrict_access,
                      only: [:create, :authenticate, :authenticate_vk]
-  before_action :set_player, only: [:show, :update, :destroy, :friends, :report, :notify]
+  before_action :set_player, only: [:update, :destroy, :friends, :report, :notify]
 
   # GET /players
   def index
@@ -10,9 +10,9 @@ class PlayersController < ApplicationController
 
   # GET /players/1
   def show
+    @player = Player.includes(:topic_results).find(params[:id])
     @is_friend = current_player.friends.include?(@player)
     @score = current_player.score_against(@player)
-    @total_score = @player.total_score
   end
 
   # POST /players

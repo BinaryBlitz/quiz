@@ -1,19 +1,8 @@
 module PlayerRankings
   extend ActiveSupport::Concern
 
-  included do
-  end
-
-  def wins
-    topic_results.sum(:wins)
-  end
-
-  def draws
-    topic_results.sum(:draws)
-  end
-
-  def losses
-    topic_results.sum(:losses)
+  def score
+    Score.new(wins, draws, losses)
   end
 
   def weekly_points
@@ -34,6 +23,20 @@ module PlayerRankings
 
   def weekly_category_points(category)
     topic_results.where(category: category).recent.sum(:weekly_points)
+  end
+
+  private
+
+  def wins
+    topic_results.sum(:wins)
+  end
+
+  def draws
+    topic_results.sum(:draws)
+  end
+
+  def losses
+    topic_results.sum(:losses)
   end
 
   module ClassMethods

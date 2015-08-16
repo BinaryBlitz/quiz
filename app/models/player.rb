@@ -103,7 +103,7 @@ class Player < ActiveRecord::Base
   end
 
   def score_against(opponent)
-    return [nil, nil] if self == opponent
+    return ::Score.new if self == opponent
     sessions = game_sessions.where('host_id = ? OR opponent_id = ?', opponent, opponent)
     wins = 0
     draws = 0
@@ -111,11 +111,7 @@ class Player < ActiveRecord::Base
       draws += 1 and next if session.draw?
       wins += 1 if session.winner?(self)
     end
-    [wins, sessions.count - wins - draws]
-  end
-
-  def total_score
-    [wins, draws, losses]
+    Score.new(wins, nil, sessions.count - wins - draws)
   end
 
   def multiplier

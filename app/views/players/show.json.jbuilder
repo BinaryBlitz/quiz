@@ -2,14 +2,14 @@ json.partial! 'player', player: @player
 json.is_friend @is_friend
 
 json.total_score do
-  json.wins @total_score[0]
-  json.draws @total_score[1]
-  json.losses @total_score[2]
+  json.wins @player.score.wins
+  json.draws @player.score.draws
+  json.losses @player.score.losses
 end
 
 json.score do
-  json.wins @score[0]
-  json.losses @score[1]
+  json.wins @score.wins
+  json.losses @score.losses
 end
 
 json.favorite_topics @player.favorite_topics do |topic|
