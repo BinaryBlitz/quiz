@@ -28,6 +28,10 @@ class PlayersController < ApplicationController
 
   # PATCH/PUT /players/1
   def update
+    if player_params[:avatar].present?
+      @player.vk_avatar = nil
+    end
+
     if @player.update(player_params)
       head :no_content
     else
