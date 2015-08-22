@@ -5,6 +5,7 @@ tr
   td = topic.paid?
   td = topic.featured?
   td = topic.game_sessions.count
+  td = topic.topic_results.count
   td
     = link_to 'Изменить', edit_admin_topic_path(topic), class: 'btn btn-default'
     = ' '
