@@ -33,7 +33,7 @@ class GameSessionQuestion < ActiveRecord::Base
   validate :valid_host_answer, on: :update
   validate :valid_opponent_answer, on: :update
 
-  CORRECT_ANSWER_PROBABILITY = 0.7
+  CORRECT_ANSWER_PROBABILITY = 0.5
 
   def host_points
     return 0 unless host_time
