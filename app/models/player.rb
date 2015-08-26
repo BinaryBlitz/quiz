@@ -94,8 +94,8 @@ class Player < ActiveRecord::Base
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
   end
 
-  def self.random_username
-    pluck(:username).sample
+  def self.random_username(current_user)
+    Player.where.not(id: current_user.id).order('RANDOM()').first.username
   end
 
   def to_s
