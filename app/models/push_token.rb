@@ -11,6 +11,8 @@
 #
 
 class PushToken < ActiveRecord::Base
+  before_validation :ensure_uniqueness
+
   belongs_to :player
 
   validates :token, uniqueness: true
@@ -25,6 +27,11 @@ class PushToken < ActiveRecord::Base
   end
 
   private
+
+  def ensure_uniqueness
+    push_token = PushToken.find_by(token: token)
+    push_token.destroy if push_token
+  end
 
   def push_to_android(message, options = {})
     data = { data: { title: 'iQuiz', message: message } }
