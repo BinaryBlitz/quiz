@@ -28,6 +28,8 @@ class Player < ActiveRecord::Base
   include PlayerRankings
   include PlayerTopics
 
+  before_save { self.email = email.downcase if email }
+
   after_create :create_stats
   after_create :register_xmpp
   after_create :set_online
