@@ -16,9 +16,4 @@ class PushTokenTest < ActiveSupport::TestCase
   def setup
     @push_token = push_tokens(:apple)
   end
-
-  test 'uniqueness' do
-    copy = PushToken.new(token: @push_token.token)
-    assert_not copy.valid?
-  end
 end

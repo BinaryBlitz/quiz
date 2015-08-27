@@ -71,6 +71,11 @@ class PlayerTest < ActiveSupport::TestCase
     assert @bar.invalid?
   end
 
+  test 'case-insensitive uniqueness' do
+    @bar.username = @foo.username.upcase
+    assert @bar.invalid?
+  end
+
   test 'search' do
     result = Player.search(@foo.username.downcase[0..-2])
     assert result.include?(@foo)
