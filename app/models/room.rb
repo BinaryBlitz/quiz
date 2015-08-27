@@ -24,7 +24,7 @@ class Room < ActiveRecord::Base
 
   attr_accessor :topic, :topic_id
 
-  scope :visible, -> { where(friends_only: false).where(started: false) }
+  scope :visible, -> { where(started: false) }
   scope :recent, -> { where('created_at > ?', 10.minutes.ago) }
 
   def start

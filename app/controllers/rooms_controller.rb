@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
 
   # GET /rooms
   def index
-    @rooms = Room.recent
+    @rooms = Room.recent.visible
   end
 
   # GET /rooms/1
