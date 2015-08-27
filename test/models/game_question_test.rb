@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: game_session_questions
+# Table name: game_questions
 #
 #  id                 :integer          not null, primary key
 #  game_session_id    :integer
@@ -15,9 +15,9 @@
 
 require 'test_helper'
 
-class GameSessionQuestionTest < ActiveSupport::TestCase
+class GameQuestionTest < ActiveSupport::TestCase
   def setup
-    @session_question = game_session_questions(:session_question)
+    @session_question = game_questions(:session_question)
   end
 
   test 'invalid without session' do

@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     resources :topics, only: [:index, :show]
     resources :categories, only: [:index, :show]
 
-    resources :game_session_questions, only: [:update]
+    resources :game_questions, only: [:update]
     resources :game_sessions, except: [:new, :edit] do
       patch 'close', on: :member
     end
