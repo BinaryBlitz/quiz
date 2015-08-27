@@ -7,7 +7,6 @@ set :default_stage, "staging"
 require 'capistrano/ext/multistage'
 
 set :application, 'quizapp'
-set :rails_env, 'production'
 set :deploy_to, "/home/quizapp/#{application}"
 set :use_sudo, false
 set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
