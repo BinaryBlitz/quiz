@@ -111,7 +111,7 @@ class Player < ActiveRecord::Base
       draws += 1 and next if session.draw?
       wins += 1 if session.winner?(self)
     end
-    Score.new(wins, nil, sessions.count - wins - draws)
+    ::Score.new(wins, nil, sessions.count - wins - draws)
   end
 
   def multiplier
