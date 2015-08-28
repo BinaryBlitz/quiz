@@ -1,5 +1,6 @@
 json.partial! 'player', player: @player
-json.is_friend @is_friend
+
+json.is_friend current_player.friends.include?(@player)
 
 json.total_score do
   json.wins @player.score.wins
@@ -7,9 +8,12 @@ json.total_score do
   json.losses @player.score.losses
 end
 
-json.score do
-  json.wins @score.wins
-  json.losses @score.losses
+unless @player == current_player
+  score = current_player.score_against(@player)
+  json.score do
+    json.wins score.wins
+    json.losses score.losses
+  end
 end
 
 json.favorite_topics @player.favorite_topics do |topic|
