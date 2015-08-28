@@ -16,9 +16,4 @@ class AnswerTest < ActiveSupport::TestCase
   def setup
     @answer = answers(:correct)
   end
-
-  test 'invalid without content' do
-    @answer.content = ''
-    assert_not @answer.valid?
-  end
 end

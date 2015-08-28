@@ -21,8 +21,5 @@ class TopicTest < ActiveSupport::TestCase
     @paid = topics(:paid)
   end
 
-  test 'invalid without category' do
-    @geography.category = nil
-    assert @geography.invalid?
-  end
+  # TODO: Add tests
 end

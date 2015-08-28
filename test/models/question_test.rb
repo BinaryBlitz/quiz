@@ -17,9 +17,4 @@ class QuestionTest < ActiveSupport::TestCase
     @question = questions(:capital_of_the_uk)
     @answer = answers(:correct)
   end
-
-  test 'invalid without content' do
-    @question.content = ''
-    assert @question.invalid?
-  end
 end
