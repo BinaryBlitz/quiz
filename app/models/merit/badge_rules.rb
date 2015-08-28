@@ -46,7 +46,7 @@ module Merit
       # end
 
       grant_on 'game_sessions#close', badge: 'Победитель' do |game_session|
-        game_session.finisher.wins == 100
+        game_session.finisher.score.wins == 100
       end
 
       grant_on 'game_sessions#close', badge: 'Верный делу' do |game_session|
