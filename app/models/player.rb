@@ -16,7 +16,6 @@
 #  password_reset_token   :string
 #  password_reset_sent_at :datetime
 #  token                  :string
-#  xmpp_password          :string
 #  visited_at             :datetime
 #  vk_avatar              :string
 #
@@ -31,7 +30,6 @@ class Player < ActiveRecord::Base
   before_save { self.email = email.downcase if email }
 
   after_create :create_stats
-  after_create :register_xmpp
   after_create :set_online
 
   # Associations
@@ -159,14 +157,5 @@ class Player < ActiveRecord::Base
 
   def vk_user?
     vk_id.present?
-  end
-
-  def register_xmpp
-    jid = "id#{id}"
-    xmpp_password = SecureRandom.hex
-    `sudo ejabberdctl register #{jid} localhost #{xmpp_password}`
-    update(xmpp_password: xmpp_password)
-  rescue
-    logger.debug 'XMPP registration failed.'
   end
 end
