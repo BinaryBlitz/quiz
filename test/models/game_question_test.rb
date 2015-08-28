@@ -20,16 +20,6 @@ class GameQuestionTest < ActiveSupport::TestCase
     @session_question = game_questions(:session_question)
   end
 
-  test 'invalid without session' do
-    @session_question.game_session = nil
-    assert @session_question.invalid?
-  end
-
-  test 'invalid without question' do
-    @session_question.question = nil
-    assert @session_question.invalid?
-  end
-
   test 'invalid with negative host time' do
     @session_question.host_time = -1
     assert @session_question.invalid?

@@ -15,14 +15,4 @@ class ReportTest < ActiveSupport::TestCase
   def setup
     @report = reports(:cheating)
   end
-
-  test 'invalid without player' do
-    @report.player = nil
-    assert @report.invalid?
-  end
-
-  test 'invalid without message' do
-    @report.message = ''
-    assert @report.invalid?
-  end
 end
