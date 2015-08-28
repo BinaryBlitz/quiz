@@ -11,14 +11,17 @@
 #
 
 class Message < ActiveRecord::Base
-  after_create :notify
-
   belongs_to :creator, class_name: 'Player'
   belongs_to :player
 
   validates :content, presence: true
   validates :creator, presence: true
   validates :player, presence: true
+
+  def post
+    notify
+    save
+  end
 
   private
 

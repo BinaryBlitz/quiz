@@ -18,17 +18,14 @@ class GameSessionQuestion < ActiveRecord::Base
   belongs_to :question
 
   belongs_to :host_answer, class_name: 'Answer', foreign_key: :host_answer_id
-  belongs_to :opponent_answer,
-             class_name: 'Answer', foreign_key: :opponent_answer_id
+  belongs_to :opponent_answer, class_name: 'Answer', foreign_key: :opponent_answer_id
 
   validates :game_session, presence: true
   validates :question, presence: true
 
-  validates :host_time,
-            numericality: { greater_than_or_equal_to: 0 },
+  validates :host_time, numericality: { greater_than_or_equal_to: 0 },
             on: :update, allow_blank: true
-  validates :opponent_time,
-            numericality: { greater_than_or_equal_to: 0 },
+  validates :opponent_time, numericality: { greater_than_or_equal_to: 0 },
             on: :update, allow_blank: true
   validate :valid_host_answer, on: :update
   validate :valid_opponent_answer, on: :update
@@ -72,7 +69,8 @@ class GameSessionQuestion < ActiveRecord::Base
   # Generates offline session question
   def generate_for_offline
     opponent_answer, opponent_time = load_or_generate_answer
-    update(opponent_answer: opponent_answer, opponent_time: opponent_time)
+    self.opponent_answer = opponent_answer
+    self.opponent_time = opponent_time
   end
 
   private
@@ -114,6 +112,7 @@ class GameSessionQuestion < ActiveRecord::Base
 
   def valid_host_answer
     return if !question || !host_answer
+
     unless question.answers.include?(host_answer)
       errors.add(:host_answer, "doesn't belong to the question")
     end
@@ -121,6 +120,7 @@ class GameSessionQuestion < ActiveRecord::Base
 
   def valid_opponent_answer
     return if !question || !opponent_answer
+
     unless question.answers.include?(opponent_answer)
       errors.add(:opponent_answer, "doesn't belong to the question")
     end

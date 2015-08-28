@@ -19,6 +19,7 @@ class Room < ActiveRecord::Base
   has_one :room_session, dependent: :destroy
   has_many :participations, dependent: :destroy
   has_many :players, through: :participations
+  has_many :invites, dependent: :destroy
 
   validates :player, presence: true
 
@@ -28,7 +29,7 @@ class Room < ActiveRecord::Base
   scope :recent, -> { where('created_at > ?', 10.minutes.ago) }
 
   def start
-    create_room_session
+    build_room_session.generate
     notify_session_start
     update(started: true)
   end

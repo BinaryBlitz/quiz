@@ -90,6 +90,13 @@ class Player < ActiveRecord::Base
 
   TOP_SIZE = 20
 
+  def register
+    build_stats
+    register_xmpp
+    self.visited_at = Time.zone.now
+    save
+  end
+
   def game_sessions
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
   end

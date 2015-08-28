@@ -26,6 +26,11 @@ class FriendRequest < ActiveRecord::Base
     destroy
   end
 
+  def post
+    send_notification
+    save
+  end
+
   private
 
   def not_self

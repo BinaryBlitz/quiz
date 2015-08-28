@@ -7,7 +7,7 @@ class InvitesController < ApplicationController
   def create
     @invite = current_player.outgoing_invites.build(invite_params)
 
-    if @invite.save
+    if @invite.post
       render :show, status: :created, location: @invite
     else
       render json: @invite.errors, status: :unprocessable_entity

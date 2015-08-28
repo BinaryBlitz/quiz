@@ -14,8 +14,6 @@
 #
 
 class GameSession < ActiveRecord::Base
-  after_create :generate
-
   # Associations
   belongs_to :host, class_name: 'Player', foreign_key: 'host_id'
   belongs_to :opponent, class_name: 'Player', foreign_key: 'opponent_id'
@@ -33,6 +31,11 @@ class GameSession < ActiveRecord::Base
 
   # Scopes
   scope :last_week, -> { where(updated_at: (1.week.ago)..(Time.zone.now)) }
+
+  def generate
+    generate_session
+    save
+  end
 
   def player_points(player)
     if player == host
@@ -120,10 +123,9 @@ class GameSession < ActiveRecord::Base
     finisher.stats.increment_early_winner(self)
   end
 
-  def generate
+  def generate_session
     questions = Question.where(topic: topic).sample(6)
-    questions.map! { |q| game_session_questions.create(question: q) }
-    game_session_questions.each(&:generate_for_offline) if offline
-    self
+    questions.map! { |question| game_session_questions.build(question: question) }
+    game_session_questions.each(&:generate_for_offline) if offline?
   end
 end

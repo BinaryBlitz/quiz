@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.all.includes(:topics).where('topics.visible': true)
+    @categories = Category.all.includes(:topics).where('topics.visible' => true)
   end
 
   def show

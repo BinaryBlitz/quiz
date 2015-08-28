@@ -10,6 +10,7 @@ module LobbySessions
       host: current_player,
       opponent: opponent_lobby.player,
       offline: false)
+    @session.generate
     @session.lobbies << [@lobby, opponent_lobby]
     @lobby.close
   end
@@ -20,6 +21,7 @@ module LobbySessions
       topic: @lobby.topic,
       host: current_player,
       offline: true)
+    @session.generate
     @lobby.close
   end
 end

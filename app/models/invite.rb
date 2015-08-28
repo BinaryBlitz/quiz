@@ -11,14 +11,17 @@
 #
 
 class Invite < ActiveRecord::Base
-  after_create :notify_player
-
   belongs_to :room
   belongs_to :player
   belongs_to :creator, class_name: 'Player'
 
   validates :room, presence: true, uniqueness: { scope: :player }
   validates :player, presence: true
+
+  def post
+    notify_player
+    save
+  end
 
   private
 

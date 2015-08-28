@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
   def create
     @message = current_player.created_messages.build(message_params)
 
-    if @message.save
+    if @message.post
       head :created
     else
       render json: @message.errors, status: :unprocessable_entity

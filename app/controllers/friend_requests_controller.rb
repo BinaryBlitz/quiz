@@ -10,7 +10,7 @@ class FriendRequestsController < ApplicationController
     friend = Player.find(params[:friend_id])
     @friend_request = current_player.friend_requests.build(friend: friend)
 
-    if @friend_request.save
+    if @friend_request.post
       render :show, status: :created, location: @friend_request
     else
       render json: @friend_request.errors, status: :unprocessable_entity

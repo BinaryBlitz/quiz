@@ -10,8 +10,6 @@
 #
 
 class RoomSession < ActiveRecord::Base
-  after_create :generate
-
   belongs_to :room
 
   has_many :room_questions, dependent: :destroy
@@ -19,6 +17,11 @@ class RoomSession < ActiveRecord::Base
   validates :room, presence: true
 
   QUESTIONS_PER_PLAYER = 3
+
+  def generate
+    generate_session
+    save
+  end
 
   # Players ranked by points
   def rankings
@@ -48,12 +51,12 @@ class RoomSession < ActiveRecord::Base
 
   private
 
-  def generate
+  def generate_session
     topics = Hash.new(0)
     room.participations.map(&:topic).each { |topic| topics[topic] += QUESTIONS_PER_PLAYER }
     topics.each do |topic, number_of_questions|
       questions = Question.where(topic: topic).sample(number_of_questions)
-      questions.each { |question| room_questions.create(question: question) }
+      questions.each { |question| room_questions.build(question: question) }
     end
   end
 end

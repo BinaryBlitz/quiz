@@ -43,7 +43,7 @@ Rails.application.routes.draw do
       end
     end
     resources :invites, except: [:new, :edit]
-    resources :participations, except: [:new, :create, :edit]
+    resources :participations, except: [:new, :edit]
     resources :room_sessions, only: [:show]
     resources :room_questions, only: [] do
       member do

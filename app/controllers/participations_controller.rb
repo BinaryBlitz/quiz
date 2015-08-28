@@ -1,5 +1,15 @@
 class ParticipationsController < ApplicationController
-  before_action :set_participation, except: []
+  before_action :set_participation, except: [:create]
+
+  def create
+    @participation = current_player.participations.build(participation_params)
+
+    if @participation.save
+      head :created
+    else
+      render json: @participation.errors, status: :unprocessable_entity
+    end
+  end
 
   def create
     @participation = current_player.participations.build(topic: topic)
@@ -32,6 +42,6 @@ class ParticipationsController < ApplicationController
   end
 
   def participation_params
-    params.require(:participation).permit(:ready, :topic_id)
+    params.require(:participation).permit(:ready, :topic_id, :room_id)
   end
 end
