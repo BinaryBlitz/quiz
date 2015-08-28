@@ -31,11 +31,18 @@ class ApplicationController < ActionController::Base
     @current_player = Player.find_by_token(params[:token])
   end
 
+  # Authorization
+  include Pundit
+
+  rescue_from Pundit::NotAuthorizedError, with: :player_not_authorized
+
+  def pundit_user
+    current_player
+  end
+
   def record_activity
     current_player.touch(:visited_at) if current_player
   end
-
-  rescue_from Pundit::NotAuthorizedError, with: :player_not_authorized
 
   private
 

@@ -91,7 +91,6 @@ class Player < ActiveRecord::Base
 
   def register
     build_stats
-    register_xmpp
     self.visited_at = Time.zone.now
     save && self
   end
