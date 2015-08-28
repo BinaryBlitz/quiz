@@ -31,8 +31,8 @@ class RoomsTest < ActionDispatch::IntegrationTest
   end
 
   test 'join room' do
-    post '/api/participations', token: @guest.token,
-      participation: { topic_id: @topic.id, room_id: @room.id }
+    post '/api/participations',
+         token: @guest.token, participation: { topic_id: @topic.id, room_id: @room.id }
     assert_response :created
     assert @guest.rooms.include?(@room)
   end
