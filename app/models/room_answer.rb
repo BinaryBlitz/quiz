@@ -36,8 +36,6 @@ class RoomAnswer < ActiveRecord::Base
   def answer_belongs_to_question
     return unless room_question
 
-    unless question.answers.include?(answer)
-      errors.add(:answer, "doesn't belong to question")
-    end
+    errors.add(:answer, "doesn't belong to question") unless question.answers.include?(answer)
   end
 end

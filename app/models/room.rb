@@ -41,7 +41,7 @@ class Room < ActiveRecord::Base
   end
 
   def player_finished?(current_player)
-    participation = participations.find_by(player: player)
+    participation = participations.find_by(player: current_player)
     participation && participation.finished?
   end
 
