@@ -11,8 +11,6 @@ class PlayersController < ApplicationController
   # GET /players/1
   def show
     @player = Player.includes(:topic_results).find(params[:id])
-    @is_friend = current_player.friends.include?(@player)
-    @score = current_player.score_against(@player)
   end
 
   # POST /players
@@ -20,7 +18,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      render :authenticate, status: :created
+      render :authenticate, status: :created, location: @player
     else
       render json: @player.errors, status: :unprocessable_entity
     end
@@ -29,11 +27,11 @@ class PlayersController < ApplicationController
   # PATCH/PUT /players/1
   def update
     if player_params[:avatar].present?
-      @player.vk_avatar = nil
+      @player.remove_vk_avatar!
     end
 
     if @player.update(player_params)
-      head :no_content
+      render :show, status: :ok
     else
       render json: @player.errors, status: :unprocessable_entity
     end
@@ -93,8 +91,7 @@ class PlayersController < ApplicationController
 
   def player_params
     params.require(:player).permit(
-      :name, :username, :email, :password, :password_confirmation, :points, :avatar,
-      :nonce
+      :username, :email, :password, :password_confirmation, :points, :avatar, :nonce
     )
   end
 end
