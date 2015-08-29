@@ -91,7 +91,8 @@ class PlayersController < ApplicationController
 
   def player_params
     params.require(:player).permit(
-      :username, :email, :password, :password_confirmation, :points, :avatar, :nonce
+      :username, :email, :password, :password_confirmation,
+      :points, :avatar, :remove_avatar, :remove_vk_avatar, :nonce
     )
   end
 end
