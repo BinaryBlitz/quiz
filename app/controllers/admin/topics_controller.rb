@@ -1,5 +1,5 @@
 class Admin::TopicsController < Admin::AdminController
-  before_action :find_topic, only: [:show, :edit, :update, :destroy]
+  before_action :find_topic, only: [:show, :edit, :update, :destroy, :export]
 
   def index
     @topics = Topic.includes(:category).order('categories.name ASC').page(params[:page])
@@ -37,6 +37,13 @@ class Admin::TopicsController < Admin::AdminController
   def destroy
     @topic.destroy
     redirect_to admin_topics_path, notice: 'Topic was successfully destroyed.'
+  end
+
+  def export
+    TopicExporter.new(@topic).export do |path|
+      file = File.read(path)
+      send_data file, filename: 'export.txt', status: :ok
+    end
   end
 
   private

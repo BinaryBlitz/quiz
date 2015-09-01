@@ -14,7 +14,9 @@ Rails.application.routes.draw do
     get 'manage', to: 'admins#index'
     resources :admins
     resources :categories
-    resources :topics
+    resources :topics do
+      get 'export', on: :member
+    end
     resources :questions, except: [:index, :show]
     resources :achievements
     resources :facts
