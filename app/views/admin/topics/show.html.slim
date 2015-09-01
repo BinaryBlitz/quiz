@@ -14,6 +14,8 @@ h3
   span.label.label-default = @topic.questions.count
   | &nbsp;
   = link_to 'Новый', new_admin_question_path(topic_id: @topic.id), class: 'btn btn-default'
+  | &nbsp;
+  = link_to 'Экспорт', export_admin_topic_path(@topic), class: 'btn btn-default'
 
 - unless @questions.empty?
   table.table
