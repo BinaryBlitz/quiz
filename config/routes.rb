@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     resources :categories, only: [:index, :show]
 
     resources :game_questions, only: [:update]
+    patch 'game_session_questions/:id' => 'game_questions#update'
     resources :game_sessions, except: [:new, :edit] do
       patch 'close', on: :member
     end
