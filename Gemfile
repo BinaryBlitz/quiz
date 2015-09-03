@@ -41,9 +41,8 @@ gem 'kaminari'
 gem 'pusher'
 gem 'vkontakte_api'
 gem 'layer-identity_token'
-gem 'gcm'
-gem 'houston'
 gem 'merit'
+gem 'rpush'
 
 # File processing
 gem 'carrierwave'
@@ -52,11 +51,6 @@ gem 'mini_magick'
 
 # Use Unicorn as the app server
 gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem 'mocha'

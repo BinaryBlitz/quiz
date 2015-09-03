@@ -34,7 +34,7 @@ class GameSession < ActiveRecord::Base
 
   def generate
     generate_session
-    save
+    save && self
   end
 
   def player_points(player)
@@ -109,7 +109,7 @@ class GameSession < ActiveRecord::Base
   end
 
   def close(current_player)
-    host.push_challenge_results(self) if challenge? && offline?
+    push_challenge_results if challenge? && offline?
 
     update(closed: true, finisher: current_player)
     finisher.topic_results.find_or_create_by(topic: topic).add_session_results(self)
@@ -117,6 +117,12 @@ class GameSession < ActiveRecord::Base
   end
 
   private
+
+  def push_challenge_results
+    message = "#{opponent} принял ваш вызов"
+    options = { action: 'CHALLENGE_FINISHED', game_session: as_json }
+    Notifier.new(host, message, options).push
+  end
 
   def update_stats
     finisher.stats.increment_consecutive_days

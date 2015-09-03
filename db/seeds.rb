@@ -6,16 +6,31 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Players
-host = Player.create(username: 'foo', email: 'foo@bar.com', password: 'foobar')
-opponent = Player.create(username: 'bar', email: 'bar@foo.com', password: 'barfoo')
+host = Player.new(username: 'foo', email: 'foo@bar.com', password: 'foobar').register
+opponent = Player.new(username: 'bar', email: 'bar@foo.com', password: 'barfoo').register
 # API keys
-host.update(token: 'foobar')
-opponent.update(token: 'barfoo')
-# Push tokens
-host.push_tokens.create(token: 'apple')
-host.push_tokens.create(token: 'android', android: true)
-opponent.push_tokens.create(token: 'apple-2')
-opponent.push_tokens.create(token: 'android-2', android: true)
+host.update(token: 'foo')
+opponent.update(token: 'bar')
+
+# Push notifications
+app = Rpush::Apns::App.new
+app.name = 'ios_app'
+app.certificate = File.read(Rails.root.join('config', 'pushcert.pem'))
+app.environment = 'sandbox'
+app.connections = 1
+app.save!
+
+app = Rpush::Gcm::App.new
+app.name = 'android_app'
+app.auth_key = Rails.application.secrets.gcm_sender_id || 'gcm_sender_id'
+app.connections = 1
+app.save!
+
+# Device tokens
+host.device_tokens.create(token: 'apple', platform: 'ios')
+host.device_tokens.create(token: 'android', platform: 'android')
+opponent.device_tokens.create(token: 'apple-2', platform: 'ios')
+opponent.device_tokens.create(token: 'android-2', platform: 'android')
 
 # Purchases
 PurchaseType.create(
@@ -31,6 +46,7 @@ questions = {}
   questions["Вопрос #{n + 1}"] = %w(Lorem Ipsum Dolor Sit)
 end
 
+# Answers
 questions.each do |question, answers|
   q = Question.new(content: question, topic: topic)
   answers.each { |answer| q.answers.new(content: answer, correct: answer == answers.first) }
@@ -50,6 +66,4 @@ offline_session.game_questions.each do |session_question|
 end
 
 # Admin
-Admin.create(
-  email: 'foo@bar.com',
-  password: 'qwerty123', password_confirmation: 'qwerty123')
+Admin.create(email: 'foo@bar.com', password: 'qwerty123', password_confirmation: 'qwerty123')

@@ -26,6 +26,6 @@ class Message < ActiveRecord::Base
   private
 
   def notify
-    player.push_notification(content, action: 'MESSAGE', message: as_json, player: creator.as_json)
+    Notifier.new(player, content, as_json).push
   end
 end

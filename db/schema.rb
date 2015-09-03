@@ -82,6 +82,17 @@ ActiveRecord::Schema.define(version: 20150828114821) do
   add_index "category_results", ["category_id"], name: "index_category_results_on_category_id", using: :btree
   add_index "category_results", ["player_id"], name: "index_category_results_on_player_id", using: :btree
 
+  create_table "device_tokens", force: :cascade do |t|
+    t.string   "token"
+    t.integer  "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "platform"
+  end
+
+  add_index "device_tokens", ["player_id"], name: "index_device_tokens_on_player_id", using: :btree
+  add_index "device_tokens", ["token"], name: "index_device_tokens_on_token", using: :btree
+
   create_table "facts", force: :cascade do |t|
     t.text     "content"
     t.datetime "created_at", null: false
@@ -263,17 +274,6 @@ ActiveRecord::Schema.define(version: 20150828114821) do
   add_index "purchases", ["player_id"], name: "index_purchases_on_player_id", using: :btree
   add_index "purchases", ["purchase_type_id"], name: "index_purchases_on_purchase_type_id", using: :btree
 
-  create_table "push_tokens", force: :cascade do |t|
-    t.string   "token"
-    t.boolean  "android",    default: false
-    t.integer  "player_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
-
-  add_index "push_tokens", ["player_id"], name: "index_push_tokens_on_player_id", using: :btree
-  add_index "push_tokens", ["token"], name: "index_push_tokens_on_token", using: :btree
-
   create_table "questions", force: :cascade do |t|
     t.text     "content"
     t.datetime "created_at", null: false
@@ -336,6 +336,65 @@ ActiveRecord::Schema.define(version: 20150828114821) do
 
   add_index "rooms", ["player_id"], name: "index_rooms_on_player_id", using: :btree
 
+  create_table "rpush_apps", force: :cascade do |t|
+    t.string   "name",                                null: false
+    t.string   "environment"
+    t.text     "certificate"
+    t.string   "password"
+    t.integer  "connections",             default: 1, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type",                                null: false
+    t.string   "auth_key"
+    t.string   "client_id"
+    t.string   "client_secret"
+    t.string   "access_token"
+    t.datetime "access_token_expiration"
+  end
+
+  create_table "rpush_feedback", force: :cascade do |t|
+    t.string   "device_token", limit: 64, null: false
+    t.datetime "failed_at",               null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "app_id"
+  end
+
+  add_index "rpush_feedback", ["device_token"], name: "index_rpush_feedback_on_device_token", using: :btree
+
+  create_table "rpush_notifications", force: :cascade do |t|
+    t.integer  "badge"
+    t.string   "device_token",      limit: 64
+    t.string   "sound",                        default: "default"
+    t.string   "alert"
+    t.text     "data"
+    t.integer  "expiry",                       default: 86400
+    t.boolean  "delivered",                    default: false,     null: false
+    t.datetime "delivered_at"
+    t.boolean  "failed",                       default: false,     null: false
+    t.datetime "failed_at"
+    t.integer  "error_code"
+    t.text     "error_description"
+    t.datetime "deliver_after"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "alert_is_json",                default: false
+    t.string   "type",                                             null: false
+    t.string   "collapse_key"
+    t.boolean  "delay_while_idle",             default: false,     null: false
+    t.text     "registration_ids"
+    t.integer  "app_id",                                           null: false
+    t.integer  "retries",                      default: 0
+    t.string   "uri"
+    t.datetime "fail_after"
+    t.boolean  "processing",                   default: false,     null: false
+    t.integer  "priority"
+    t.text     "url_args"
+    t.string   "category"
+  end
+
+  add_index "rpush_notifications", ["delivered", "failed"], name: "index_rpush_notifications_multi", where: "((NOT delivered) AND (NOT failed))", using: :btree
+
   create_table "sashes", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -385,6 +444,7 @@ ActiveRecord::Schema.define(version: 20150828114821) do
 
   add_foreign_key "category_results", "categories"
   add_foreign_key "category_results", "players"
+  add_foreign_key "device_tokens", "players"
   add_foreign_key "friend_requests", "players"
   add_foreign_key "friendships", "players"
   add_foreign_key "game_questions", "game_sessions"
@@ -401,7 +461,6 @@ ActiveRecord::Schema.define(version: 20150828114821) do
   add_foreign_key "participations", "topics"
   add_foreign_key "purchases", "players"
   add_foreign_key "purchases", "purchase_types"
-  add_foreign_key "push_tokens", "players"
   add_foreign_key "questions", "topics"
   add_foreign_key "reports", "players"
   add_foreign_key "room_answers", "answers"

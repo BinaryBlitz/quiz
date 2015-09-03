@@ -71,7 +71,7 @@ Rails.application.routes.draw do
     resources :achievements, only: [:index]
 
     # Mobile
-    resources :push_tokens, only: [:create] do
+    resources :device_tokens, only: [:create] do
       collection do
         patch 'replace'
         delete 'delete'

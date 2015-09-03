@@ -23,7 +23,6 @@
 class Player < ActiveRecord::Base
   include VkAuthorization
   include Achievements
-  include Notifiable
   include PlayerRankings
   include PlayerTopics
 
@@ -52,7 +51,7 @@ class Player < ActiveRecord::Base
   has_many :invited_rooms, through: :invites, source: :room
 
   # Device
-  has_many :push_tokens, dependent: :destroy
+  has_many :device_tokens, dependent: :destroy
   has_many :purchases, -> { where('purchases.updated_at >= ?', Time.zone.now - 10.days) }, dependent: :destroy
   has_many :purchase_types, through: :purchases
 
@@ -94,7 +93,7 @@ class Player < ActiveRecord::Base
     build_stats
     register_xmpp
     self.visited_at = Time.zone.now
-    save
+    save && self
   end
 
   def game_sessions
@@ -149,11 +148,20 @@ class Player < ActiveRecord::Base
   end
 
   def online?
-    visited_at > 1.minute.ago
+    visited_at && visited_at > 1.minute.ago
   end
 
   def topics_unlocked?
     purchase_types.where(topic: true).any?
+  end
+
+  def push_achievement(badge)
+    message = "You received an achievement: #{badge.name}"
+    options = {
+      action: 'ACHIEVEMENT',
+      badge: { id: badge.id, name: badge.name, icon_url: Achievement.icon_url_for(badge) }
+    }
+    Notifier.new(self, message, options).push
   end
 
   private

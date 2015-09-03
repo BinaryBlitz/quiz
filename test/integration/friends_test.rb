@@ -6,6 +6,7 @@ class FriendsTest < ActionDispatch::IntegrationTest
     @bar = players(:bar)
   end
 
+  # TODO: Refactor
   test 'friends' do
     # Create friend request
     post '/api/friend_requests', token: token, friend_id: @bar.id

@@ -31,7 +31,7 @@ class LobbiesController < ApplicationController
     @lobbies = current_player.challenged
   end
 
-  # 1. Create the lobby with the given opponent ant topic
+  # 1. Create the lobby with the given opponent and topic
   # 2. Create the session
   # 3. Push the challenge to opponent (with lobby id)
   # 4. Opponent accepts the challenge, closes the lobby, receives the session, pushes game start
@@ -40,11 +40,9 @@ class LobbiesController < ApplicationController
     opponent = Player.find(params[:opponent_id])
     topic = Topic.find(params[:topic_id])
 
-    @lobby = Lobby.new(player: current_player, topic: topic, challenge: true)
-    @lobby.generate_session(opponent)
-
-    opponent.push_challenge(@lobby)
-    render partial: 'game_sessions/game_session', locals: { game_session: @lobby.game_session }
+    lobby = current_player.lobbies.build(topic: topic).challenge_player(opponent)
+    @game_session = lobby.game_session
+    render 'game_sessions/show'
   end
 
   def accept_challenge
@@ -58,16 +56,12 @@ class LobbiesController < ApplicationController
   end
 
   def decline_challenge
-    # Close the lobby
-    head :unprocessable_entity and return if @lobby.closed?
-    @lobby.close
-    logger.debug "#{current_player} declined the challenge of #{@lobby.game_session.host}."
-
-    # Notify host
-    Pusher.trigger("player-session-#{@lobby.game_session.host.id}", 'challenge-declined', {})
-    @lobby.game_session.host.push_decline(@lobby)
-
-    head :no_content
+    if lobby.closed?
+      head :unprocessable_entity
+    else
+      @lobby.decline_challenge
+      head :no_content
+    end
   end
 
   # GET /lobbies/1/find
