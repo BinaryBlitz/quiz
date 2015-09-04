@@ -13,7 +13,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :player
   belongs_to :purchase_type
 
-  validates :purchase_type, presence: true, uniqueness: { scope: :player }
+  validates :purchase_type, presence: true
   validates :player, presence: true
 
   DAYS_VALID = 10
