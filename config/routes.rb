@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'reports/create'
+
   root 'admin/dashboard#index'
 
   # Devise
@@ -80,6 +82,7 @@ Rails.application.routes.draw do
     resources :purchases do
       get 'available', on: :collection
     end
+    resources :reports, only: [:create]
 
     # Game
     resources :lobbies, only: [:create, :destroy] do

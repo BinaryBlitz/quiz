@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828114821) do
+ActiveRecord::Schema.define(version: 20150904184249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -287,11 +287,13 @@ ActiveRecord::Schema.define(version: 20150828114821) do
   create_table "reports", force: :cascade do |t|
     t.integer  "player_id"
     t.text     "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "question_id"
   end
 
   add_index "reports", ["player_id"], name: "index_reports_on_player_id", using: :btree
+  add_index "reports", ["question_id"], name: "index_reports_on_question_id", using: :btree
 
   create_table "room_answers", force: :cascade do |t|
     t.integer  "room_question_id"
