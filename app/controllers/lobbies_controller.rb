@@ -37,10 +37,12 @@ class LobbiesController < ApplicationController
   # 4. Opponent accepts the challenge, closes the lobby, receives the session, pushes game start
   # 5. The game either starts, or the host is playing delayed session
   def challenge
+    # TODO: Move to strong params
     opponent = Player.find(params[:opponent_id])
     topic = Topic.find(params[:topic_id])
 
     @lobby = Lobby.new(player: current_player, topic: topic, challenge: true)
+    authorize @lobby
     @lobby.generate_session(opponent)
 
     opponent.push_challenge(@lobby)

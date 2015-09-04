@@ -35,6 +35,12 @@ class ApplicationController < ActionController::Base
     current_player.touch(:visited_at) if current_player
   end
 
+  include Pundit
+
+  def pundit_user
+    current_player
+  end
+
   rescue_from Pundit::NotAuthorizedError, with: :player_not_authorized
 
   include Pundit
