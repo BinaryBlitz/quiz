@@ -25,4 +25,6 @@ class Topic < ActiveRecord::Base
 
   validates :name, presence: true
   validates :category, presence: true
+
+  scope :random, -> (n) { where(visible: false).order('RANDOM()').limit(n) }
 end
