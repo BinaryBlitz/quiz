@@ -45,7 +45,9 @@ class Room < ActiveRecord::Base
   end
 
   def finish_as(current_player)
-    participations.find_by(player: current_player).finish
+    participations.find_by(player: current_player).update(finished: true)
+    add_points_for(current_player)
+
     options = { player_id: current_player.id, points: room_session.points_for(current_player) }
     Pusher.trigger("room-#{id}", 'player-finished', options)
     logger.debug "#{Time.zone.now} #{current_player} has finished the game in room \##{id}"
@@ -63,5 +65,14 @@ class Room < ActiveRecord::Base
     session_data = JSON.parse(room_session.as_json)
     Pusher.trigger("room-#{id}", 'game-start', session_data)
     logger.debug "#{Time.zone.now}: Session sent to room \##{id}"
+  end
+
+  def add_points_for(current_player)
+    topics = participations.includes(:topic).map(&:topic)
+    topics.each do |topic|
+      points = room_session.points_for(current_player, topic)
+      topic_result = current_player.topic_results.find_or_create_by(topic: topic)
+      topic_result.add_points(points)
+    end
   end
 end

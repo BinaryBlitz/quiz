@@ -36,11 +36,16 @@ class RoomSession < ActiveRecord::Base
       .render('/room_sessions/room_session.jbuilder', room_session: self)
   end
 
-  def points_for(player)
+  def points_for(player, topic = nil)
     # return 0 unless room.player_finished?(player)
+    if topic
+      questions = room_questions.joins(:question).where('questions.topic_id' => topic.id)
+    else
+      questions = room_questions
+    end
 
     result = 0
-    room_questions.each do |question|
+    questions.each do |question|
       result += question.points_for(player)
     end
     result

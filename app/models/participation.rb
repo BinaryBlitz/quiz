@@ -25,15 +25,6 @@ class Participation < ActiveRecord::Base
   validates :room, presence: true, uniqueness: { scope: :player, message: 'already joined' }
   validates :topic, presence: true
 
-  def finish
-    update(finished: true)
-
-    # Add points
-    points = room.room_session.points_for(player)
-    topic_result = player.topic_results.find_or_create_by(topic: topic)
-    topic_result.add_points(points)
-  end
-
   private
 
   def notify_new_participant
