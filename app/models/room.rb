@@ -45,7 +45,7 @@ class Room < ActiveRecord::Base
   end
 
   def finish_as(current_player)
-    participations.find_by(player: current_player).update(finished: true)
+    participations.find_by(player: current_player).finish
     options = { player_id: current_player.id, points: room_session.points_for(current_player) }
     Pusher.trigger("room-#{id}", 'player-finished', options)
     logger.debug "#{Time.zone.now} #{current_player} has finished the game in room \##{id}"
