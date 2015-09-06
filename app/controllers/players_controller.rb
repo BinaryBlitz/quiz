@@ -74,7 +74,9 @@ class PlayersController < ApplicationController
   end
 
   def search
-    @players = Player.search(params[:query])
+    if params[:query].present? && params[:query].length >= 3
+      @players = Player.search(params[:query])
+    end
   end
 
   # GET /players/1/report

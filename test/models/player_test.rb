@@ -79,4 +79,9 @@ class PlayerTest < ActiveSupport::TestCase
     result = Player.search(@foo.username.downcase[0..-2])
     assert result.include?(@foo)
   end
+
+  test 'restrict short usernames' do
+    @foo.username = 'fo'
+    assert @foo.invalid?
+  end
 end
