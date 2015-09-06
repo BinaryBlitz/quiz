@@ -1,3 +1,3 @@
-json.array! @players do |player|
-  json.partial! 'player', player: player
+json.cache! @players do
+  json.partial! 'player', collection: @players, as: :player
 end
