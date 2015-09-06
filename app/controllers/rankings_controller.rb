@@ -4,9 +4,13 @@ class RankingsController < ApplicationController
 
   def general
     if weekly?
-      set_up_rankings(Player.order_by_weekly_points)
+      @rankings = Player.order_by_weekly_points(20)
+      @position = Player.position_weekly(current_player)
+      @player_rankings = Player.order_by_weekly_points(11).offset(@position - 5) if @position > 20
     else
-      set_up_rankings(Player.order_by_points)
+      @rankings = Player.order_by_points(20)
+      @position = Player.position_general(current_player)
+      @player_rankings = Player.order_by_points(11).offset(@position - 5) if @position > 20
     end
     render :rankings
   end
