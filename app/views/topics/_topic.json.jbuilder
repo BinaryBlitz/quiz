@@ -2,4 +2,6 @@ json.extract! topic, :id, :name, :paid
 json.background_url topic.category.background_url
 json.points current_player.topic_points(topic)
 json.available !topic.paid || current_player.topics_unlocked?
+
+# TODO: Render visibility
 json.visible true

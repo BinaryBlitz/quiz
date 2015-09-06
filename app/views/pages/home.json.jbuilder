@@ -1,12 +1,15 @@
 json.featured_topics do
   json.partial! 'home_topics', topics: @featured_topics
 end
+
 json.friends_favorite_topics do
   json.partial! 'home_topics', topics: @friends_favorite_topics
 end
+
 json.favorite_topics do
   json.partial! 'home_topics', topics: @favorite_topics
 end
+
 json.random_topics do
   json.partial! 'home_topics', topics: Topic.random(3)
 end
