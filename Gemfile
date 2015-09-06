@@ -53,6 +53,9 @@ gem 'mini_magick'
 # Use Unicorn as the app server
 gem 'unicorn'
 
+# Monitoring
+gem 'newrelic_rpm'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
