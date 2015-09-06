@@ -45,18 +45,22 @@ module PlayerRankings
     end
 
     def order_by_points
-      joins(:topic_results)
-        .select('players.*, sum(topic_results.points) as total_points')
-        .group('players.id')
-        .order('total_points desc')
+      Rails.cache.fetch("rankings_general", expires_in: 3.hours) do
+        joins(:topic_results)
+          .select('players.*, sum(topic_results.points) as total_points')
+          .group('players.id')
+          .order('total_points desc')
+      end
     end
 
     def order_by_weekly_points
-      joins(:topic_results)
-        .recent_results
-        .select('players.*, sum(topic_results.weekly_points) as total_points')
-        .group('players.id')
-        .order('total_points desc')
+      Rails.cache.fetch("rankings_weekly", expires_in: 3.hours) do
+        joins(:topic_results)
+          .recent_results
+          .select('players.*, sum(topic_results.weekly_points) as total_points')
+          .group('players.id')
+          .order('total_points desc')
+      end
     end
 
     def order_by_topic(topic)
