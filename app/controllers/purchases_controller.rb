@@ -4,13 +4,20 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    purchase_type = PurchaseType.find_by(identifier: params[:identifier])
-    @purchase = current_player.purchases.build(purchase_type: purchase_type)
+    purchase_type = PurchaseType.find_by(purchase_params)
+    @purchase = current_player.purchases.find_or_initialize_by(purchase_type: purchase_type)
 
     if @purchase.save
-      head :created
+      @purchase.touch(:updated_at)
+      render :show, status: :created, location: @purchase
     else
       render json: @purchase.errors, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def purchase_params
+    params.permit(:identifier)
   end
 end
