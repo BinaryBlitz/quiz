@@ -5,7 +5,7 @@ module PlayerRankings
     Score.new(wins, draws, losses)
   end
 
-  def total_points
+  def general_points
     topic_results.sum(:points)
   end
 
@@ -61,7 +61,7 @@ module PlayerRankings
     def position_general(current_player)
       Player.joins(:topic_results)
         .group('players.id')
-        .having('sum(topic_results.points) > ?', current_player.total_points)
+        .having('sum(topic_results.points) > ?', current_player.general_points)
         .count.size
     end
 
@@ -78,6 +78,7 @@ module PlayerRankings
 
     def position_weekly(current_player)
       Player.joins(:topic_results)
+        .recent_results
         .group('players.id')
         .having('sum(topic_results.weekly_points) > ?', current_player.weekly_points)
         .count.size
