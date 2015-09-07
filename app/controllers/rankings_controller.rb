@@ -6,7 +6,7 @@ class RankingsController < ApplicationController
     if weekly?
       @rankings = Player.order_by_weekly_points(20)
       @position = Player.position_weekly(current_player)
-      @player_rankings = Player.order_by_weekly_points(11).offset(@position - 5) if @position > 20
+      @player_rankings = Player.where(id: current_player.id)
     else
       @rankings = Player.order_by_points(20)
       @position = Player.position_general(current_player)
