@@ -48,13 +48,14 @@ module PlayerRankings
       where('topic_results.updated_at > ?', Time.zone.now.beginning_of_week)
     end
 
-    # TODO: Create a separate method for queries with offset
     def order_by_points(limit = 20)
+      Rails.cache.fetch("rankings_general", expires_in: 1.hour) do
         joins(:topic_results)
           .select('players.*, sum(topic_results.points) as total_points')
           .group('players.id')
           .order('total_points desc')
           .limit(limit)
+      end
     end
 
     def position_general(current_player)
@@ -65,17 +66,18 @@ module PlayerRankings
     end
 
     def order_by_weekly_points(limit = 20)
+      Rails.cache.fetch("rankings_weekly", expires_in: 1.hour) do
         joins(:topic_results)
           .recent_results
           .select('players.*, sum(topic_results.weekly_points) as total_points')
           .group('players.id')
           .order('total_points desc')
           .limit(limit)
+      end
     end
 
     def position_weekly(current_player)
       Player.joins(:topic_results)
-        .recent_results
         .group('players.id')
         .having('sum(topic_results.weekly_points) > ?', current_player.weekly_points)
         .count.size
