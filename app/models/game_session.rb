@@ -14,7 +14,7 @@
 #
 
 class GameSession < ActiveRecord::Base
-  after_create :generate
+  after_create :generate_session
 
   # Associations
   belongs_to :host, class_name: 'Player', foreign_key: 'host_id'
@@ -120,10 +120,10 @@ class GameSession < ActiveRecord::Base
     finisher.stats.increment_early_winner(self)
   end
 
-  def generate
+  def generate_session
     questions = Question.where(topic: topic).sample(6)
-    questions.map! { |q| game_session_questions.create(question: q) }
-    game_session_questions.each(&:generate_for_offline) if offline
-    self
+    questions.map! { |question| game_session_questions.build(question: question) }
+    game_session_questions.each(&:generate_for_offline) if offline?
+    save
   end
 end

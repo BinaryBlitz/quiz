@@ -10,7 +10,7 @@
 #
 
 class RoomSession < ActiveRecord::Base
-  after_create :generate
+  after_create :generate_session
 
   belongs_to :room
 
@@ -53,7 +53,7 @@ class RoomSession < ActiveRecord::Base
 
   private
 
-  def generate
+  def generate_session
     topics = Hash.new(0)
     room.participations.map(&:topic).each { |topic| topics[topic] += QUESTIONS_PER_PLAYER }
     topics.each do |topic, number_of_questions|
