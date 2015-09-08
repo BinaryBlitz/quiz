@@ -2,17 +2,21 @@ json.partial! 'player', player: @player
 
 json.is_friend current_player.friends.include?(@player)
 
-json.total_score do
-  json.wins @player.score.wins
-  json.draws @player.score.draws
-  json.losses @player.score.losses
+json.cache! "players/#{@player.id}-total_score", expires_in: 1.hour do
+  json.total_score do
+    json.wins @player.score.wins
+    json.draws @player.score.draws
+    json.losses @player.score.losses
+  end
 end
 
-unless @player == current_player
-  score = current_player.score_against(@player)
-  json.score do
-    json.wins score.wins
-    json.losses score.losses
+json.cache! "players/#{@player.id}-#{current_player.id}", expires_in: 1.hour do
+  unless @player == current_player
+    score = current_player.score_against(@player)
+    json.score do
+      json.wins score.wins
+      json.losses score.losses
+    end
   end
 end
 
