@@ -61,4 +61,6 @@ class RankingsController < ApplicationController
   def weekly?
     params.key?(:weekly)
   end
+
+  helper_method :weekly?
 end
