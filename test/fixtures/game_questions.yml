@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: game_session_questions
+# Table name: game_questions
 #
 #  id                 :integer          not null, primary key
 #  game_session_id    :integer

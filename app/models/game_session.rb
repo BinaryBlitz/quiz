@@ -22,8 +22,8 @@ class GameSession < ActiveRecord::Base
   belongs_to :finisher, class_name: 'Player', foreign_key: 'finisher_id'
   belongs_to :topic
 
-  has_many :game_session_questions, -> { order(created_at: :asc) }, dependent: :destroy
-  has_many :questions, through: :game_session_questions
+  has_many :game_questions, -> { order(created_at: :asc) }, dependent: :destroy
+  has_many :questions, through: :game_questions
   has_many :lobbies, dependent: :destroy
 
   # Validations
@@ -46,7 +46,7 @@ class GameSession < ActiveRecord::Base
 
   def host_points
     sum = 0
-    game_session_questions.each do |question|
+    game_questions.each do |question|
       next unless question.host_answer && question.host_answer.correct?
       sum += question.host_points
     end
@@ -55,7 +55,7 @@ class GameSession < ActiveRecord::Base
 
   def opponent_points
     sum = 0
-    game_session_questions.each do |question|
+    game_questions.each do |question|
       next unless question.opponent_answer && question.opponent_answer.correct?
       sum += question.opponent_points
     end
@@ -65,7 +65,7 @@ class GameSession < ActiveRecord::Base
   # Returns an array where each element is answer time or nil if the answer was incorrect
   # Example: [1, 2, nil, 3, 4, nil]
   def player_answers(player)
-    game_session_questions.map do |question|
+    game_questions.map do |question|
       question.player_time(player) if question.player_answer_correct?(player)
     end
   end
@@ -122,8 +122,8 @@ class GameSession < ActiveRecord::Base
 
   def generate_session
     questions = Question.where(topic: topic).sample(6)
-    questions.map! { |question| game_session_questions.build(question: question) }
-    game_session_questions.each(&:generate_for_offline) if offline?
+    questions.map! { |question| game_questions.build(question: question) }
+    game_questions.each(&:generate_for_offline) if offline?
     save
   end
 end

@@ -25,8 +25,8 @@ class GameSessionTest < ActiveSupport::TestCase
   end
 
   test 'generation' do
-    assert_equal 6, @offline.game_session_questions.count
-    @offline.game_session_questions.each do |question|
+    assert_equal 6, @offline.game_questions.count
+    @offline.game_questions.each do |question|
       assert_includes 0..6, question.opponent_time
     end
   end
@@ -42,14 +42,13 @@ class GameSessionTest < ActiveSupport::TestCase
   end
 
   test 'player points' do
-    question = @online.game_session_questions.first
+    question = @online.game_questions.first
     correct_answer = question.question.correct_answer
 
-    assert_difference ['@online.reload.host_points', '@online.reload.opponent_points'], 20 do
-      question.update(host_time: 0, host_answer: correct_answer)
-      question.update(opponent_time: 0, opponent_answer: correct_answer)
-    end
+    question.update(host_time: 0, host_answer: correct_answer)
+    question.update(opponent_time: 0, opponent_answer: correct_answer)
 
+    @online.reload
     assert_equal 20, @online.player_points(@online.host)
     assert_equal 20, @online.player_points(@online.opponent)
   end

@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20150908163117) do
 
   add_index "friendships", ["player_id"], name: "index_friendships_on_player_id", using: :btree
 
-  create_table "game_session_questions", force: :cascade do |t|
+  create_table "game_questions", force: :cascade do |t|
     t.integer  "game_session_id"
     t.integer  "question_id"
     t.integer  "host_answer_id"
@@ -119,8 +119,8 @@ ActiveRecord::Schema.define(version: 20150908163117) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "game_session_questions", ["game_session_id"], name: "index_game_session_questions_on_game_session_id", using: :btree
-  add_index "game_session_questions", ["question_id"], name: "index_game_session_questions_on_question_id", using: :btree
+  add_index "game_questions", ["game_session_id"], name: "index_game_questions_on_game_session_id", using: :btree
+  add_index "game_questions", ["question_id"], name: "index_game_questions_on_question_id", using: :btree
 
   create_table "game_sessions", force: :cascade do |t|
     t.integer  "host_id"
@@ -378,8 +378,8 @@ ActiveRecord::Schema.define(version: 20150908163117) do
   add_foreign_key "category_results", "players"
   add_foreign_key "friend_requests", "players"
   add_foreign_key "friendships", "players"
-  add_foreign_key "game_session_questions", "game_sessions"
-  add_foreign_key "game_session_questions", "questions"
+  add_foreign_key "game_questions", "game_sessions"
+  add_foreign_key "game_questions", "questions"
   add_foreign_key "game_sessions", "topics"
   add_foreign_key "invites", "players"
   add_foreign_key "invites", "rooms"

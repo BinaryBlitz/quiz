@@ -1,17 +1,17 @@
-class GameSessionQuestionsController < ApplicationController
-  before_action :find_session_question
+class GameQuestionsController < ApplicationController
+  before_action :find_game_question
   before_action :find_current_session
 
-  # PATCH /game_session_question/1
+  # PATCH /game_question/1
   def update
-    answer_id = params[:game_session_question][:answer_id].to_i
-    time = params[:game_session_question][:time].to_i
+    answer_id = params[:game_question][:answer_id].to_i
+    time = params[:game_question][:time].to_i
 
     update_answer(answer_id, time)
-    if @session_question.save
+    if @game_question.save
       head :no_content
     else
-      render json: @session_question.errors, status: :unprocessable_entity
+      render json: @game_question.errors, status: :unprocessable_entity
     end
   end
 
@@ -30,14 +30,14 @@ class GameSessionQuestionsController < ApplicationController
 
   # Push to host
   def update_host_answer(answer_id, time)
-    @session_question.host_answer_id = answer_id
-    @session_question.host_time = time
+    @game_question.host_answer_id = answer_id
+    @game_question.host_time = time
   end
 
   # Push to opponent
   def update_opponent_answer(answer_id, time)
-    @session_question.opponent_answer_id = answer_id
-    @session_question.opponent_time = time
+    @game_question.opponent_answer_id = answer_id
+    @game_question.opponent_time = time
   end
 
   # Push player answer to opponent
@@ -54,22 +54,21 @@ class GameSessionQuestionsController < ApplicationController
   # Format data for pusher
   def answer_data(answer_id, answer_time)
     {
-      game_session_question_id: @session_question.id,
+      game_session_question_id: @game_question.id,
       answer_id: answer_id,
       answer_time: answer_time
     }
   end
 
-  def find_session_question
-    @session_question = GameSessionQuestion.find(params[:id])
+  def find_game_question
+    @game_question = GameQuestion.find(params[:id])
   end
 
   def find_current_session
-    @current_session = @session_question.game_session
+    @current_session = @game_question.game_session
   end
 
   def game_session_question_params
-    params.require(:game_session_question)
-      .permit(:host_answer_id, :host_time, :answer_id, :time)
+    params.require(:game_question).permit(:host_answer_id, :host_time, :answer_id, :time)
   end
 end
