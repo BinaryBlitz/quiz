@@ -153,7 +153,7 @@ class Player < ActiveRecord::Base
   private
 
   def set_online
-    touch(:visited_at)
+    update_column(:visited_at, Time.zone.now)
   end
 
   def vk_user?
