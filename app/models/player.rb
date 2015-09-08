@@ -67,9 +67,6 @@ class Player < ActiveRecord::Base
   has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id', dependent: :destroy
   has_many :friends, through: :friendships
 
-  has_many :created_messages, dependent: :destroy, class_name: 'Message', foreign_key: 'creator_id'
-  has_many :unread_messages, dependent: :destroy, class_name: 'Message'
-
   mount_base64_uploader :avatar, AvatarUploader
   mount_base64_uploader :vk_avatar, VkUploader
 
