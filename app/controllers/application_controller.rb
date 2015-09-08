@@ -47,6 +47,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :player_not_authorized
 
+  def record_activity
+    current_player.touch(:visited_at) if current_player
+  end
+
   private
 
   def player_not_authorized

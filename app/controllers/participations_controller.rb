@@ -3,16 +3,6 @@ class ParticipationsController < ApplicationController
 
   def create
     @participation = current_player.participations.build(participation_params)
-
-    if @participation.save
-      head :created
-    else
-      render json: @participation.errors, status: :unprocessable_entity
-    end
-  end
-
-  def create
-    @participation = current_player.participations.build(topic: topic)
     authorize @participation
 
     if @participation.save
