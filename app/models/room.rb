@@ -19,6 +19,7 @@ class Room < ActiveRecord::Base
   has_one :room_session, dependent: :destroy
   has_many :participations, dependent: :destroy
   has_many :players, through: :participations
+  has_many :invites, dependent: :destroy
 
   validates :player, presence: true
 

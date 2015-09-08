@@ -10,7 +10,7 @@ module Player::VkAuthorization
         player = create!(
           password: SecureRandom.hex,
           vk_token: vk.token, vk_id: user.uid,
-          remote_avatar_url: user.photo_medium, remote_vk_avatar_url: user.photo_max_orig)
+          remote_avatar_url: user.photo_medium, remote_vk_avatar_url: user.photo_max_orig).register
         add_friends(player, vk.friends.get)
       end
       player

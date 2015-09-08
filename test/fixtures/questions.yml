@@ -16,7 +16,7 @@ capital_of_the_uk:
   content: What is the capital of the UK?
   topic: geography
 
-<% 6.times do |n| %>
+<% 10.times do |n| %>
 question_<%= n %>:
   content: <%= "Question #{n}" %>
   topic: geography
