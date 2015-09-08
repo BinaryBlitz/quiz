@@ -35,13 +35,40 @@ class Lobby < ActiveRecord::Base
     update(closed: true)
   end
 
+  def challenge_player(opponent)
+    self.challenge = true
+    generate_challenge(opponent)
+    notify_opponent(opponent)
+    save && self
+  end
+
+  def decline_challenge
+    close
+    logger.debug "#{current_player} declined the challenge of #{@lobby.game_session.host}."
+    notify_declined
+  end
+
   def increment_count
     update(query_count: query_count + 1)
   end
 
-  def generate_session(opponent)
-    game_session = GameSession.create(
-      host: player, opponent: opponent, topic: topic, offline: false)
-    update!(game_session: game_session)
+  def generate_challenge(opponent)
+    build_game_session(host: player, opponent: opponent, topic: topic, offline: false)
+  end
+
+  private
+
+  def notify_opponent(opponent)
+    message = "#{player} has challenged you."
+    options = { action: 'CHALLENGE', lobby: as_json }
+    Notifier.new(opponent, message, options)
+  end
+
+  def notify_declined
+    Pusher.trigger("player-session-#{@lobby.game_session.host.id}", 'challenge-declined', {})
+
+    message = "#{lobby.game_session.opponent} has declined your challenge."
+    options = { action: 'CHALLENGE_DECLINED', lobby: { id: lobby.id } }
+    Notifier.new(game_session.host, message, options).push
   end
 end
