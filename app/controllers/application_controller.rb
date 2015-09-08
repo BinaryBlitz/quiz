@@ -3,11 +3,18 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
   before_filter :restrict_access
-  after_action :record_activity
 
   attr_reader :current_player
   helper_method :current_player
 
+  # Set player's online status
+  after_action :record_activity
+
+  def record_activity
+    current_player.update_column(:visited_at, Time.zone.now) if current_player
+  end
+
+  # API authentication
   def restrict_access
     unless restrict_access_by_params || restrict_access_by_header
       render json: { message: 'Invalid API Token' }, status: 401
@@ -31,10 +38,7 @@ class ApplicationController < ActionController::Base
     @current_player = Player.find_by_token(params[:token])
   end
 
-  def record_activity
-    current_player.update_column(:visited_at, Time.zone.now) if current_player
-  end
-
+  # Authorization
   include Pundit
 
   def pundit_user
@@ -42,12 +46,6 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Pundit::NotAuthorizedError, with: :player_not_authorized
-
-  include Pundit
-
-  def pundit_user
-    current_player
-  end
 
   private
 
