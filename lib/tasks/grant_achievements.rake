@@ -4,7 +4,7 @@ task grant_achievements: :environment do
     category = Category.find_by(name: category_badge.custom_fields[:category_name])
     next unless category
 
-    top_players = Player.order_by_category(category).limit(10)
+    top_players = Player.order_by_weekly_category(category).limit(10)
     Player.all.each do |player|
       if top_players.include?(player)
         player.add_badge(category_badge.id)
