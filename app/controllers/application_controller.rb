@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def record_activity
-    current_player.touch(:visited_at) if current_player
+    current_player.update_column(:visited_at, Time.zone.now) if current_player
   end
 
   include Pundit
