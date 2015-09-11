@@ -37,7 +37,7 @@ class Notifier
     tokens.each do |token|
       n = Rpush::Apns::Notification.new
       n.app = Rpush::Apns::App.find_by_name('ios_app')
-      n.device_token = token
+      n.device_token = token.token
       n.alert = @message
       n.data = @options
       n.save!

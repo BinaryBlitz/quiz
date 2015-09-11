@@ -30,7 +30,7 @@ class DeviceToken < ActiveRecord::Base
 
   def ensure_uniqueness
     device_token = DeviceToken.find_by(token: token)
-    device_token.destroy if device_token
+    device_token.destroy if device_token && device_token.id != id
   end
 
   def push_to_android(message, options = {})
