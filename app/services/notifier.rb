@@ -1,19 +1,20 @@
 class Notifier
   def initialize(player, message, options = {})
+    @player = player
     @device_tokens = player.device_tokens
     @message = message
     @options = options
-
-    Rails.logger.debug "#{Time.zone.now} Notifying #{player} with message: #{@message}"
   end
 
   def push
     return if @message.blank?
 
+    Rails.logger.debug "#{Time.zone.now} Notifying #{@player} with message: #{@message}"
+
     android_tokens = @device_tokens.where(platform: 'android')
     push_android_notifications(android_tokens)
-    apple_tokens = @device_tokens.where(platform: 'apple')
-    push_apple_notifications(apple_tokens)
+    ios_tokens = @device_tokens.where(platform: 'ios')
+    push_ios_notifications(ios_tokens)
   end
 
   private
@@ -30,7 +31,7 @@ class Notifier
     Rails.logger.debug "#{Time.zone.now} Android notification: #{@message}, options: #{@options}"
   end
 
-  def push_apple_notifications(tokens)
+  def push_ios_notifications(tokens)
     return if tokens.blank?
 
     tokens.each do |token|
