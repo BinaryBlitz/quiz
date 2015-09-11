@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: push_tokens
+# Table name: device_tokens
 #
 #  id         :integer          not null, primary key
 #  token      :string
@@ -10,12 +10,10 @@
 #  updated_at :datetime         not null
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+require 'test_helper'
 
-apple:
-  token: apple
-  player: foo
-
-android:
-  token: android
-  player: bar
+class DeviceTokenTest < ActiveSupport::TestCase
+  def setup
+    @device_token = device_tokens(:apple)
+  end
+end

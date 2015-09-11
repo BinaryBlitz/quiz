@@ -22,6 +22,8 @@ class GameSessionTest < ActiveSupport::TestCase
 
     @online = game_sessions(:online)
     @online.send(:generate_session)
+
+    Player.all.each(&:create_stats)
   end
 
   test 'generation' do

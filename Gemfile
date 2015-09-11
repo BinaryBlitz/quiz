@@ -41,9 +41,8 @@ gem 'kaminari'
 gem 'pusher'
 gem 'vkontakte_api'
 gem 'layer-identity_token'
-gem 'gcm'
-gem 'houston'
 gem 'merit'
+gem 'rpush'
 
 # File processing
 gem 'carrierwave'
@@ -53,6 +52,7 @@ gem 'mini_magick'
 # Use Unicorn as the app server
 gem 'unicorn'
 
+<<<<<<< b311a78738a9a89c7c69a4c792a91db23ffe0e2b
 # Monitoring
 gem 'newrelic_rpm'
 
@@ -61,6 +61,8 @@ gem 'newrelic_rpm'
 
 gem 'rails_12factor', group: :production
 
+=======
+>>>>>>> Refactor notifications
 group :development, :test do
   gem 'mocha'
   gem 'capistrano'
