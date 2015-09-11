@@ -55,10 +55,10 @@ class LobbiesController < ApplicationController
   end
 
   def decline_challenge
-    if lobby.closed?
+    if @lobby.closed?
       head :unprocessable_entity
     else
-      @lobby.decline_challenge
+      @lobby.decline_challenge(current_player)
       head :no_content
     end
   end

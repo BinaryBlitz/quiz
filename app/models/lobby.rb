@@ -42,9 +42,9 @@ class Lobby < ActiveRecord::Base
     save && self
   end
 
-  def decline_challenge
+  def decline_challenge(current_player)
     close
-    logger.debug "#{current_player} declined the challenge of #{@lobby.game_session.host}."
+    logger.debug "#{current_player} declined the challenge of #{game_session.host}."
     notify_declined
   end
 
@@ -65,7 +65,7 @@ class Lobby < ActiveRecord::Base
   end
 
   def notify_declined
-    Pusher.trigger("player-session-#{@lobby.game_session.host.id}", 'challenge-declined', {})
+    Pusher.trigger("player-session-#{game_session.host.id}", 'challenge-declined', {})
 
     message = "#{lobby.game_session.opponent} отклонил ваш вызов"
     options = { action: 'CHALLENGE_DECLINED', lobby: { id: lobby.id } }
