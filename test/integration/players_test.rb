@@ -14,7 +14,6 @@ class PlayersTest < ActionDispatch::IntegrationTest
     get "/api/players/#{@player.id}", token: token
     assert_response :success
     assert_equal @player.username, json_response[:username]
-    assert_not_nil json_response[:score]
     assert_not_nil json_response[:total_score]
     assert_not_nil json_response[:favorite_topics]
     assert_not_nil json_response[:achievements]
@@ -29,7 +28,7 @@ class PlayersTest < ActionDispatch::IntegrationTest
   test 'should update player' do
     new_username = 'New username'
     patch "/api/players/#{@player.id}", token: token, player: { username: new_username }
-    assert_response :no_content
+    assert_response :ok
     assert_equal new_username, @player.reload.username
   end
 
