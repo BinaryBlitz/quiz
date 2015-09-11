@@ -61,7 +61,7 @@ class Lobby < ActiveRecord::Base
   def notify_opponent(opponent)
     message = "#{player} бросил вам вызов"
     options = { action: 'CHALLENGE', lobby: as_json }
-    Notifier.new(opponent, message, options)
+    Notifier.new(opponent, message, options).push
   end
 
   def notify_declined
