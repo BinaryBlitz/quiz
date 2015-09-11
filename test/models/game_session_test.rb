@@ -17,41 +17,42 @@ require 'test_helper'
 
 class GameSessionTest < ActiveSupport::TestCase
   def setup
-    @offline = game_sessions(:offline)
-    @offline.send(:generate_session)
+    @offline_session = game_sessions(:offline)
+    @offline_session.send(:generate_session)
 
-    @online = game_sessions(:online)
-    @online.send(:generate_session)
+    @online_session = game_sessions(:online)
+    @online_session.send(:generate_session)
 
     Player.all.each(&:create_stats)
   end
 
   test 'generation' do
-    assert_equal 6, @offline.game_questions.count
-    @offline.game_questions.each do |question|
+    assert_equal 6, @offline_session.game_questions.count
+    @offline_session.game_questions.each do |question|
       assert_includes 0..6, question.opponent_time
     end
   end
 
   test 'invalid without host' do
-    @offline.host = nil
-    assert @offline.invalid?
+    @offline_session.host = nil
+    assert @offline_session.invalid?
   end
 
   test 'invalid without opponent in online' do
-    @online.opponent = nil
-    assert @online.invalid?
+    @online_session.opponent = nil
+    assert @online_session.invalid?
   end
 
   test 'player points' do
-    question = @online.game_questions.first
-    correct_answer = question.question.correct_answer
+    game_question = @online_session.game_questions.first
+    correct_answer = game_question.question.correct_answer
 
-    question.update(host_time: 0, host_answer: correct_answer)
-    question.update(opponent_time: 0, opponent_answer: correct_answer)
+    game_question.update!(host_time: 0, host_answer: correct_answer)
+    game_question.update!(opponent_time: 0, opponent_answer: correct_answer)
 
-    @online.reload
-    assert_equal 20, @online.player_points(@online.host)
-    assert_equal 20, @online.player_points(@online.opponent)
+    @online_session.reload
+    # byebug
+    assert_equal 20, @online_session.player_points(@online_session.host)
+    assert_equal 20, @online_session.player_points(@online_session.opponent)
   end
 end

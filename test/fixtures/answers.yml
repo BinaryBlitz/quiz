@@ -29,7 +29,7 @@ incorrect_three:
   content: Cambridge
   question: capital_of_the_uk
 
-<% 24.times do |n| %>
+<% 40.times do |n| %>
 answer_<%= n %>:
   content: <%= "Answer #{n}" %>
   correct: <%= n % 4 == 0 %>
