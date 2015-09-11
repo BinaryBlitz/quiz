@@ -7,10 +7,10 @@
 
 # Players
 host = Player.new(username: 'foo', email: 'foo@bar.com', password: 'foobar').register
-opponent = Player.new(username: 'bar', email: 'bar@foo.com', password: 'barfoo').register
+opponent = Player.new(username: 'baz', email: 'baz@qux.com', password: 'bazqux').register
 # API keys
 host.update(token: 'foo')
-opponent.update(token: 'bar')
+opponent.update(token: 'baz')
 
 # Push notifications
 app = Rpush::Apns::App.new
