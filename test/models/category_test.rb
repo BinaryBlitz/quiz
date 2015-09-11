@@ -16,9 +16,4 @@ class CategoryTest < ActiveSupport::TestCase
   def setup
     @category = categories(:general)
   end
-
-  test 'invalid without name' do
-    @category.name = ''
-    assert_not @category.valid?
-  end
 end

@@ -17,14 +17,9 @@ class PurchaseTest < ActiveSupport::TestCase
     @purchase = purchases(:booster)
   end
 
-  test 'invalid without purchase type' do
-    @purchase.purchase_type = nil
-    @purchase.invalid?
-  end
-
   test 'only unique purchases allowed' do
-    assert_raise ActiveRecord::RecordInvalid do
-      @player.purchases.create!(purchase_type: @purchase.purchase_type)
+    assert_no_difference 'Purchase.count' do
+      @player.purchases.create(purchase_type: @purchase.purchase_type)
     end
   end
 end
