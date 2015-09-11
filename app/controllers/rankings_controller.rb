@@ -17,18 +17,18 @@ class RankingsController < ApplicationController
 
   def topic
     if weekly?
-      set_up_rankings(Player.order_by_weekly_topic(@topic))
+      setup_rankings(Player.order_by_weekly_topic(@topic))
     else
-      set_up_rankings(Player.order_by_topic(@topic))
+      setup_rankings(Player.order_by_topic(@topic))
     end
     render :rankings
   end
 
   def category
     if weekly?
-      set_up_rankings(Player.order_by_weekly_category(@category))
+      setup_rankings(Player.order_by_weekly_category(@category))
     else
-      set_up_rankings(Player.order_by_category(@category))
+      setup_rankings(Player.order_by_category(@category))
     end
     render :rankings
   end
@@ -52,7 +52,7 @@ class RankingsController < ApplicationController
     (@current_position - 5)..(@current_position + 5)
   end
 
-  def set_up_rankings(top_players)
+  def setup_rankings(top_players)
     @rankings = top_players.limit(Player::TOP_SIZE)
     @position = top_players.index(current_player)
     @player_rankings = player_rankings(top_players) if @position.to_i >= Player::TOP_SIZE

@@ -15,7 +15,7 @@ class DeviceToken < ActiveRecord::Base
   belongs_to :player
 
   validates :token, uniqueness: true
-  validates :platform, inclusion: %w{android ios}
+  validates :platform, inclusion: %w(android ios)
 
   def push(message, options = {})
     logger.debug "Started pushing notification to #{player} with options: #{options}"

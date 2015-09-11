@@ -24,9 +24,9 @@ class GameQuestion < ActiveRecord::Base
   validates :question, presence: true
 
   validates :host_time, numericality: { greater_than_or_equal_to: 0 },
-            on: :update, allow_blank: true
+                        on: :update, allow_blank: true
   validates :opponent_time, numericality: { greater_than_or_equal_to: 0 },
-            on: :update, allow_blank: true
+                            on: :update, allow_blank: true
   validate :valid_host_answer, on: :update
   validate :valid_opponent_answer, on: :update
 
