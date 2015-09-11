@@ -1,3 +1,3 @@
 server 'quizapp@binaryblitz.ru', :app, :web, :db, primary: true
-set :branch, 'staging'
+set :branch, 'development'
 set :rails_env, 'staging'
