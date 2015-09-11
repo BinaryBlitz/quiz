@@ -59,7 +59,7 @@ class Lobby < ActiveRecord::Base
   private
 
   def notify_opponent(opponent)
-    message = "#{player} has challenged you."
+    message = "#{player} бросил вам вызов"
     options = { action: 'CHALLENGE', lobby: as_json }
     Notifier.new(opponent, message, options)
   end
@@ -67,7 +67,7 @@ class Lobby < ActiveRecord::Base
   def notify_declined
     Pusher.trigger("player-session-#{@lobby.game_session.host.id}", 'challenge-declined', {})
 
-    message = "#{lobby.game_session.opponent} has declined your challenge."
+    message = "#{lobby.game_session.opponent} отклонил ваш вызов"
     options = { action: 'CHALLENGE_DECLINED', lobby: { id: lobby.id } }
     Notifier.new(game_session.host, message, options).push
   end
