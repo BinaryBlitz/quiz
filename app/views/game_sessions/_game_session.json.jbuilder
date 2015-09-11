@@ -26,3 +26,7 @@ end
 json.game_questions game_session.game_questions do |sq|
   json.partial! 'game_questions/game_question', game_session_question: sq
 end
+
+json.game_session_questions game_session.game_questions do |sq|
+  json.partial! 'game_questions/game_question', game_session_question: sq
+end

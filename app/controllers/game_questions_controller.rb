@@ -4,6 +4,9 @@ class GameQuestionsController < ApplicationController
 
   # PATCH /game_question/1
   def update
+    # TODO: Deprecate
+    params[:game_question] = params[:game_session_question] if params[:game_session_question].present?
+
     answer_id = params[:game_question][:answer_id].to_i
     time = params[:game_question][:time].to_i
 

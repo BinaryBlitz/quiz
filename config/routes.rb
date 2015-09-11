@@ -31,6 +31,9 @@ Rails.application.routes.draw do
     resources :topics, only: [:index, :show]
     resources :categories, only: [:index, :show]
 
+    # TODO: Deprecate
+    patch 'game_session_questions/:id' => 'game_questions#update'
+
     resources :game_questions, only: [:update]
     resources :game_sessions, except: [:new, :edit] do
       patch 'close', on: :member
@@ -79,6 +82,14 @@ Rails.application.routes.draw do
         delete 'delete'
       end
     end
+    # TODO: Deprecate
+    resources :push_tokens, only: [:create], controller: 'device_tokens' do
+      collection do
+        patch 'replace'
+        delete 'delete'
+      end
+    end
+
     resources :purchases do
       get 'available', on: :collection
     end
