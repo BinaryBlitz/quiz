@@ -34,7 +34,7 @@ gem 'sprockets', '2.12.3'
 # Dashboard
 gem 'devise'
 gem 'bootstrap-sass'
-gem 'autoprefixer-rails'
+gem 'autoprefixer-rails', '~> 5.0'
 gem 'nested_form_fields'
 gem 'kaminari'
 
@@ -52,17 +52,11 @@ gem 'mini_magick'
 # Use Unicorn as the app server
 gem 'unicorn'
 
-<<<<<<< b311a78738a9a89c7c69a4c792a91db23ffe0e2b
 # Monitoring
 gem 'newrelic_rpm'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 gem 'rails_12factor', group: :production
 
-=======
->>>>>>> Refactor notifications
 group :development, :test do
   gem 'mocha'
   gem 'capistrano'
