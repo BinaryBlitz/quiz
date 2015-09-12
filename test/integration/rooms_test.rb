@@ -55,4 +55,13 @@ class RoomsTest < ActionDispatch::IntegrationTest
     end
     assert_response :no_content
   end
+
+  test 'invite players' do
+    invitee = players(:baz)
+
+    assert_difference 'Invite.count' do
+      post '/api/invites.json', token: token, invite: { room_id: @room.id, player_id: invitee.id }
+      assert_response :created
+    end
+  end
 end

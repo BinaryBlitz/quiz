@@ -11,7 +11,7 @@
 #
 
 class Invite < ActiveRecord::Base
-  after_create :notify_player
+  after_create :notify
 
   belongs_to :room
   belongs_to :player
@@ -22,8 +22,8 @@ class Invite < ActiveRecord::Base
 
   private
 
-  def notify_player
+  def notify
     options = { action: 'ROOM_INVITE' , invite: as_json, creator: creator.as_json }
-    player.push_notification('Вас пригласили в комнату', options)
+    Notifier.new(player, 'Вас пригласили в комнату', options).push
   end
 end
