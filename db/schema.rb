@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150912154843) do
+ActiveRecord::Schema.define(version: 20150912161926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -444,12 +444,10 @@ ActiveRecord::Schema.define(version: 20150912154843) do
   add_foreign_key "game_questions", "questions"
   add_foreign_key "game_sessions", "topics"
   add_foreign_key "invites", "players"
-  add_foreign_key "invites", "rooms"
   add_foreign_key "lobbies", "game_sessions"
   add_foreign_key "lobbies", "players"
   add_foreign_key "lobbies", "topics"
   add_foreign_key "participations", "players"
-  add_foreign_key "participations", "rooms"
   add_foreign_key "participations", "topics"
   add_foreign_key "purchases", "players"
   add_foreign_key "purchases", "purchase_types"
