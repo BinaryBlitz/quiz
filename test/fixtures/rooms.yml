@@ -9,10 +9,12 @@
 #  friends_only :boolean          default(FALSE)
 #  started      :boolean          default(FALSE)
 #  size         :integer
+#  topic_id     :integer
 #
 
 room:
   player: foo
+  topic: geography
 
 limited:
   player: foo

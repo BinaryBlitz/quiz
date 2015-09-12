@@ -24,8 +24,8 @@ class RoomsTest < ActionDispatch::IntegrationTest
   test 'create rooms' do
     assert_difference 'Room.count' do
       post '/api/rooms', token: token, room: { topic_id: topics(:geography).id }
+      assert_response :created
     end
-    assert_response :created
     room = Room.last
     assert @owner.owned_rooms.include?(room)
   end

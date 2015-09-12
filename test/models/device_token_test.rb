@@ -4,10 +4,10 @@
 #
 #  id         :integer          not null, primary key
 #  token      :string
-#  android    :boolean          default(FALSE)
 #  player_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  platform   :string
 #
 
 require 'test_helper'

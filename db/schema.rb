@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150908163117) do
+ActiveRecord::Schema.define(version: 20150912154843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -323,9 +323,11 @@ ActiveRecord::Schema.define(version: 20150908163117) do
     t.boolean  "friends_only", default: false
     t.boolean  "started",      default: false
     t.integer  "size"
+    t.integer  "topic_id"
   end
 
   add_index "rooms", ["player_id"], name: "index_rooms_on_player_id", using: :btree
+  add_index "rooms", ["topic_id"], name: "index_rooms_on_topic_id", using: :btree
 
   create_table "rpush_apps", force: :cascade do |t|
     t.string   "name",                                null: false
