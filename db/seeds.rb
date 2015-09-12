@@ -6,11 +6,11 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Players
-host = Player.new(username: 'foo', email: 'foo@bar.com', password: 'foobar').register
-opponent = Player.new(username: 'baz', email: 'baz@qux.com', password: 'bazqux').register
+host = Player.create!(username: 'foo', email: 'foo@bar.com', password: 'foobar')
+opponent = Player.create!(username: 'baz', email: 'baz@qux.com', password: 'bazqux')
 # API keys
-host.update(token: 'foo')
-opponent.update(token: 'baz')
+host.update!(token: 'foo')
+opponent.update!(token: 'baz')
 
 # Push notifications
 app = Rpush::Apns::App.new
@@ -27,18 +27,18 @@ app.connections = 1
 app.save!
 
 # Device tokens
-host.device_tokens.create(token: 'apple', platform: 'ios')
-host.device_tokens.create(token: 'android', platform: 'android')
-opponent.device_tokens.create(token: 'apple-2', platform: 'ios')
-opponent.device_tokens.create(token: 'android-2', platform: 'android')
+host.device_tokens.create!(token: 'apple', platform: 'ios')
+host.device_tokens.create!(token: 'android', platform: 'android')
+opponent.device_tokens.create!(token: 'apple-2', platform: 'ios')
+opponent.device_tokens.create!(token: 'android-2', platform: 'android')
 
 # Purchases
-PurchaseType.create(
+PurchaseType.create!(
   [{ identifier: 'booster-x2', multiplier: 2 }, { identifier: 'booster-x3', multiplier: 3 }])
 
 # Categories and topics
-category = Category.create(name: 'Тестовая категория')
-topic = Topic.create(name: 'Тестовая тема', category: category)
+category = Category.create!(name: 'Тестовая категория')
+topic = Topic.create!(name: 'Тестовая тема', category: category)
 
 # Questions
 questions = {}
@@ -49,18 +49,18 @@ end
 # Answers
 questions.each do |question, answers|
   q = Question.new(content: question, topic: topic)
-  answers.each { |answer| q.answers.new(content: answer, correct: answer == answers.first) }
+  answers.each { |answer| q.answers.build(content: answer, correct: answer == answers.first) }
   q.save
 end
 
 # Facts
 5.times do |n|
-  Fact.create(content: "Факт #{n + 1}")
+  Fact.create!(content: "Факт #{n + 1}")
 end
 
 # Online and offline session
-GameSession.create(host: host, opponent: opponent, topic: topic, offline: false).generate
-offline_session = GameSession.create(host: host, topic: topic, offline: true).generate
+GameSession.create(host: host, opponent: opponent, topic: topic, offline: false)
+offline_session = GameSession.create(host: host, topic: topic, offline: true)
 offline_session.game_questions.each do |session_question|
   session_question.update!(host_answer: session_question.question.correct_answer, host_time: 1)
 end
