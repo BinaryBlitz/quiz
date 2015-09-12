@@ -39,7 +39,9 @@ class LobbiesController < ApplicationController
     opponent = Player.find(params[:opponent_id])
     topic = Topic.find(params[:topic_id])
 
-    lobby = current_player.lobbies.build(topic: topic).challenge_player(opponent)
+    lobby = current_player.lobbies.build(topic: topic)
+    authorize lobby
+    lobby.challenge_player(opponent)
     @game_session = lobby.game_session
     render 'game_sessions/show'
   end
