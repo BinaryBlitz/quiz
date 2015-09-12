@@ -3,7 +3,10 @@ class RoomsController < ApplicationController
 
   # GET /rooms
   def index
-    @rooms = Room.recent.visible
+    public_rooms = Room.recent.visible
+    private_rooms = Room.visible_for(current_player)
+    @rooms = public_rooms + private_rooms
+
   end
 
   # GET /rooms/1

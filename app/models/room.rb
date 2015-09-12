@@ -26,8 +26,13 @@ class Room < ActiveRecord::Base
   validates :player, presence: true
   validates :topic, presence: true
 
-  scope :visible, -> { where(started: false) }
+  scope :visible, -> { where(started: false, friends_only: false) }
   scope :recent, -> { where('created_at > ?', 10.minutes.ago) }
+
+  def self.visible_for(current_user)
+    friends_ids = current_user.friends.ids
+    where(friends_only: true).where(player_id: friends_ids)
+  end
 
   def start
     create_room_session

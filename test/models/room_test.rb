@@ -53,4 +53,14 @@ class RoomTest < ActiveSupport::TestCase
     assert_not_nil session
     assert_equal RoomSession::QUESTIONS_PER_PLAYER * 3, session.room_questions.count
   end
+
+  test 'visibility' do
+    friend = players(:baz)
+
+    @player.friends << friend
+    room = @player.owned_rooms.create!(topic: @topic, friends_only: true)
+
+    private_rooms = Room.visible_for(friend)
+    assert_includes private_rooms, room
+  end
 end
