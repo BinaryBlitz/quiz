@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'reports/create'
-
   root 'admin/dashboard#index'
 
   # Devise
@@ -24,6 +22,13 @@ Rails.application.routes.draw do
     resources :facts
     resources :purchase_types
     resources :imports, only: [:new, :create]
+    resources :reports, only: [:index, :destroy] do
+      collection do
+        get 'players'
+        get 'questions'
+        get 'feedback'
+      end
+    end
   end
 
   scope '/api', defaults: { format: :json } do
