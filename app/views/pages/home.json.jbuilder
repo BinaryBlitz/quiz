@@ -14,6 +14,10 @@ json.random_topics do
   json.partial! 'home_topics', topics: Topic.random(3)
 end
 
+json.recent_topics do
+  json.partial! 'home_topics', topics: Topic.recent(3)
+end
+
 json.challenges do
   json.partial! 'challenges', lobbies: @challenges
 end
