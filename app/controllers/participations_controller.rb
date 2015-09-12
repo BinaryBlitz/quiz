@@ -22,6 +22,7 @@ class ParticipationsController < ApplicationController
 
   def destroy
     @participation.destroy
+    authorize @participation
     head :no_content
   end
 

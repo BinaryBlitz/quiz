@@ -64,4 +64,12 @@ class RoomsTest < ActionDispatch::IntegrationTest
       assert_response :created
     end
   end
+
+  test 'authorize participations' do
+    random_user = players(:bar)
+    participation = @room.participations.create(player: @guest, topic: @topic)
+
+    delete "/api/participations/#{participation.id}.json", token: random_user.token
+    assert_response :forbidden
+  end
 end
