@@ -25,5 +25,7 @@ class Proposal < ActiveRecord::Base
       question.answers.build(content: answer, correct: i == 0)
     end
     question.save!
+    destroy
+    question
   end
 end

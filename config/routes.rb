@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  namespace :admin do
+  get 'proposals/index'
+  end
+
+  namespace :admin do
+  get 'proposals/destroy'
+  end
+
   get 'proposals/create'
 
   root 'admin/dashboard#index'
@@ -24,6 +32,9 @@ Rails.application.routes.draw do
     resources :facts
     resources :purchase_types
     resources :imports, only: [:new, :create]
+    resources :proposals, only: [:index, :destroy] do
+      post 'approve', on: :member
+    end
     resources :reports, only: [:index, :destroy] do
       collection do
         get 'players'
