@@ -35,6 +35,8 @@ class Room < ActiveRecord::Base
   end
 
   def start
+    return if started && room_session
+
     create_room_session
     notify_session_start
     update(started: true)
