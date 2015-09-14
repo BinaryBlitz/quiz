@@ -17,4 +17,6 @@ class Answer < ActiveRecord::Base
   has_many :game_questions, foreign_key: :opponent_answer_id, dependent: :destroy
 
   validates :content, presence: true
+
+  scope :correct, -> { where(correct: true).first }
 end

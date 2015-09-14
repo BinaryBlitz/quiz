@@ -1,0 +1,20 @@
+table.table
+  thead
+    tr
+      th Вопрос
+      th Ответы
+      th Действия
+  tbody
+    - @proposals.each do |proposal|
+      tr
+        td = proposal.content
+        td
+          ul
+            - proposal.answers.each do |answer|
+              li = answer
+        td
+          = link_to 'Одобрить', approve_admin_proposal_path(proposal), method: :post, class: 'btn btn-success'
+          | &nbsp;
+          = link_to 'Отклонить', [:admin, proposal], method: :delete, class: 'btn btn-danger'
+
+= paginate @proposals

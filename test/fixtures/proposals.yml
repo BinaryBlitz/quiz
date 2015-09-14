@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: proposals
+#
+#  id         :integer          not null, primary key
+#  player_id  :integer
+#  topic_id   :integer
+#  content    :text
+#  answers    :text             is an Array
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+proposal:
+  player: foo
+  topic: geography
+  content: Question
+  answers:
+    - Correct
+    - Incorrect
+    - Foo
+    - Bar

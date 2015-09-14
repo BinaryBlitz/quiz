@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  namespace :admin do
+  get 'proposals/index'
+  end
+
+  namespace :admin do
+  get 'proposals/destroy'
+  end
+
+  get 'proposals/create'
+
   root 'admin/dashboard#index'
 
   # Devise
@@ -22,6 +32,9 @@ Rails.application.routes.draw do
     resources :facts
     resources :purchase_types
     resources :imports, only: [:new, :create]
+    resources :proposals, only: [:index, :destroy] do
+      post 'approve', on: :member
+    end
     resources :reports, only: [:index, :destroy] do
       collection do
         get 'players'
@@ -35,6 +48,7 @@ Rails.application.routes.draw do
     # Topics & categories
     resources :topics, only: [:index, :show]
     resources :categories, only: [:index, :show]
+    resources :proposals, only: [:create]
 
     # TODO: Deprecate
     patch 'game_session_questions/:id' => 'game_questions#update'
