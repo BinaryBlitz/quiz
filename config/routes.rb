@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     patch 'game_session_questions/:id' => 'game_questions#update'
 
     resources :game_questions, only: [:update]
-    resources :game_sessions, except: [:new, :edit] do
+    resources :game_sessions, except: [:index, :new, :edit] do
       patch 'close', on: :member
     end
     resources :rooms, except: [:new, :edit] do

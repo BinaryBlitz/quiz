@@ -5,12 +5,6 @@ class GameSessionsTest < ActionDispatch::IntegrationTest
     @game_session = game_sessions(:offline)
   end
 
-  test 'list' do
-    get '/api/game_sessions', token: token
-    assert_response :success
-    assert_not_nil assigns(:game_sessions)
-  end
-
   test 'show' do
     get "/api/game_sessions/#{@game_session.id}", token: token
     assert_response :success
