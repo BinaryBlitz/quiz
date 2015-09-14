@@ -72,4 +72,10 @@ class RoomsTest < ActionDispatch::IntegrationTest
     delete "/api/participations/#{participation.id}.json", token: random_user.token
     assert_response :forbidden
   end
+
+  test 'authorize rooms for friends' do
+    room = rooms(:friends_only)
+    post '/api/participations.json', token: @guest.token, topic_id: @topic.id, room_id: room.id
+    assert_response :forbidden
+  end
 end

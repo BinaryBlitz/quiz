@@ -6,7 +6,9 @@ class ParticipationPolicy < ApplicationPolicy
   end
 
   def create?
-    @room && @room.players.count < (@participation.room.size || 5)
+    not_full = @room && (@room.players.count < (@participation.room.size || 5))
+    visible = !@room.friends_only || @room.player.friends.include?(@player)
+    not_full && visible
   end
 
   def destroy?
