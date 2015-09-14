@@ -23,6 +23,7 @@ class QuestionImageUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   process resize_to_fit: [600, 600]
+  process convert: 'jpg'
   process quality: 80
 
   # Create different versions of your uploaded files:
@@ -39,7 +40,7 @@ class QuestionImageUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    "#{secure_token}.#{file.extension}" if original_filename
+    "#{secure_token}.jpg" if original_filename
   end
 
   protected
