@@ -57,6 +57,10 @@ gem 'newrelic_rpm'
 
 gem 'rails_12factor', group: :production
 
+group :development do
+  gem 'better_errors'
+end
+
 group :development, :test do
   gem 'mocha'
   gem 'capistrano'
@@ -64,7 +68,6 @@ group :development, :test do
   gem 'rvm-capistrano', require: false
   gem 'byebug'
   gem 'pry-rails'
-  gem 'better_errors'
   gem 'pry-byebug'
   gem 'annotate', '~> 2.6.5'
   gem 'spring'
