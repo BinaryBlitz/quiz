@@ -18,7 +18,7 @@ class Purchase < ActiveRecord::Base
 
   DAYS_VALID = 10
 
-  scope :unexpired, -> { where('updated_at >= ?', Time.zone.now - DAYS_VALID.days) }
+  scope :unexpired, -> { where('purchases.updated_at >= ?', Time.zone.now - DAYS_VALID.days) }
 
   def identifier
     purchase_type.identifier
