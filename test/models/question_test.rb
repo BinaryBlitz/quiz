@@ -14,7 +14,7 @@ require 'test_helper'
 
 class QuestionTest < ActiveSupport::TestCase
   def setup
-    @question = questions(:capital_of_the_uk)
+    @question = questions(:uk_capital)
     @answer = answers(:correct)
   end
 end

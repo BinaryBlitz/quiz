@@ -34,6 +34,7 @@ class Player < ActiveRecord::Base
   # Associations
   has_merit
   has_many :reports, dependent: :destroy
+  has_many :proposals, dependent: :destroy
 
   # Game
   has_one :stats, dependent: :destroy

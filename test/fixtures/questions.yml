@@ -12,7 +12,7 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-capital_of_the_uk:
+uk_capital:
   content: What is the capital of the UK?
   topic: geography
 

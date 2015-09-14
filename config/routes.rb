@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'proposals/create'
+
   root 'admin/dashboard#index'
 
   # Devise
@@ -35,6 +37,7 @@ Rails.application.routes.draw do
     # Topics & categories
     resources :topics, only: [:index, :show]
     resources :categories, only: [:index, :show]
+    resources :proposals, only: [:create]
 
     # TODO: Deprecate
     patch 'game_session_questions/:id' => 'game_questions#update'
