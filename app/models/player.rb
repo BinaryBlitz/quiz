@@ -53,7 +53,7 @@ class Player < ActiveRecord::Base
 
   # Device
   has_many :push_tokens, dependent: :destroy
-  has_many :purchases, -> { where('purchases.updated_at >= ?', Time.zone.now - 10.days) }, dependent: :destroy
+  has_many :purchases, dependent: :destroy
   has_many :purchase_types, through: :purchases
 
   has_many :topic_results, dependent: :destroy
@@ -113,8 +113,8 @@ class Player < ActiveRecord::Base
   end
 
   def multiplier
-    purchase = purchase_types.where.not(multiplier: nil).order(multiplier: :desc).first
-    purchase ? purchase.multiplier : 1
+    type = PurchaseType.where(id: purchase_types.ids).multipliers.order(multiplier: :desc).first
+    type ? type.multiplier : 1
   end
 
   def challenges

@@ -15,6 +15,9 @@ class PurchaseType < ActiveRecord::Base
 
   validates :identifier, presence: true, uniqueness: true
 
+  scope :multipliers, -> { where.not(multiplier: nil) }
+  scope :unlockers, -> { where(topic: true) }
+
   def booster?
     multiplier && !topic
   end
