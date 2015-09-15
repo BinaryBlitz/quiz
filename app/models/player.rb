@@ -136,7 +136,9 @@ class Player < ActiveRecord::Base
   end
 
   def purchased?(purchase_type)
-    purchases.unexpired.where(purchase_type: purchase_type).any?
+    p = purchases.where(purchase_type: purchase_type)
+    p = p.unexpired if purchase_type.multiplier?
+    p.any?
   end
 
   def online?

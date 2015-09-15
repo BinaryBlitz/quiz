@@ -18,7 +18,7 @@ class PurchaseType < ActiveRecord::Base
   scope :multipliers, -> { where.not(multiplier: nil) }
   scope :unlockers, -> { where(topic: true) }
 
-  def booster?
+  def multiplier?
     multiplier && !topic
   end
 
