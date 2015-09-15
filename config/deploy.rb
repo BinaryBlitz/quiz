@@ -7,6 +7,10 @@ set :stages, %w(production staging)
 set :default_stage, "staging"
 require 'capistrano/ext/multistage'
 
+set :whenever_command, 'bundle exec whenever'
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+require "whenever/capistrano"
+
 set :application, 'quizapp'
 set :deploy_to, "/home/quizapp/#{application}"
 set :use_sudo, false
