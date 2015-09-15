@@ -52,6 +52,8 @@ gem 'mini_magick'
 # Use Unicorn as the app server
 gem 'unicorn'
 
+gem 'whenever', require: false
+
 # Monitoring
 gem 'newrelic_rpm'
 
