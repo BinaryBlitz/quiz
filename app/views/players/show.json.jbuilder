@@ -2,7 +2,7 @@ json.partial! 'player', player: @player
 
 json.is_friend current_player.friends.include?(@player)
 
-json.cache! "players/#{@player.id}-total_score", expires_in: 1.hour do
+json.cache! "players/#{@player.id}-total_score", expires_in: 5.minutes do
   json.total_score do
     json.wins @player.score.wins
     json.draws @player.score.draws
@@ -10,7 +10,7 @@ json.cache! "players/#{@player.id}-total_score", expires_in: 1.hour do
   end
 end
 
-json.cache! "players/#{@player.id}-#{current_player.id}", expires_in: 1.hour do
+json.cache! "players/#{@player.id}-#{current_player.id}", expires_in: 5.minutes do
   unless @player == current_player
     score = current_player.score_against(@player)
     json.score do
