@@ -1,8 +1,6 @@
-json.cache! player, expires_in: 30.minutes do
-  json.extract! player, :id, :username, :email, :avatar_url
+json.extract! player, :id, :username, :email, :avatar_url
 
-  json.avatar_url player.vk_avatar_url || player.avatar_url
-  json.avatar_thumb_url player.avatar.thumb.url
+json.avatar_url player.vk_avatar_url || player.avatar_url
+json.avatar_thumb_url player.avatar.thumb.url
 
-  json.is_online player.online?
-end
+json.is_online player.online?
