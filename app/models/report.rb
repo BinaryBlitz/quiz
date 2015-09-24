@@ -12,7 +12,7 @@
 
 class Report < ActiveRecord::Base
   belongs_to :player
-  belongs_to :question
+  belongs_to :question, counter_cache: true
 
   validates :message, presence: true
 

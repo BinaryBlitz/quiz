@@ -24,6 +24,7 @@ h3
         th.col-sm-1 №
         th Содержание
         th Изображение
+        th Жалобы
         th.col-sm-4.col-md-3 Действия
     tbody
       - @questions.each_with_index do |question, index|
@@ -31,6 +32,7 @@ h3
           td = index + 1
           td = link_to question.content, edit_admin_question_path(question)
           td = question.image?
+          td = question.reports.size
           td.col-sm-4.col-md-3
             = link_to 'Изменить', edit_admin_question_path(question), class: 'btn btn-default'
             = ' '
