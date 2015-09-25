@@ -56,4 +56,9 @@ class PlayersTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert @player.reload.online?
   end
+
+  test 'versions' do
+    get '/api/players/version', version: VERSION
+    assert_response :ok
+  end
 end

@@ -1,12 +1,4 @@
 Rails.application.routes.draw do
-  namespace :admin do
-  get 'proposals/index'
-  end
-
-  namespace :admin do
-  get 'proposals/destroy'
-  end
-
   get 'proposals/create'
 
   root 'admin/dashboard#index'
@@ -82,6 +74,7 @@ Rails.application.routes.draw do
         post 'authenticate_vk'
         post 'authenticate_layer'
         get 'search'
+        get 'version'
       end
       member do
         get 'friends'

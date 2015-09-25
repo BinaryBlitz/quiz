@@ -1,6 +1,6 @@
 class PlayersController < ApplicationController
   skip_before_filter :restrict_access,
-                     only: [:create, :authenticate, :authenticate_vk]
+                     only: [:create, :authenticate, :authenticate_vk, :version]
   before_action :set_player, only: [:update, :destroy, :friends, :report, :notify]
 
   # GET /players
@@ -83,6 +83,17 @@ class PlayersController < ApplicationController
   def report
     @player.reports.create(message: params[:message])
     head :created
+  end
+
+  def version
+    client = Semantic::Version.new(params[:version])
+    server = Semantic::Version.new(VERSION)
+
+    if client.major < server.major || client.minor < server.minor
+      head :unauthorized
+    else
+      head :ok
+    end
   end
 
   private

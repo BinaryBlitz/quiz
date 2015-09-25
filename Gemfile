@@ -31,6 +31,8 @@ gem 'pundit'
 # Use old version because of the manifest bug
 gem 'sprockets', '2.12.3'
 
+gem 'semantic'
+
 # Dashboard
 gem 'devise'
 gem 'bootstrap-sass'
