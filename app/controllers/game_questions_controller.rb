@@ -2,7 +2,6 @@ class GameQuestionsController < ApplicationController
   before_action :find_game_question
   before_action :find_current_session
 
-  # PATCH /game_question/1
   def update
     # TODO: Deprecate
     params[:game_question] = params[:game_session_question] if params[:game_session_question].present?

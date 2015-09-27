@@ -3,7 +3,6 @@ class LobbiesController < ApplicationController
   before_action :find_lobby,
                 only: [:show, :find, :destroy, :close, :accept_challenge, :decline_challenge]
 
-  # POST /lobbies
   def create
     @lobby = Lobby.new(lobby_params)
     @lobby.player = current_player
