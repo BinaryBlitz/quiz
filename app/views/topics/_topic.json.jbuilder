@@ -5,5 +5,5 @@ json.cache! topic do
   json.visible true
 end
 
-json.points current_player.topic_points(topic)
+json.points current_player.score.topic_points(topic)
 json.available !topic.paid || current_player.topics_unlocked?

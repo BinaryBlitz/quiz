@@ -4,7 +4,7 @@ json.fact Fact.random
 
 json.host do
   json.partial! 'players/player', player: game_session.host
-  json.points current_player.topic_points(game_session.topic)
+  json.points current_player.score.topic_points(game_session.topic)
   json.extract! game_session.host, :multiplier
 end
 
