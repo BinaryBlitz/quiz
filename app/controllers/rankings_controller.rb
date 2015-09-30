@@ -1,66 +1,35 @@
 class RankingsController < ApplicationController
-  before_action :set_topic, only: :topic
-  before_action :set_category, only: :category
+  before_action :set_topic
+  before_action :set_category
 
-  def general
-    if weekly?
-      @rankings = Player.order_by_weekly_points(20)
-      @position = Player.position_weekly(current_player)
-      @player_rankings = Player.order_by_weekly_points(11).offset(@position - 5) if @position > 20
-    else
-      @rankings = Player.order_by_points(20)
-      @position = Player.position_general(current_player)
-      @player_rankings = Player.order_by_points(11).offset(@position - 5) if @position > 20
-    end
-    render :rankings
-  end
-
-  def topic
-    if weekly?
-      setup_rankings(Player.order_by_weekly_topic(@topic))
-    else
-      setup_rankings(Player.order_by_topic(@topic))
-    end
-    render :rankings
-  end
-
-  def category
-    if weekly?
-      setup_rankings(Player.order_by_weekly_category(@category))
-    else
-      setup_rankings(Player.order_by_category(@category))
-    end
-    render :rankings
+  def index
+    @leaderboard = Leaderboard.new(current_player, options)
   end
 
   private
 
+  def options
+    options = {}
+    options[:topic] = @topic if @topic
+    options[:category] = @category if @category
+    options[:weekly] = true if weekly?
+    options[:friends] = true if friends?
+    options
+  end
+
   def set_topic
-    @topic = Topic.find_by(id: params[:topic_id])
+    @topic = Topic.find(params[:topic_id]) if params[:topic_id].present?
   end
 
   def set_category
-    @category = Category.find(params[:category_id])
-  end
-
-  def player_rankings(players)
-    # Five positions before and after current player
-    players.offset(@position - 5).limit(11)
-  end
-
-  def current_player_range
-    (@current_position - 5)..(@current_position + 5)
-  end
-
-  def setup_rankings(top_players)
-    @rankings = top_players.limit(Player::TOP_SIZE)
-    @position = top_players.index(current_player)
-    @player_rankings = player_rankings(top_players) if @position.to_i >= Player::TOP_SIZE
+    @category = Category.find(params[:category_id]) if params[:category_id].present?
   end
 
   def weekly?
-    params.key?(:weekly)
+    params[:weekly]
   end
 
-  helper_method :weekly?
+  def friends?
+    params[:friends]
+  end
 end

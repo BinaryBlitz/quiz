@@ -122,10 +122,7 @@ Rails.application.routes.draw do
       end
     end
 
-    # Rankings
-    get 'rankings/general'
-    get 'rankings/topic'
-    get 'rankings/category'
+    resources :rankings, only: :index
 
     # Pages
     get 'pages/home'

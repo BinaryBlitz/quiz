@@ -23,7 +23,6 @@
 class Player < ActiveRecord::Base
   include VkAuthorization
   include Achievements
-  include PlayerRankings
   include PlayerTopics
 
   before_save { self.email = email.downcase if email }
@@ -57,6 +56,7 @@ class Player < ActiveRecord::Base
   has_many :purchase_types, through: :purchases
 
   has_many :topic_results, dependent: :destroy
+  has_many :recent_topic_results, -> { recent }, class_name: 'TopicResult'
   has_many :topics, -> { uniq }, through: :topic_results
 
   # Social
@@ -147,6 +147,10 @@ class Player < ActiveRecord::Base
 
   def topics_unlocked?
     purchase_types.where(topic: true).any?
+  end
+
+  def score
+    @score ||= ::Score.new(self)
   end
 
   def push_achievement(badge)

@@ -3,6 +3,7 @@ json.partial! 'player', player: @player
 json.is_friend current_player.friends.include?(@player)
 
 json.cache! "players/#{@player.id}-total_score", expires_in: 5.minutes do
+  # TODO: Rename to score?
   json.total_score do
     json.wins @player.score.wins
     json.draws @player.score.draws
@@ -22,7 +23,6 @@ end
 
 json.favorite_topics @player.favorite_topics do |topic|
   json.partial! 'topics/topic', topic: topic
-  json.points @player.topic_points(topic)
 end
 
 json.achievements do
