@@ -32,6 +32,7 @@ class DeviceTokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'destroy' do
-    post '/api/device_tokens', token: token, device_token: @device_token.token
+    skip
+    delete '/api/device_tokens', token: token, device_token: @device_token.token
   end
 end

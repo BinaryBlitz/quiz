@@ -10,10 +10,8 @@
 #  platform   :string
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 apple:
-  token: apple
+  token: <%= SecureRandom.hex(32) %>
   player: foo
   platform: ios
 
