@@ -87,10 +87,12 @@ class PlayersController < ApplicationController
     client = Semantic::Version.new(params[:version])
     server = Semantic::Version.new(VERSION)
 
-    if client.major < server.major || client.minor < server.minor
-      head :unauthorized
+    major = client.major < server.major
+
+    if major || client.minor < server.minor
+      render json: { update_available: true, major: major }
     else
-      head :ok
+      render json: { update_available: false }
     end
   end
 
