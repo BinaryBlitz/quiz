@@ -26,6 +26,8 @@ class Leaderboard
     return nil if @friends
 
     @points = player_points
+    return nil if @points == 0
+
     generic_rankings.limit(nil).having("#{total_points} > ?", @points).count.size
   end
 

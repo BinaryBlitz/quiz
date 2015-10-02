@@ -38,4 +38,23 @@ class Score
   def losses
     @losses ||= @player.topic_results.sum(:losses)
   end
+
+  def against(opponent)
+    return if @player == opponent
+
+    reset
+    sessions = @player.game_sessions.against(opponent)
+    sessions.each do |session|
+      @draws += 1 and next if session.draw?
+      @wins += 1 if session.winner?(self)
+    end
+    @losses = sessions.count - @wins - @draws
+    self
+  end
+
+  private
+
+  def reset
+    @wins = @draws = @losses = 0
+  end
 end

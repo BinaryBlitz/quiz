@@ -88,6 +88,10 @@ class Player < ActiveRecord::Base
 
   TOP_SIZE = 20
 
+  def self.search(query)
+    where('username ILIKE :query', query: "%#{query}%")
+  end
+
   def game_sessions
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
   end
@@ -98,18 +102,6 @@ class Player < ActiveRecord::Base
 
   def to_s
     username
-  end
-
-  def score_against(opponent)
-    return ::Score.new if self == opponent
-    sessions = game_sessions.where('host_id = ? OR opponent_id = ?', opponent, opponent)
-    wins = 0
-    draws = 0
-    sessions.each do |session|
-      draws += 1 and next if session.draw?
-      wins += 1 if session.winner?(self)
-    end
-    ::Score.new(wins, nil, sessions.count - wins - draws)
   end
 
   def multiplier
@@ -123,10 +115,6 @@ class Player < ActiveRecord::Base
 
   def challenged
     lobbies.where(challenge: true)
-  end
-
-  def self.search(query)
-    where('username ILIKE :query', query: "%#{query}%")
   end
 
   def send_password_reset

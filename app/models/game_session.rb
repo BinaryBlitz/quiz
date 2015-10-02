@@ -33,6 +33,7 @@ class GameSession < ActiveRecord::Base
 
   # Scopes
   scope :last_week, -> { where(updated_at: (1.week.ago)..(Time.zone.now)) }
+  scope :against, -> (opponent) { where('host_id = ? OR opponent_id = ?', opponent, opponent) }
 
   def player_points(player)
     if player == host
