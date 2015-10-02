@@ -85,7 +85,7 @@ class PlayersController < ApplicationController
 
   def version
     client = Semantic::Version.new(params[:version])
-    server = Semantic::Version.new(VERSION)
+    server = Semantic::Version.new(API_VERSION)
 
     major = client.major < server.major
 
