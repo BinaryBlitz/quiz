@@ -83,6 +83,7 @@ class Leaderboard
   end
 
   def friends(rankings)
-    rankings.where('topic_results.player_id' => @player.friends.ids)
+    ids = @player.friends.ids << @player.id
+    rankings.where('topic_results.player_id' => ids)
   end
 end
