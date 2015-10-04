@@ -28,6 +28,8 @@ class Leaderboard
     @points = player_points
     return nil if @points == 0
 
+    rankings = generic_rankings
+    rankings = rankings.where('topic_results.updated_at > ?', Time.zone.now.beginning_of_week) if @weekly
     generic_rankings.limit(nil).having("#{total_points} > ?", @points).count.size
   end
 
@@ -43,7 +45,7 @@ class Leaderboard
   end
 
   def build_rankings
-    rankings = @weekly ? weekly(generic_rankings) : general(generic_rankings)
+    rankings = select_points(generic_rankings)
     rankings.order("total_points DESC")
   end
 
@@ -51,6 +53,7 @@ class Leaderboard
     rankings = player_rankings
     rankings = topic(rankings) if @topic
     rankings = category(rankings) if @category
+    rankings = weekly(rankings) if @weekly
     rankings = friends(rankings) if @friends
     rankings
   end
@@ -60,13 +63,12 @@ class Leaderboard
     Player.joins(:topic_results).limit(limit).group('players.id')
   end
 
-  def general(rankings)
-    rankings.select("players.*, #{total_points} AS total_points")
-  end
-
   def weekly(rankings)
     rankings.where('topic_results.updated_at > ?', Time.zone.now.beginning_of_week)
-      .select("players.*, #{total_points} AS total_points")
+  end
+
+  def select_points(rankings)
+    rankings.select("players.*, #{total_points} AS total_points")
   end
 
   def total_points
