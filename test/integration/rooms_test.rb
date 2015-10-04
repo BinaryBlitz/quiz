@@ -9,6 +9,7 @@ class RoomsTest < ActionDispatch::IntegrationTest
 
     @room = rooms(:room)
     @room.topic = @topic
+    @room.run_callbacks(:create)
   end
 
   test 'list rooms' do
@@ -77,5 +78,11 @@ class RoomsTest < ActionDispatch::IntegrationTest
     room = rooms(:friends_only)
     post '/api/participations.json', token: @guest.token, topic_id: @topic.id, room_id: room.id
     assert_response :forbidden
+  end
+
+  test 'chat' do
+    post "/api/rooms/#{@room.id}/messages.json",
+         token: @owner.token, content: 'Hello!', room_id: @room.id
+    assert_response :success
   end
 end

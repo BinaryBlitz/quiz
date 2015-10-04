@@ -58,7 +58,7 @@ class PlayersTest < ActionDispatch::IntegrationTest
   end
 
   test 'versions' do
-    get '/api/players/version', version: VERSION
+    get '/api/players/version', version: API_VERSION
     assert_response :ok
   end
 end

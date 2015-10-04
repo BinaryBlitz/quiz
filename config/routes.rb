@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       patch 'close', on: :member
     end
     resources :rooms, except: [:new, :edit] do
+      post 'messages', to: 'room_messages#create'
       member do
         post 'join'
         post 'start'
