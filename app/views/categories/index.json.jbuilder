@@ -1,3 +1,1 @@
-json.cache! @categories do
-  json.partial! 'category', collection: @categories, as: :category
-end
+json.partial! 'category', collection: @categories, as: :category
