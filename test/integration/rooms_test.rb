@@ -32,7 +32,9 @@ class RoomsTest < ActionDispatch::IntegrationTest
   end
 
   test 'join room' do
-    post '/api/participations', token: @guest.token, topic_id: @topic.id, room_id: @room.id
+    post '/api/participations.json', token: @guest.token, participation: {
+      topic_id: @topic.id, room_id: @room.id
+    }
     assert_response :created
     assert @guest.rooms.include?(@room)
   end
@@ -76,7 +78,9 @@ class RoomsTest < ActionDispatch::IntegrationTest
 
   test 'authorize rooms for friends' do
     room = rooms(:friends_only)
-    post '/api/participations.json', token: @guest.token, topic_id: @topic.id, room_id: room.id
+    post '/api/participations.json', token: @guest.token, participation: {
+      topic_id: @topic.id, room_id: room.id
+    }
     assert_response :forbidden
   end
 
