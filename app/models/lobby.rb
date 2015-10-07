@@ -23,12 +23,11 @@ class Lobby < ActiveRecord::Base
 
   MAX_QUERY_COUNT = 6
 
+  scope :recent, -> { where(created_at: (Time.zone.now - 15.seconds)..(Time.zone.now)) }
+  scope :open, -> { where(game_session: nil).where(closed: false) }
+
   def find_opponent_lobby
-    Lobby.where(created_at: (Time.zone.now - 15.seconds)..(Time.zone.now))
-      .where(game_session: nil)
-      .where(topic: topic)
-      .where(closed: false)
-      .where.not(player: player).first
+    Lobby.recent.open.where(topic: topic).where.not(player: player).first
   end
 
   def close
