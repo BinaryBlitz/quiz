@@ -81,6 +81,7 @@ Rails.application.routes.draw do
         get 'friends'
         get 'report'
         post 'notify'
+        patch 'flag_layer'
       end
     end
     resources :friend_requests, except: [:new, :edit]
