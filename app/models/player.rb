@@ -54,6 +54,8 @@ class Player < ActiveRecord::Base
   has_many :device_tokens, dependent: :destroy
   has_many :purchases, dependent: :destroy
   has_many :purchase_types, through: :purchases
+  has_many :multiplier_purchases, -> { unexpired.multipliers }, class_name: 'Purchase'
+  has_many :multipliers, through: :multiplier_purchases, source: :purchase_type
 
   has_many :topic_results, dependent: :destroy
   has_many :recent_topic_results, -> { recent }, class_name: 'TopicResult'
@@ -105,8 +107,8 @@ class Player < ActiveRecord::Base
   end
 
   def multiplier
-    type = PurchaseType.where(id: purchase_types.ids).multipliers.order(multiplier: :desc).first
-    type ? type.multiplier : 1
+    purchase_type = multipliers.order(multiplier: :desc).first
+    purchase_type ? purchase_type.multiplier : 1
   end
 
   def challenges
