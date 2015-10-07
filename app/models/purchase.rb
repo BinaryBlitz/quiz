@@ -19,6 +19,7 @@ class Purchase < ActiveRecord::Base
   DAYS_VALID = 10
 
   scope :unexpired, -> { where('purchases.updated_at >= ?', Time.zone.now - DAYS_VALID.days) }
+  scope :multipliers, -> { joins(:purchase_type).where.not('purchase_types.multiplier' => nil) }
 
   def identifier
     purchase_type.identifier
