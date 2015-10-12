@@ -97,6 +97,7 @@ class PlayersController < ApplicationController
   end
 
   def flag_layer
+    current_player.update(layer_needs_authentication: true)
     @player.update(layer_needs_authentication: true)
     head :ok
   end
