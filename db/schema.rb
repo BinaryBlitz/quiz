@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150908163117) do
+ActiveRecord::Schema.define(version: 20151007152947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,17 @@ ActiveRecord::Schema.define(version: 20150908163117) do
   add_index "category_results", ["category_id"], name: "index_category_results_on_category_id", using: :btree
   add_index "category_results", ["player_id"], name: "index_category_results_on_player_id", using: :btree
 
+  create_table "device_tokens", force: :cascade do |t|
+    t.string   "token"
+    t.integer  "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "platform"
+  end
+
+  add_index "device_tokens", ["player_id"], name: "index_device_tokens_on_player_id", using: :btree
+  add_index "device_tokens", ["token"], name: "index_device_tokens_on_token", using: :btree
+
   create_table "facts", force: :cascade do |t|
     t.text     "content"
     t.datetime "created_at", null: false
@@ -108,7 +119,7 @@ ActiveRecord::Schema.define(version: 20150908163117) do
 
   add_index "friendships", ["player_id"], name: "index_friendships_on_player_id", using: :btree
 
-  create_table "game_session_questions", force: :cascade do |t|
+  create_table "game_questions", force: :cascade do |t|
     t.integer  "game_session_id"
     t.integer  "question_id"
     t.integer  "host_answer_id"
@@ -119,8 +130,8 @@ ActiveRecord::Schema.define(version: 20150908163117) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "game_session_questions", ["game_session_id"], name: "index_game_session_questions_on_game_session_id", using: :btree
-  add_index "game_session_questions", ["question_id"], name: "index_game_session_questions_on_question_id", using: :btree
+  add_index "game_questions", ["game_session_id"], name: "index_game_questions_on_game_session_id", using: :btree
+  add_index "game_questions", ["question_id"], name: "index_game_questions_on_question_id", using: :btree
 
   create_table "game_sessions", force: :cascade do |t|
     t.integer  "host_id"
@@ -216,12 +227,12 @@ ActiveRecord::Schema.define(version: 20150908163117) do
   create_table "players", force: :cascade do |t|
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "vk_token"
     t.integer  "vk_id"
     t.integer  "sash_id"
-    t.integer  "level",                  default: 0
+    t.integer  "level",                      default: 0
     t.string   "avatar"
     t.string   "username"
     t.string   "password_reset_token"
@@ -229,10 +240,23 @@ ActiveRecord::Schema.define(version: 20150908163117) do
     t.string   "token"
     t.datetime "visited_at"
     t.string   "vk_avatar"
+    t.boolean  "layer_needs_authentication"
   end
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
   add_index "players", ["username"], name: "index_players_on_username", unique: true, using: :btree
+
+  create_table "proposals", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "topic_id"
+    t.text     "content"
+    t.text     "answers",                 array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "proposals", ["player_id"], name: "index_proposals_on_player_id", using: :btree
+  add_index "proposals", ["topic_id"], name: "index_proposals_on_topic_id", using: :btree
 
   create_table "purchase_types", force: :cascade do |t|
     t.string   "identifier"
@@ -252,23 +276,13 @@ ActiveRecord::Schema.define(version: 20150908163117) do
   add_index "purchases", ["player_id"], name: "index_purchases_on_player_id", using: :btree
   add_index "purchases", ["purchase_type_id"], name: "index_purchases_on_purchase_type_id", using: :btree
 
-  create_table "push_tokens", force: :cascade do |t|
-    t.string   "token"
-    t.boolean  "android",    default: false
-    t.integer  "player_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
-
-  add_index "push_tokens", ["player_id"], name: "index_push_tokens_on_player_id", using: :btree
-  add_index "push_tokens", ["token"], name: "index_push_tokens_on_token", using: :btree
-
   create_table "questions", force: :cascade do |t|
     t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "topic_id"
     t.string   "image"
+    t.integer  "reports_count", default: 0
   end
 
   add_index "questions", ["topic_id"], name: "index_questions_on_topic_id", using: :btree
@@ -323,9 +337,70 @@ ActiveRecord::Schema.define(version: 20150908163117) do
     t.boolean  "friends_only", default: false
     t.boolean  "started",      default: false
     t.integer  "size"
+    t.integer  "topic_id"
   end
 
   add_index "rooms", ["player_id"], name: "index_rooms_on_player_id", using: :btree
+  add_index "rooms", ["topic_id"], name: "index_rooms_on_topic_id", using: :btree
+
+  create_table "rpush_apps", force: :cascade do |t|
+    t.string   "name",                                null: false
+    t.string   "environment"
+    t.text     "certificate"
+    t.string   "password"
+    t.integer  "connections",             default: 1, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type",                                null: false
+    t.string   "auth_key"
+    t.string   "client_id"
+    t.string   "client_secret"
+    t.string   "access_token"
+    t.datetime "access_token_expiration"
+  end
+
+  create_table "rpush_feedback", force: :cascade do |t|
+    t.string   "device_token", limit: 64, null: false
+    t.datetime "failed_at",               null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "app_id"
+  end
+
+  add_index "rpush_feedback", ["device_token"], name: "index_rpush_feedback_on_device_token", using: :btree
+
+  create_table "rpush_notifications", force: :cascade do |t|
+    t.integer  "badge"
+    t.string   "device_token",      limit: 64
+    t.string   "sound",                        default: "default"
+    t.string   "alert"
+    t.text     "data"
+    t.integer  "expiry",                       default: 86400
+    t.boolean  "delivered",                    default: false,     null: false
+    t.datetime "delivered_at"
+    t.boolean  "failed",                       default: false,     null: false
+    t.datetime "failed_at"
+    t.integer  "error_code"
+    t.text     "error_description"
+    t.datetime "deliver_after"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "alert_is_json",                default: false
+    t.string   "type",                                             null: false
+    t.string   "collapse_key"
+    t.boolean  "delay_while_idle",             default: false,     null: false
+    t.text     "registration_ids"
+    t.integer  "app_id",                                           null: false
+    t.integer  "retries",                      default: 0
+    t.string   "uri"
+    t.datetime "fail_after"
+    t.boolean  "processing",                   default: false,     null: false
+    t.integer  "priority"
+    t.text     "url_args"
+    t.string   "category"
+  end
+
+  add_index "rpush_notifications", ["delivered", "failed"], name: "index_rpush_notifications_multi", where: "((NOT delivered) AND (NOT failed))", using: :btree
 
   create_table "sashes", force: :cascade do |t|
     t.datetime "created_at"
@@ -376,22 +451,20 @@ ActiveRecord::Schema.define(version: 20150908163117) do
 
   add_foreign_key "category_results", "categories"
   add_foreign_key "category_results", "players"
+  add_foreign_key "device_tokens", "players"
   add_foreign_key "friend_requests", "players"
   add_foreign_key "friendships", "players"
-  add_foreign_key "game_session_questions", "game_sessions"
-  add_foreign_key "game_session_questions", "questions"
+  add_foreign_key "game_questions", "game_sessions"
+  add_foreign_key "game_questions", "questions"
   add_foreign_key "game_sessions", "topics"
   add_foreign_key "invites", "players"
-  add_foreign_key "invites", "rooms"
   add_foreign_key "lobbies", "game_sessions"
   add_foreign_key "lobbies", "players"
   add_foreign_key "lobbies", "topics"
   add_foreign_key "participations", "players"
-  add_foreign_key "participations", "rooms"
   add_foreign_key "participations", "topics"
   add_foreign_key "purchases", "players"
   add_foreign_key "purchases", "purchase_types"
-  add_foreign_key "push_tokens", "players"
   add_foreign_key "questions", "topics"
   add_foreign_key "reports", "players"
   add_foreign_key "room_answers", "answers"

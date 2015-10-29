@@ -4,7 +4,7 @@ json.fact Fact.random
 
 json.host do
   json.partial! 'players/player', player: game_session.host
-  json.points current_player.topic_points(game_session.topic)
+  json.points current_player.score.topic_points(game_session.topic)
   json.extract! game_session.host, :multiplier
 end
 
@@ -23,6 +23,10 @@ json.opponent do
   end
 end
 
-json.game_session_questions game_session.game_session_questions do |sq|
-  json.partial! 'game_session_questions/game_session_question', game_session_question: sq
+json.game_questions game_session.game_questions do |sq|
+  json.partial! 'game_questions/game_question', game_session_question: sq
+end
+
+json.game_session_questions game_session.game_questions do |sq|
+  json.partial! 'game_questions/game_question', game_session_question: sq
 end

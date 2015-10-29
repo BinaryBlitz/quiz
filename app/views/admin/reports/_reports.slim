@@ -1,0 +1,10 @@
+table.table
+  thead
+    tr
+      th Сообщение
+      th Действия
+  tbody
+    - reports.each do |report|
+      tr
+        td = report.message
+        td = link_to 'Удалить', admin_report_path(report), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

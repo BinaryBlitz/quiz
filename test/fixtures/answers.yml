@@ -15,21 +15,21 @@
 correct:
   content: London
   correct: true
-  question: capital_of_the_uk
+  question: uk_capital
 
 incorrect_one:
   content: Manchester
-  question: capital_of_the_uk
+  question: uk_capital
 
 incorrect_two:
   content: Liverpool
-  question: capital_of_the_uk
+  question: uk_capital
 
 incorrect_three:
   content: Cambridge
-  question: capital_of_the_uk
+  question: uk_capital
 
-<% 24.times do |n| %>
+<% 40.times do |n| %>
 answer_<%= n %>:
   content: <%= "Answer #{n}" %>
   correct: <%= n % 4 == 0 %>

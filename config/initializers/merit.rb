@@ -59,6 +59,62 @@ badges = [
   {
     id: id += 1, name: 'Геродот', description: 'Топ в истории.',
     custom_fields: { category_name: 'История' }
+  },
+  {
+    id: id += 1, name: 'Патриот', description: 'Топ в регионах.',
+    custom_fields: { category_name: 'Регионы' }
+  },
+  {
+    id: id += 1, name: 'Шумахер', description: 'Топ в автомобилях.',
+    custom_fields: { category_name: 'История' }
+  },
+  {
+    id: id += 1, name: 'Зоолог', description: 'Топ в животных.',
+    custom_fields: { category_name: 'Животные' }
+  },
+  {
+    id: id += 1, name: 'Биограф', description: 'Топ в личностях.',
+    custom_fields: { category_name: 'История' }
+  },
+  {
+    id: id += 1, name: 'Рокер', description: 'Топ в теме: «Рок и метал»',
+    custom_fields: { topic_name: 'Рок и метал' }
+  },
+  {
+    id: id += 1, name: 'Джастин Бибер', description: 'Топ в теме: «Попса»',
+    custom_fields: { topic_name: 'Попса' }
+  },
+  {
+    id: id += 1, name: 'Гиппократ', description: 'Топ в теме: «Медицина и анатомия»',
+    custom_fields: { topic_name: 'Медицина и анатомия' }
+  },
+  {
+    id: id += 1, name: 'Полиглот', description: 'Топ в теме: «Значения слов»',
+    custom_fields: { topic_name: 'Значения слов' }
+  },
+  {
+    id: id += 1, name: 'Василий Уткин', description: 'Топ в теме: «Футбол»',
+    custom_fields: { topic_name: 'Рок' }
+  },
+  {
+    id: id += 1, name: 'Милитарист', description: 'Топ в теме: «Оружие и военная техника»',
+    custom_fields: { topic_name: 'Оружие и военная техника' }
+  },
+  {
+    id: id += 1, name: 'Анимешник', description: 'Топ в теме: «Аниме»',
+    custom_fields: { topic_name: 'Аниме' }
+  },
+  {
+    id: id += 1, name: 'Киноман', description: 'Топ в теме: «Современное кино»',
+    custom_fields: { topic_name: 'Современное кино' }
+  },
+  {
+    id: id += 1, name: 'Мультоман', description: 'Топ в теме: «Мультфильмы»',
+    custom_fields: { topic_name: 'Мультфильмы' }
+  },
+  {
+    id: id += 1, name: 'Шоумэн', description: 'Топ в теме: «Шоу-бизнес»',
+    custom_fields: { topic_name: 'Шоу-бизнес' }
   }
 ]
 

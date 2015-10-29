@@ -12,7 +12,12 @@
 
 class Report < ActiveRecord::Base
   belongs_to :player
-  belongs_to :question
+  belongs_to :question, counter_cache: true
 
   validates :message, presence: true
+
+  scope :desc, -> { order(created_at: :desc) }
+  scope :players, -> { includes(:player).where.not(player: nil).desc }
+  scope :questions, -> { includes(:question).where.not(question: nil).desc }
+  scope :feedback, -> { where(player: nil, question: nil).desc }
 end

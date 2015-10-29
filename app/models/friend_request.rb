@@ -10,7 +10,7 @@
 #
 
 class FriendRequest < ActiveRecord::Base
-  after_create :send_notification
+  after_create :notify
 
   belongs_to :player
   belongs_to :friend, class_name: 'Player'
@@ -42,7 +42,9 @@ class FriendRequest < ActiveRecord::Base
     errors.add(:friend, 'already requested friendship') if friend.pending_friends.include?(player)
   end
 
-  def send_notification
-    friend.push_friend_request_from(player)
+  def notify
+    message = "#{player} добавил вас в друзья"
+    options = { action: 'FRIEND_REQUEST', player: { id: player.id, username: player.username } }
+    Notifier.new(friend, message, options).push
   end
 end

@@ -12,7 +12,7 @@ end
 
 json.cache! "players/#{@player.id}-#{current_player.id}", expires_in: 5.minutes do
   unless @player == current_player
-    score = current_player.score_against(@player)
+    score = current_player.score.against(@player)
     json.score do
       json.wins score.wins
       json.losses score.losses
@@ -22,7 +22,6 @@ end
 
 json.favorite_topics @player.favorite_topics do |topic|
   json.partial! 'topics/topic', topic: topic
-  json.points @player.topic_points(topic)
 end
 
 json.achievements do

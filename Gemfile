@@ -31,19 +31,20 @@ gem 'pundit'
 # Use old version because of the manifest bug
 gem 'sprockets', '2.12.3'
 
+gem 'semantic'
+
 # Dashboard
 gem 'devise'
 gem 'bootstrap-sass'
-gem 'autoprefixer-rails'
+gem 'autoprefixer-rails', '~> 5.0'
 gem 'nested_form_fields'
 gem 'kaminari'
 
 gem 'pusher'
 gem 'vkontakte_api'
 gem 'layer-identity_token'
-gem 'gcm'
-gem 'houston'
 gem 'merit'
+gem 'rpush'
 
 # File processing
 gem 'carrierwave'
@@ -53,13 +54,18 @@ gem 'mini_magick'
 # Use Unicorn as the app server
 gem 'unicorn'
 
+gem 'whenever', require: false
+
 # Monitoring
 gem 'newrelic_rpm'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 gem 'rails_12factor', group: :production
+
+gem 'ffaker', group: [:development, :staging]
+
+group :development do
+  gem 'better_errors'
+end
 
 group :development, :test do
   gem 'mocha'
@@ -68,7 +74,6 @@ group :development, :test do
   gem 'rvm-capistrano', require: false
   gem 'byebug'
   gem 'pry-rails'
-  gem 'better_errors'
   gem 'pry-byebug'
   gem 'annotate', '~> 2.6.5'
   gem 'spring'

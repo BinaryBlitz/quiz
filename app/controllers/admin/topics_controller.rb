@@ -6,7 +6,7 @@ class Admin::TopicsController < Admin::AdminController
   end
 
   def show
-    @questions = Question.where(topic: @topic)#.page(params[:page])
+    @questions = Question.where(topic: @topic) #.page(params[:page])
   end
 
   def new

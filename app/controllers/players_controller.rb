@@ -1,19 +1,16 @@
 class PlayersController < ApplicationController
   skip_before_filter :restrict_access,
-                     only: [:create, :authenticate, :authenticate_vk]
-  before_action :set_player, only: [:update, :destroy, :friends, :report, :notify]
+                     only: [:create, :authenticate, :authenticate_vk, :version]
+  before_action :set_player, only: [:update, :destroy, :friends, :report, :flag_layer]
 
-  # GET /players
   def index
     @players = Player.all
   end
 
-  # GET /players/1
   def show
     @player = Player.includes(:topic_results).find(params[:id])
   end
 
-  # POST /players
   def create
     @player = Player.new(player_params)
 
@@ -24,7 +21,6 @@ class PlayersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /players/1
   def update
     if player_params[:avatar].present?
       @player.remove_vk_avatar!
@@ -37,7 +33,6 @@ class PlayersController < ApplicationController
     end
   end
 
-  # DELETE /players/1
   def destroy
     @player.destroy
     head :no_content
@@ -68,21 +63,43 @@ class PlayersController < ApplicationController
     render :authenticate
   end
 
+  # POST /players/authenticate_layer
   def authenticate_layer
     token = Layer::IdentityToken.new(current_player.id, params[:nonce])
     render json: { token: token }
   end
 
+  # GET /players/search
   def search
     if params[:query].present? && params[:query].length >= 3
       @players = Player.search(params[:query])
     end
   end
 
+  # TODO: GET?
   # GET /players/1/report
   def report
     @player.reports.create(message: params[:message])
     head :created
+  end
+
+  def version
+    client = Semantic::Version.new(params[:version])
+    server = Semantic::Version.new(API_VERSION)
+
+    major = client.major < server.major
+
+    if major || client.minor < server.minor
+      render json: { update_available: true, major: major }
+    else
+      render json: { update_available: false }
+    end
+  end
+
+  def flag_layer
+    current_player.update(layer_needs_authentication: true)
+    @player.update(layer_needs_authentication: true)
+    head :ok
   end
 
   private
@@ -94,7 +111,6 @@ class PlayersController < ApplicationController
   def player_params
     params.require(:player).permit(
       :username, :email, :password, :password_confirmation,
-      :points, :avatar, :remove_avatar, :remove_vk_avatar, :nonce
-    )
+      :points, :avatar, :remove_avatar, :remove_vk_avatar, :nonce)
   end
 end

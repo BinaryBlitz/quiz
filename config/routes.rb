@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'reports/create'
+  get 'proposals/create'
 
   root 'admin/dashboard#index'
 
@@ -24,18 +24,33 @@ Rails.application.routes.draw do
     resources :facts
     resources :purchase_types
     resources :imports, only: [:new, :create]
+    resources :proposals, only: [:index, :destroy] do
+      post 'approve', on: :member
+    end
+    resources :reports, only: [:index, :destroy] do
+      collection do
+        get 'players'
+        get 'questions'
+        get 'feedback'
+      end
+    end
   end
 
   scope '/api', defaults: { format: :json } do
     # Topics & categories
     resources :topics, only: [:index, :show]
     resources :categories, only: [:index, :show]
+    resources :proposals, only: [:create]
 
-    resources :game_session_questions, only: [:update]
-    resources :game_sessions, except: [:new, :edit] do
+    # TODO: Deprecate
+    patch 'game_session_questions/:id' => 'game_questions#update'
+
+    resources :game_questions, only: [:update]
+    resources :game_sessions, except: [:index, :new, :edit] do
       patch 'close', on: :member
     end
     resources :rooms, except: [:new, :edit] do
+      post 'messages', to: 'room_messages#create'
       member do
         post 'join'
         post 'start'
@@ -45,7 +60,7 @@ Rails.application.routes.draw do
       end
     end
     resources :invites, except: [:new, :edit]
-    resources :participations, except: [:new, :create, :edit]
+    resources :participations, except: [:new, :edit]
     resources :room_sessions, only: [:show]
     resources :room_questions, only: [] do
       member do
@@ -60,11 +75,13 @@ Rails.application.routes.draw do
         post 'authenticate_vk'
         post 'authenticate_layer'
         get 'search'
+        get 'version'
       end
       member do
         get 'friends'
         get 'report'
         post 'notify'
+        patch 'flag_layer'
       end
     end
     resources :friend_requests, except: [:new, :edit]
@@ -73,12 +90,20 @@ Rails.application.routes.draw do
     resources :achievements, only: [:index]
 
     # Mobile
-    resources :push_tokens, only: [:create] do
+    resources :device_tokens, only: [:create] do
       collection do
         patch 'replace'
         delete 'delete'
       end
     end
+    # TODO: Deprecate
+    resources :push_tokens, only: [:create], controller: 'device_tokens' do
+      collection do
+        patch 'replace'
+        delete 'delete'
+      end
+    end
+
     resources :purchases do
       get 'available', on: :collection
     end
@@ -99,10 +124,7 @@ Rails.application.routes.draw do
       end
     end
 
-    # Rankings
-    get 'rankings/general'
-    get 'rankings/topic'
-    get 'rankings/category'
+    resources :rankings, only: :index
 
     # Pages
     get 'pages/home'

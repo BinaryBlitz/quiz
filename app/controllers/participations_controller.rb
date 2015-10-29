@@ -1,8 +1,8 @@
 class ParticipationsController < ApplicationController
-  before_action :set_participation, except: []
+  before_action :set_participation, except: [:create]
 
   def create
-    @participation = current_player.participations.build(topic: topic)
+    @participation = current_player.participations.build(participation_params)
     authorize @participation
 
     if @participation.save
@@ -22,6 +22,7 @@ class ParticipationsController < ApplicationController
 
   def destroy
     @participation.destroy
+    authorize @participation
     head :no_content
   end
 
@@ -32,6 +33,6 @@ class ParticipationsController < ApplicationController
   end
 
   def participation_params
-    params.require(:participation).permit(:ready, :topic_id)
+    params.require(:participation).permit(:ready, :topic_id, :room_id)
   end
 end

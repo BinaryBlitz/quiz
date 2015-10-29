@@ -9,25 +9,34 @@
 #  friends_only :boolean          default(FALSE)
 #  started      :boolean          default(FALSE)
 #  size         :integer
+#  topic_id     :integer
 #
 
 class Room < ActiveRecord::Base
   after_create :add_owner_to_participants
 
   belongs_to :player
+  belongs_to :topic
 
   has_one :room_session, dependent: :destroy
   has_many :participations, dependent: :destroy
   has_many :players, through: :participations
+  has_many :invites, dependent: :destroy
 
   validates :player, presence: true
+  validates :topic, presence: true
 
-  attr_accessor :topic, :topic_id
-
-  scope :visible, -> { where(started: false) }
+  scope :visible, -> { where(started: false, friends_only: false) }
   scope :recent, -> { where('created_at > ?', 10.minutes.ago) }
 
+  def self.visible_for(current_user)
+    friends_ids = current_user.friends.ids
+    where(friends_only: true).where(player_id: friends_ids)
+  end
+
   def start
+    return if started && room_session
+
     create_room_session
     notify_session_start
     update(started: true)
@@ -40,7 +49,7 @@ class Room < ActiveRecord::Base
   end
 
   def player_finished?(current_player)
-    participation = participations.find_by(player: player)
+    participation = participations.find_by(player: current_player)
     participation && participation.finished?
   end
 
@@ -56,7 +65,6 @@ class Room < ActiveRecord::Base
   private
 
   def add_owner_to_participants
-    self.topic ||= Topic.find(topic_id)
     participations.create(player: player, topic: topic)
   end
 

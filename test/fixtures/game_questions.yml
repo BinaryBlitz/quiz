@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: game_questions
+#
+#  id                 :integer          not null, primary key
+#  game_session_id    :integer
+#  question_id        :integer
+#  host_answer_id     :integer
+#  opponent_answer_id :integer
+#  host_time          :integer
+#  opponent_time      :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+session_question:
+  game_session: empty
+  question: uk_capital

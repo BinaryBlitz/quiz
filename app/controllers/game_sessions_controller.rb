@@ -1,12 +1,6 @@
 class GameSessionsController < ApplicationController
   before_action :set_game_session, except: [:index]
 
-  # GET /game_sessions
-  def index
-    @game_sessions = GameSession.all
-  end
-
-  # GET /game_sessions/1
   def show
   end
 
@@ -18,7 +12,6 @@ class GameSessionsController < ApplicationController
     end
   end
 
-  # PATCH /game_sessions/1/close
   def close
     @game_session.close(current_player)
     head :no_content

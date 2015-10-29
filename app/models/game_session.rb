@@ -14,7 +14,7 @@
 #
 
 class GameSession < ActiveRecord::Base
-  after_create :generate
+  after_create :generate_session
 
   # Associations
   belongs_to :host, class_name: 'Player', foreign_key: 'host_id'
@@ -22,8 +22,8 @@ class GameSession < ActiveRecord::Base
   belongs_to :finisher, class_name: 'Player', foreign_key: 'finisher_id'
   belongs_to :topic
 
-  has_many :game_session_questions, -> { order(created_at: :asc) }, dependent: :destroy
-  has_many :questions, through: :game_session_questions
+  has_many :game_questions, -> { order(created_at: :asc) }, dependent: :destroy
+  has_many :questions, through: :game_questions
   has_many :lobbies, dependent: :destroy
 
   # Validations
@@ -33,6 +33,7 @@ class GameSession < ActiveRecord::Base
 
   # Scopes
   scope :last_week, -> { where(updated_at: (1.week.ago)..(Time.zone.now)) }
+  scope :against, -> (opponent) { where('host_id = ? OR opponent_id = ?', opponent, opponent) }
 
   def player_points(player)
     if player == host
@@ -46,7 +47,7 @@ class GameSession < ActiveRecord::Base
 
   def host_points
     sum = 0
-    game_session_questions.each do |question|
+    game_questions.each do |question|
       next unless question.host_answer && question.host_answer.correct?
       sum += question.host_points
     end
@@ -55,7 +56,7 @@ class GameSession < ActiveRecord::Base
 
   def opponent_points
     sum = 0
-    game_session_questions.each do |question|
+    game_questions.each do |question|
       next unless question.opponent_answer && question.opponent_answer.correct?
       sum += question.opponent_points
     end
@@ -65,7 +66,7 @@ class GameSession < ActiveRecord::Base
   # Returns an array where each element is answer time or nil if the answer was incorrect
   # Example: [1, 2, nil, 3, 4, nil]
   def player_answers(player)
-    game_session_questions.map do |question|
+    game_questions.map do |question|
       question.player_time(player) if question.player_answer_correct?(player)
     end
   end
@@ -106,7 +107,7 @@ class GameSession < ActiveRecord::Base
   end
 
   def close(current_player)
-    host.push_challenge_results(self) if challenge? && offline?
+    push_challenge_results if challenge? && offline?
 
     update(closed: true, finisher: current_player)
     finisher.topic_results.find_or_create_by(topic: topic).add_session_results(self)
@@ -115,15 +116,21 @@ class GameSession < ActiveRecord::Base
 
   private
 
+  def push_challenge_results
+    message = "#{opponent} принял ваш вызов"
+    options = { action: 'CHALLENGE_FINISHED', game_session: as_json }
+    Notifier.new(host, message, options).push
+  end
+
   def update_stats
     finisher.stats.increment_consecutive_days
     finisher.stats.increment_early_winner(self)
   end
 
-  def generate
+  def generate_session
     questions = Question.where(topic: topic).sample(6)
-    questions.map! { |q| game_session_questions.create(question: q) }
-    game_session_questions.each(&:generate_for_offline) if offline
-    self
+    questions.map! { |question| game_questions.build(question: question) }
+    game_questions.each(&:generate_for_offline) if offline?
+    save
   end
 end

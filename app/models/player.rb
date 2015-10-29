@@ -23,8 +23,6 @@
 class Player < ActiveRecord::Base
   include VkAuthorization
   include Achievements
-  include Notifiable
-  include PlayerRankings
   include PlayerTopics
 
   before_save { self.email = email.downcase if email }
@@ -35,6 +33,7 @@ class Player < ActiveRecord::Base
   # Associations
   has_merit
   has_many :reports, dependent: :destroy
+  has_many :proposals, dependent: :destroy
 
   # Game
   has_one :stats, dependent: :destroy
@@ -52,13 +51,14 @@ class Player < ActiveRecord::Base
   has_many :invited_rooms, through: :invites, source: :room
 
   # Device
-  has_many :push_tokens, dependent: :destroy
+  has_many :device_tokens, dependent: :destroy
   has_many :purchases, dependent: :destroy
   has_many :purchase_types, through: :purchases
   has_many :multiplier_purchases, -> { unexpired.multipliers }, class_name: 'Purchase'
   has_many :multipliers, through: :multiplier_purchases, source: :purchase_type
 
   has_many :topic_results, dependent: :destroy
+  has_many :recent_topic_results, -> { recent }, class_name: 'TopicResult'
   has_many :topics, -> { uniq }, through: :topic_results
 
   # Social
@@ -90,6 +90,10 @@ class Player < ActiveRecord::Base
 
   TOP_SIZE = 20
 
+  def self.search(query)
+    where('username ILIKE :query', query: "%#{query}%")
+  end
+
   def game_sessions
     GameSession.where('host_id = ? OR opponent_id = ?', id, id)
   end
@@ -100,18 +104,6 @@ class Player < ActiveRecord::Base
 
   def to_s
     username
-  end
-
-  def score_against(opponent)
-    return ::Score.new if self == opponent
-    sessions = game_sessions.where('host_id = ? OR opponent_id = ?', opponent, opponent)
-    wins = 0
-    draws = 0
-    sessions.each do |session|
-      draws += 1 and next if session.draw?
-      wins += 1 if session.winner?(self)
-    end
-    ::Score.new(wins, nil, sessions.count - wins - draws)
   end
 
   def multiplier
@@ -127,10 +119,6 @@ class Player < ActiveRecord::Base
     lobbies.where(challenge: true)
   end
 
-  def self.search(query)
-    where('username ILIKE :query', query: "%#{query}%")
-  end
-
   def send_password_reset
     generate_reset_password_token
     update!(password_reset_sent_at: Time.zone.now)
@@ -144,11 +132,24 @@ class Player < ActiveRecord::Base
   end
 
   def online?
-    visited_at > 1.minute.ago
+    visited_at && visited_at > 1.minute.ago
   end
 
   def topics_unlocked?
     purchase_types.where(topic: true).any?
+  end
+
+  def score
+    @score ||= ::Score.new(self)
+  end
+
+  def push_achievement(badge)
+    message = "Вы получили достижение: #{badge.name}"
+    options = {
+      action: 'ACHIEVEMENT',
+      badge: { id: badge.id, name: badge.name, icon_url: Achievement.icon_url_for(badge) }
+    }
+    Notifier.new(self, message, options).push
   end
 
   private

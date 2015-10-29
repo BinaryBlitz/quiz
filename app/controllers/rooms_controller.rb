@@ -1,16 +1,16 @@
 class RoomsController < ApplicationController
   before_action :set_room, except: [:index, :create]
 
-  # GET /rooms
   def index
-    @rooms = Room.recent.visible
+    public_rooms = Room.recent.visible
+    private_rooms = Room.visible_for(current_player)
+    @rooms = public_rooms + private_rooms
+
   end
 
-  # GET /rooms/1
   def show
   end
 
-  # POST /rooms
   def create
     @room = current_player.owned_rooms.build(room_params)
 
@@ -21,7 +21,6 @@ class RoomsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /rooms/1
   def update
     if @room.update(room_params)
       render :show, status: :ok, location: @room
@@ -30,7 +29,6 @@ class RoomsController < ApplicationController
     end
   end
 
-  # DELETE /rooms/1
   def destroy
     @room.destroy
     head :no_content

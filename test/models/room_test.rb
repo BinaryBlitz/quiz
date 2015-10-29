@@ -9,6 +9,7 @@
 #  friends_only :boolean          default(FALSE)
 #  started      :boolean          default(FALSE)
 #  size         :integer
+#  topic_id     :integer
 #
 
 require 'test_helper'
@@ -18,7 +19,10 @@ class RoomTest < ActiveSupport::TestCase
     Pusher.stubs(trigger: {})
     @player = players(:foo)
     @topic = topics(:geography)
-    @room = Room.create(player: @player, topic: @topic)
+    @room = rooms(:room)
+
+    # Trigger callbacks
+    @room.run_callbacks(:create)
   end
 
   test 'valid' do
@@ -33,7 +37,7 @@ class RoomTest < ActiveSupport::TestCase
     player = players(:bar)
     topic = topics(:geometry)
 
-    @room.participations.build(player: player, topic: topic).save
+    @room.participations.create(player: player, topic: topic)
     assert @room.players.include?(player)
   end
 
@@ -48,5 +52,15 @@ class RoomTest < ActiveSupport::TestCase
     session = @room.room_session
     assert_not_nil session
     assert_equal RoomSession::QUESTIONS_PER_PLAYER * 3, session.room_questions.count
+  end
+
+  test 'visibility' do
+    friend = players(:baz)
+
+    @player.friends << friend
+    room = @player.owned_rooms.create!(topic: @topic, friends_only: true)
+
+    private_rooms = Room.visible_for(friend)
+    assert_includes private_rooms, room
   end
 end
