@@ -12,7 +12,7 @@ json.opponent do
   if game_session.opponent
     json.partial! 'players/player', player: game_session.opponent
     json.extract! game_session.opponent, :multiplier
-    json.points game_session.opponent.topic_points(game_session.topic)
+    json.points game_session.opponent.score.topic_points(game_session.topic)
   else
     json.id nil
     json.username Player.random_username(current_player)
