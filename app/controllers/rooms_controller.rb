@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
 
   def index
     public_rooms = Room.recent.visible
-    private_rooms = Room.visible_for(current_player)
+    private_rooms = Room.visible_for(current_player).recent
     @rooms = public_rooms + private_rooms
 
   end
