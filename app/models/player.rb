@@ -25,7 +25,7 @@ class Player < ActiveRecord::Base
   include Achievements
   include PlayerTopics
 
-  before_save { self.email = email.downcase if email }
+  before_save { email.downcase! if email }
 
   after_create :create_stats
   after_create :set_online
