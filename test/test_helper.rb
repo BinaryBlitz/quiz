@@ -5,7 +5,7 @@ require 'minitest/pride'
 require 'mocha/mini_test'
 
 app = Rpush::Apns::App.new(name: 'ios_app', environment: 'sandbox', connections: 1)
-app.certificate = File.read(Rails.root.join('config', 'pushcert.pem'))
+app.certificate = 'test'
 app.save
 
 app = Rpush::Gcm::App.new(name: 'android_app', connections: 1)
