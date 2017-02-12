@@ -12,57 +12,65 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
-# Use Slim
-gem 'slim-rails'
-# Use old version because of the manifest bug
-gem 'sprockets', '2.12.3'
+
+# Use jquery as the JavaScript library
 gem 'jquery-rails'
+# Turbolinks makes navigating your web application faster.
 gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.6'
+# Build JSON APIs with ease.
+gem 'jbuilder', '~> 2.5'
 
-gem 'bcrypt'
-gem 'has_secure_token'
-
-gem 'pundit', '~> 1.1'
-
-# Dashboard
-gem 'devise', '~> 4.2'
+# Front-end
+gem 'slim-rails'
 gem 'bootstrap-sass', '~> 3.3'
-gem 'autoprefixer-rails'
 gem 'nested_form_fields', '~> 0.8'
 gem 'kaminari', '~> 0.17'
 
+# Auth
+gem 'devise', '~> 4.2'
+gem 'bcrypt'
+gem 'has_secure_token'
+gem 'pundit', '~> 1.1'
+
+# Image processing
+gem 'carrierwave', '~> 0.11'
+gem 'carrierwave-base64', '~> 2.3'
+gem 'mini_magick', '~> 4.3'
+
+# Utilities
 gem 'pusher', '~> 0.18'
 gem 'vkontakte_api', '~> 1.4'
 gem 'layer-identity_token', '~> 0.1'
 gem 'merit', '~> 2.4'
 gem 'rpush', '~> 2.5.0'
 gem 'semantic', '~> 1.6'
-
-# File processing
-gem 'carrierwave', '~> 0.11'
-gem 'carrierwave-base64', '~> 2.3'
-gem 'mini_magick', '~> 4.3'
+gem 'ffaker', '~> 2.4'
 
 # Server
 gem 'unicorn', '~> 5.2'
-gem 'newrelic_rpm', '~> 3.18'
-
 gem 'whenever', '~> 0.9', require: false
 
-gem 'ffaker', '~> 2.4', group: [:development, :staging]
+# Analytics
+gem 'newrelic_rpm', '~> 3.18'
 
 group :development do
-  gem 'better_errors'
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem 'web-console'
+  gem 'listen', '~> 3.0.5'
+  # Spring speeds up development by keeping your application running in the background.
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+  # Pry
+  gem 'pry-rails'
+  gem 'traceroute'
 end
 
 group :development, :test do
-  gem 'mocha'
-  gem 'traceroute'
-  gem 'byebug'
-  gem 'pry-rails'
-  gem 'pry-byebug'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platform: :mri
   gem 'annotate'
-  gem 'spring'
+end
+
+group :test do
+  gem 'mocha'
 end
