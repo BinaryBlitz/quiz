@@ -2,22 +2,23 @@
 #
 # Table name: players
 #
-#  id                     :integer          not null, primary key
-#  email                  :string
-#  password_digest        :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  vk_token               :string
-#  vk_id                  :integer
-#  sash_id                :integer
-#  level                  :integer          default(0)
-#  avatar                 :string
-#  username               :string
-#  password_reset_token   :string
-#  password_reset_sent_at :datetime
-#  token                  :string
-#  visited_at             :datetime
-#  vk_avatar              :string
+#  id                         :integer          not null, primary key
+#  email                      :string
+#  password_digest            :string
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  vk_token                   :string
+#  vk_id                      :integer
+#  sash_id                    :integer
+#  level                      :integer          default(0)
+#  avatar                     :string
+#  username                   :string
+#  password_reset_token       :string
+#  password_reset_sent_at     :datetime
+#  token                      :string
+#  visited_at                 :datetime
+#  vk_avatar                  :string
+#  layer_needs_authentication :boolean
 #
 
 require 'test_helper'
