@@ -12,15 +12,13 @@ gem 'uglifier'
 gem 'coffee-rails', '~> 4.2'
 # Use Slim
 gem 'slim-rails'
+gem 'sprockets', '2.12.3'
 
-# Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
-# Use ActiveModel has_secure_password
 gem 'bcrypt'
 gem 'has_secure_token'
 gem 'pundit'
@@ -42,21 +40,18 @@ gem 'vkontakte_api'
 gem 'layer-identity_token'
 gem 'merit'
 gem 'rpush'
+gem 'semantic'
 
 # File processing
 gem 'carrierwave'
 gem 'carrierwave-base64'
 gem 'mini_magick'
 
-# Use Unicorn as the app server
+# Server
 gem 'unicorn'
-
-gem 'whenever', require: false
-
-# Monitoring
 gem 'newrelic_rpm'
 
-gem 'rails_12factor', group: :production
+gem 'whenever', require: false
 
 gem 'ffaker', group: [:development, :staging]
 
@@ -66,6 +61,7 @@ end
 
 group :development, :test do
   gem 'mocha'
+  gem 'traceroute'
   gem 'capistrano'
   gem 'capistrano-ext'
   gem 'rvm-capistrano', require: false

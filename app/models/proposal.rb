@@ -21,9 +21,11 @@ class Proposal < ActiveRecord::Base
 
   def approve
     question = Question.new(content: content, topic: topic)
-    answers.each_with_index do |answer, i|
-      question.answers.build(content: answer, correct: i == 0)
+
+    answers.each_with_index do |answer, index|
+      question.answers.build(content: answer, correct: index == 0)
     end
+
     question.save!
     destroy
     question

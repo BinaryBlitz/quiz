@@ -15,8 +15,9 @@ class Stats < ActiveRecord::Base
   belongs_to :player
 
   def increment_consecutive_days
-    self.days_in_a_row = days_in_a_row + 1 if played_at == Date.today - 1
-    self.played_at = Date.today
+    today = Date.today
+    self.days_in_a_row = days_in_a_row + 1 if played_at == today - 1
+    self.played_at = today
     save!
   end
 
