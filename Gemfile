@@ -60,9 +60,6 @@ end
 group :development, :test do
   gem 'mocha'
   gem 'traceroute'
-  gem 'capistrano'
-  gem 'capistrano-ext'
-  gem 'rvm-capistrano', require: false
   gem 'byebug'
   gem 'pry-rails'
   gem 'pry-byebug'
