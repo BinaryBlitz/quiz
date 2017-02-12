@@ -23,7 +23,8 @@ class Question < ActiveRecord::Base
   validates :topic, presence: true
 
   accepts_nested_attributes_for :answers,
-                                reject_if: -> (a) { a[:content].blank? }, allow_destroy: true
+                                reject_if: -> (answer) { answer[:content].blank? },
+                                allow_destroy: true
   validates :answers, length: { is: 4, wrong_length: 'count must be equal to 4' }
 
   # Finds the first answer and updates it to be the correct one
@@ -52,6 +53,7 @@ class Question < ActiveRecord::Base
   private
 
   # Finds and updates correct answers to incorrect
+  # TODO: Refactor this method, set default value to false
   def set_incorrect_answers
     # Get all answers (except the first one)
     other_answers = answers.drop(1)
