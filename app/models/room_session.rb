@@ -13,7 +13,6 @@ class RoomSession < ActiveRecord::Base
   after_create :generate_session
 
   belongs_to :room
-
   has_many :room_questions, dependent: :destroy
 
   validates :room, presence: true
@@ -23,14 +22,11 @@ class RoomSession < ActiveRecord::Base
   # Players ranked by points
   def rankings
     question_results = room_questions.map(&:question_results)
-
-    result = RoomSessionResult.new
-    question_results.each { |answer| result.add(answer[:player], answer[:points]) }
-    result.rankings
+    RoomSessionResult.new(question_results).rankings
   end
 
+  # Reuse JSON partial from views
   def as_json
-    # Reuse JSON partial from views
     RoomSessionsController.new
       .view_context
       .render('/room_sessions/room_session.jbuilder', room_session: self)

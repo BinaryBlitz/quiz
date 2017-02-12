@@ -26,6 +26,6 @@ class Topic < ActiveRecord::Base
   validates :name, presence: true
   validates :category, presence: true
 
-  scope :random, -> (n) { where(visible: true).order('RANDOM()').limit(n) }
-  scope :recent, -> (n) { order(created_at: :desc).limit(n) }
+  scope :random, -> (number) { where(visible: true).order('RANDOM()').limit(number) }
+  scope :recent, -> (number) { order(created_at: :desc).limit(number) }
 end
