@@ -27,4 +27,4 @@ PurchaseType.create!(
 Admin.create(email: 'foo@bar.com', password: 'qwerty123', password_confirmation: 'qwerty123')
 
 # Populate
-Rake::Task['db:populate'].invoke
+# Rake::Task['db:populate'].invoke

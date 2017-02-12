@@ -15,8 +15,12 @@
 /log/*
 !/log/.keep
 /tmp
-config/database.yml
+
+# Uploads
+/public/uploads
+
+# macOS
 .DS_Store
 
-# Ignore uploads
-/public/uploads
+# rbenv
+.ruby-version
