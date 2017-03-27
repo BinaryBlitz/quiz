@@ -47,9 +47,6 @@ gem 'rpush', '~> 2.5.0'
 gem 'semantic', '~> 1.6'
 gem 'ffaker', '~> 2.4'
 
-# Analytics
-gem 'newrelic_rpm', '~> 3.18'
-
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
