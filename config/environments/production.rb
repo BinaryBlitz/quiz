@@ -20,8 +20,9 @@ Rails.application.configure do
   # NGINX, varnish or squid.
   # config.action_dispatch.rack_cache = true
 
-  # Disable Rails's static asset server (Apache or NGINX will already do this).
-  config.serve_static_files = false
+  # Disable serving static files from the `/public` folder by default since
+  # Apache or NGINX already handles this.
+  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -45,7 +46,7 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :info
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
@@ -75,15 +76,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  config.action_mailer.smtp_settings = {
-    port: Rails.application.secrets.mailgun_smtp_port,
-    address: Rails.application.secrets.mailgun_smtp_server,
-    user_name: Rails.application.secrets.mailgun_smtp_login,
-    password: Rails.application.secrets.mailgun_smtp_password,
-    domain: 'partyapp.herokuapp.com',
-    authentication: :plain
-  }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'quizapp.binaryblitz.ru' }
 end

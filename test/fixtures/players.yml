@@ -26,14 +26,14 @@ foo:
   email: foo@bar.com
   username: foo
   password_digest: <%= BCrypt::Password.create("foobar", cost: 4) %>
-  token: <%= SecureRandom.base58(24) %>
+  token: <%= SecureRandom.base64(24) %>
   visited_at: <%= Time.zone.now %>
 
 bar:
   email: bar@foo.com
   username: bar
   password_digest: <%= BCrypt::Password.create("barfoo", cost: 4) %>
-  token: <%= SecureRandom.base58(24) %>
+  token: <%= SecureRandom.base64(24) %>
   visited_at: <%= Time.zone.now %>
 
 vk_player:
@@ -42,12 +42,12 @@ vk_player:
   password_digest: <%= BCrypt::Password.create(SecureRandom.hex, cost: 4) %>
   vk_id: 1
   vk_token: foobar
-  token: <%= SecureRandom.base58(24) %>
+  token: <%= SecureRandom.base64(24) %>
   visited_at: <%= Time.zone.now %>
 
 baz:
   email: baz@qux.com
   username: baz
   password_digest: <%= BCrypt::Password.create("bazqux", cost: 4) %>
-  token: <%= SecureRandom.base58(24) %>
+  token: <%= SecureRandom.base64(24) %>
   visited_at: <%= Time.zone.now %>

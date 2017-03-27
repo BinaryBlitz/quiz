@@ -30,7 +30,5 @@ module QuizApp
       g.test_framework nil
       g.template_engine = :jbuilder
     end
-
-    config.autoload_paths << Rails.root.join('app', 'services')
   end
 end
