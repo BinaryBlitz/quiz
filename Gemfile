@@ -42,7 +42,6 @@ gem 'mini_magick', '~> 4.3'
 # Utilities
 gem 'pusher', '~> 0.18'
 gem 'vkontakte_api', '~> 1.4'
-gem 'layer-identity_token', '~> 0.1'
 gem 'merit', '~> 2.4'
 gem 'rpush', '~> 2.5.0'
 gem 'semantic', '~> 1.6'

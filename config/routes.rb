@@ -73,7 +73,6 @@ Rails.application.routes.draw do
       collection do
         post 'authenticate'
         post 'authenticate_vk'
-        post 'authenticate_layer'
         get 'search'
         get 'version'
       end
@@ -81,7 +80,6 @@ Rails.application.routes.draw do
         get 'friends'
         get 'report'
         post 'notify'
-        patch 'flag_layer'
       end
     end
     resources :friend_requests, except: [:new, :edit]
