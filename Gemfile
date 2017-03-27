@@ -35,8 +35,8 @@ gem 'has_secure_token'
 gem 'pundit', '~> 1.1'
 
 # Image processing
-gem 'carrierwave', '~> 0.11'
-gem 'carrierwave-base64', '~> 2.3'
+gem 'carrierwave', '~> 1.0'
+gem 'carrierwave-base64', '~> 2.5'
 gem 'mini_magick', '~> 4.3'
 
 # Utilities
@@ -70,4 +70,9 @@ end
 
 group :test do
   gem 'mocha'
+end
+
+group :production do
+  # AWS adapter for CarrierWave
+  gem 'fog-aws', '~> 1.2'
 end
