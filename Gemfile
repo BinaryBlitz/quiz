@@ -6,6 +6,8 @@ ruby '~> 2.4.0'
 gem 'rails', '~> 4.2.8'
 # Use sqlite3 as the database for Active Record
 gem 'pg', '~> 0.19'
+# Use Puma as the app server
+gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -45,10 +47,6 @@ gem 'merit', '~> 2.4'
 gem 'rpush', '~> 2.5.0'
 gem 'semantic', '~> 1.6'
 gem 'ffaker', '~> 2.4'
-
-# Server
-gem 'unicorn', '~> 5.2'
-gem 'whenever', '~> 0.9', require: false
 
 # Analytics
 gem 'newrelic_rpm', '~> 3.18'
