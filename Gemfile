@@ -72,4 +72,5 @@ end
 group :production do
   # AWS adapter for CarrierWave
   gem 'fog-aws', '~> 1.2'
+  gem 'rollbar'
 end
