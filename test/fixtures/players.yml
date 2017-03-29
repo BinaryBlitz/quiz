@@ -2,23 +2,22 @@
 #
 # Table name: players
 #
-#  id                         :integer          not null, primary key
-#  email                      :string
-#  password_digest            :string
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  vk_token                   :string
-#  vk_id                      :integer
-#  sash_id                    :integer
-#  level                      :integer          default(0)
-#  avatar                     :string
-#  username                   :string
-#  password_reset_token       :string
-#  password_reset_sent_at     :datetime
-#  token                      :string
-#  visited_at                 :datetime
-#  vk_avatar                  :string
-#  layer_needs_authentication :boolean
+#  id                     :integer          not null, primary key
+#  email                  :string
+#  password_digest        :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  vk_token               :string
+#  vk_id                  :integer
+#  sash_id                :integer
+#  level                  :integer          default(0)
+#  avatar                 :string
+#  username               :string
+#  password_reset_token   :string
+#  password_reset_sent_at :datetime
+#  token                  :string
+#  visited_at             :datetime
+#  vk_avatar              :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -27,14 +26,14 @@ foo:
   email: foo@bar.com
   username: foo
   password_digest: <%= BCrypt::Password.create("foobar", cost: 4) %>
-  token: <%= SecureRandom.base58(24) %>
+  token: <%= SecureRandom.base64(24) %>
   visited_at: <%= Time.zone.now %>
 
 bar:
   email: bar@foo.com
   username: bar
   password_digest: <%= BCrypt::Password.create("barfoo", cost: 4) %>
-  token: <%= SecureRandom.base58(24) %>
+  token: <%= SecureRandom.base64(24) %>
   visited_at: <%= Time.zone.now %>
 
 vk_player:
@@ -43,12 +42,12 @@ vk_player:
   password_digest: <%= BCrypt::Password.create(SecureRandom.hex, cost: 4) %>
   vk_id: 1
   vk_token: foobar
-  token: <%= SecureRandom.base58(24) %>
+  token: <%= SecureRandom.base64(24) %>
   visited_at: <%= Time.zone.now %>
 
 baz:
   email: baz@qux.com
   username: baz
   password_digest: <%= BCrypt::Password.create("bazqux", cost: 4) %>
-  token: <%= SecureRandom.base58(24) %>
+  token: <%= SecureRandom.base64(24) %>
   visited_at: <%= Time.zone.now %>

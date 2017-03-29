@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
 
-ruby '~> 2.3.3'
+ruby '~> 2.4.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.7'
+gem 'rails', '~> 4.2.8'
 # Use sqlite3 as the database for Active Record
 gem 'pg', '~> 0.19'
+# Use Puma as the app server
+gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -33,25 +35,17 @@ gem 'has_secure_token'
 gem 'pundit', '~> 1.1'
 
 # Image processing
-gem 'carrierwave', '~> 0.11'
-gem 'carrierwave-base64', '~> 2.3'
+gem 'carrierwave', '~> 1.0'
+gem 'carrierwave-base64', '~> 2.5'
 gem 'mini_magick', '~> 4.3'
 
 # Utilities
 gem 'pusher', '~> 0.18'
 gem 'vkontakte_api', '~> 1.4'
-gem 'layer-identity_token', '~> 0.1'
 gem 'merit', '~> 2.4'
 gem 'rpush', '~> 2.5.0'
 gem 'semantic', '~> 1.6'
 gem 'ffaker', '~> 2.4'
-
-# Server
-gem 'unicorn', '~> 5.2'
-gem 'whenever', '~> 0.9', require: false
-
-# Analytics
-gem 'newrelic_rpm', '~> 3.18'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
@@ -73,4 +67,10 @@ end
 
 group :test do
   gem 'mocha'
+end
+
+group :production do
+  # AWS adapter for CarrierWave
+  gem 'fog-aws', '~> 1.2'
+  gem 'rollbar'
 end

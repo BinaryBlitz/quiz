@@ -63,12 +63,6 @@ class PlayersController < ApplicationController
     render :authenticate
   end
 
-  # POST /players/authenticate_layer
-  def authenticate_layer
-    token = Layer::IdentityToken.new(current_player.id, params[:nonce])
-    render json: { token: token }
-  end
-
   # GET /players/search
   def search
     if params[:query].present? && params[:query].length >= 3
