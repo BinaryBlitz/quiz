@@ -87,14 +87,6 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create]
     resources :achievements, only: [:index]
 
-    # Mobile
-    resources :device_tokens, only: [:create] do
-      collection do
-        patch 'replace'
-        delete 'delete'
-      end
-    end
-
     resources :purchases do
       get 'available', on: :collection
     end

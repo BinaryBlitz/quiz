@@ -5,6 +5,12 @@ task clean_up: :environment do
 
   # Destroy invalid device tokens
   Rpush::Apns::Feedback.find_each do |feedback|
-    DeviceToken.find_by(token: feedback.device_token)&.destroy
+    player = Player.find_by(device_token: feedback.device_token)
+    # Skip if player is not found
+    next unless player.present?
+    # Skip if there is another token
+    next if player.device_token != feedback.device_token
+    # Delete token otherwise
+    player.update_attribute(:device_token, feedback.device_token)
   end
 end

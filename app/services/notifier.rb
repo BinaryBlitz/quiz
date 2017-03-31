@@ -1,7 +1,7 @@
 class Notifier
   def initialize(player, message, options = {})
     @player = player
-    @device_tokens = player.device_tokens
+    @device_tokens = []
     @message = message
     @options = options
   end
