@@ -45,6 +45,6 @@ class FriendRequest < ActiveRecord::Base
   def notify
     message = "#{player} добавил вас в друзья"
     options = { action: 'FRIEND_REQUEST', player: { id: player.id, username: player.username } }
-    Notifier.new(friend, message, options).push
+    Notifier.new(friend, message, options)
   end
 end

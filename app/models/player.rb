@@ -148,7 +148,7 @@ class Player < ActiveRecord::Base
       action: 'ACHIEVEMENT',
       badge: { id: badge.id, name: badge.name, icon_url: Achievement.icon_url_for(badge) }
     }
-    Notifier.new(self, message, options).push
+    Notifier.new(self, message, options)
   end
 
   private

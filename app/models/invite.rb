@@ -24,6 +24,6 @@ class Invite < ActiveRecord::Base
 
   def notify
     options = { action: 'ROOM_INVITE' , invite: as_json, creator: creator.as_json }
-    Notifier.new(player, 'Вас пригласили в комнату', options).push
+    Notifier.new(player, 'Вас пригласили в комнату', options)
   end
 end
