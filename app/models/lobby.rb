@@ -66,7 +66,7 @@ class Lobby < ActiveRecord::Base
   def notify_declined
     Pusher.trigger("player-session-#{game_session.host.id}", 'challenge-declined', {})
 
-    message = "#{lobby.game_session.opponent} отклонил ваш вызов"
+    message = "#{game_session.opponent} отклонил ваш вызов"
     options = { action: 'CHALLENGE_DECLINED', lobby: { id: lobby.id } }
     Notifier.new(game_session.host, message, options)
   end
