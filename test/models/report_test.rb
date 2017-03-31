@@ -4,7 +4,7 @@
 #
 #  id          :integer          not null, primary key
 #  player_id   :integer
-#  message     :text
+#  message     :text             not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  question_id :integer

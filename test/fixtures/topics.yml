@@ -3,7 +3,7 @@
 # Table name: topics
 #
 #  id          :integer          not null, primary key
-#  name        :string
+#  name        :string           not null
 #  visible     :boolean          default(TRUE)
 #  expires_at  :date
 #  category_id :integer
