@@ -1,16 +1,6 @@
 class DeviceTokensController < ApplicationController
   before_action :set_device_token, only: [:destroy]
 
-  # def create
-  #   @device_token = current_player.device_tokens.build(device_token_params)
-  #
-  #   if @device_token.save
-  #     head :created
-  #   else
-  #     head :unprocessable_entity
-  #   end
-  # end
-
   def create
     @device_token = current_player.device_tokens.build
 
@@ -18,10 +8,6 @@ class DeviceTokensController < ApplicationController
       @device_token.token = params[:device_token][:token]
       @device_token.platform = params[:device_token][:platform]
     end
-
-    # TODO: Deprecate
-    @device_token.token = params[:push_token] if params[:push_token].present?
-    @device_token.platform = 'ios' unless @device_token.platform.present?
 
     if @device_token.save
       head :created

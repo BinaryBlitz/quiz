@@ -94,13 +94,6 @@ Rails.application.routes.draw do
         delete 'delete'
       end
     end
-    # TODO: Deprecate
-    resources :push_tokens, only: [:create], controller: 'device_tokens' do
-      collection do
-        patch 'replace'
-        delete 'delete'
-      end
-    end
 
     resources :purchases do
       get 'available', on: :collection
