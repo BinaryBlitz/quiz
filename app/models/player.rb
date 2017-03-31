@@ -18,6 +18,7 @@
 #  token                  :string
 #  visited_at             :datetime
 #  vk_avatar              :string
+#  device_token           :string
 #
 
 class Player < ActiveRecord::Base

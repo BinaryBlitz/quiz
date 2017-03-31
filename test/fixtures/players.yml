@@ -18,6 +18,7 @@
 #  token                  :string
 #  visited_at             :datetime
 #  vk_avatar              :string
+#  device_token           :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
