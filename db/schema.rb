@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170331184817) do
+ActiveRecord::Schema.define(version: 20170331222660) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,16 +75,6 @@ ActiveRecord::Schema.define(version: 20170331184817) do
     t.datetime "updated_at",                null: false
     t.index ["category_id"], name: "index_category_results_on_category_id", using: :btree
     t.index ["player_id"], name: "index_category_results_on_player_id", using: :btree
-  end
-
-  create_table "device_tokens", force: :cascade do |t|
-    t.string   "token"
-    t.integer  "player_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "platform"
-    t.index ["player_id"], name: "index_device_tokens_on_player_id", using: :btree
-    t.index ["token"], name: "index_device_tokens_on_token", using: :btree
   end
 
   create_table "facts", force: :cascade do |t|
@@ -424,7 +414,6 @@ ActiveRecord::Schema.define(version: 20170331184817) do
 
   add_foreign_key "category_results", "categories"
   add_foreign_key "category_results", "players"
-  add_foreign_key "device_tokens", "players"
   add_foreign_key "friend_requests", "players"
   add_foreign_key "friendships", "players"
   add_foreign_key "game_questions", "game_sessions"
