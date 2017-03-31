@@ -1,4 +1,4 @@
-json.extract! current_player, :layer_needs_authentication
+json.layer_needs_authentication false
 
 json.featured_topics do
   json.partial! 'home_topics', topics: @featured_topics
