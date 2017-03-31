@@ -8,7 +8,6 @@ class CategoriesTest < ActionDispatch::IntegrationTest
   test 'should get index' do
     get '/api/categories', token: token
     assert_response :success
-    assert_not_nil assigns(:categories)
   end
 
   test 'should show category' do

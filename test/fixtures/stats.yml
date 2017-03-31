@@ -11,9 +11,7 @@
 #  early_wins    :integer          default(0)
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
+stat:
   days_in_a_row: 9
   played_at: <%= Date.today - 1 %>
   early_wins: 49
