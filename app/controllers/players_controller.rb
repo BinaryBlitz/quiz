@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
   skip_before_filter :restrict_access,
                      only: [:create, :authenticate, :authenticate_vk, :version]
-  before_action :set_player, only: [:update, :destroy, :friends, :report, :flag_layer]
+  before_action :set_player, only: [:update, :destroy, :friends, :report]
 
   def index
     @players = Player.all
@@ -88,12 +88,6 @@ class PlayersController < ApplicationController
     else
       render json: { update_available: false }
     end
-  end
-
-  def flag_layer
-    current_player.update(layer_needs_authentication: true)
-    @player.update(layer_needs_authentication: true)
-    head :ok
   end
 
   private
