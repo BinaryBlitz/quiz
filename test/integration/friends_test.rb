@@ -3,7 +3,7 @@ require 'test_helper'
 class FriendsTest < ActionDispatch::IntegrationTest
   def setup
     @foo = players(:foo)
-    @bar = players(:bar)
+    @bar = players(:baz)
   end
 
   # TODO: Refactor

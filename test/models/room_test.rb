@@ -34,7 +34,7 @@ class RoomTest < ActiveSupport::TestCase
   end
 
   test 'players can join with topic' do
-    player = players(:bar)
+    player = players(:baz)
     topic = topics(:geometry)
 
     @room.participations.create(player: player, topic: topic)
@@ -42,7 +42,7 @@ class RoomTest < ActiveSupport::TestCase
   end
 
   test 'starts the game' do
-    bar = players(:bar)
+    bar = players(:baz)
     baz = players(:baz)
     @room.participations.build(player: bar, topic: @topic)
     @room.participations.build(player: baz, topic: @topic)

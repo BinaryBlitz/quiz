@@ -69,7 +69,7 @@ class RoomsTest < ActionDispatch::IntegrationTest
   end
 
   test 'authorize participations' do
-    random_user = players(:bar)
+    random_user = players(:baz)
     participation = @room.participations.create(player: @guest, topic: @topic)
 
     delete "/api/participations/#{participation.id}.json", token: random_user.token
