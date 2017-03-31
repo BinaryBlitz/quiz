@@ -46,6 +46,7 @@ gem 'merit', '~> 2.4'
 gem 'rpush', '~> 2.5.0'
 gem 'semantic', '~> 1.6'
 gem 'ffaker', '~> 2.4'
+gem 'rollbar'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
@@ -72,5 +73,4 @@ end
 group :production do
   # AWS adapter for CarrierWave
   gem 'fog-aws', '~> 1.2'
-  gem 'rollbar'
 end

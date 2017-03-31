@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
   skip_before_filter :restrict_access,
                      only: [:create, :authenticate, :authenticate_vk, :version]
-  before_action :set_player, only: [:update, :destroy, :friends, :report, :flag_layer]
+  before_action :set_player, only: [:update, :destroy, :friends, :report]
 
   def index
     @players = Player.all
@@ -90,12 +90,6 @@ class PlayersController < ApplicationController
     end
   end
 
-  def flag_layer
-    current_player.update(layer_needs_authentication: true)
-    @player.update(layer_needs_authentication: true)
-    head :ok
-  end
-
   private
 
   def set_player
@@ -103,8 +97,12 @@ class PlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:player).permit(
-      :username, :email, :password, :password_confirmation,
-      :points, :avatar, :remove_avatar, :remove_vk_avatar, :nonce)
+    params
+      .require(:player)
+      .permit(
+        :username, :password, :password_confirmation,
+        :avatar, :remove_avatar, :remove_vk_avatar,
+        :device_token
+      )
   end
 end

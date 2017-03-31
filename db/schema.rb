@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327165446) do
+ActiveRecord::Schema.define(version: 20170331184817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20170327165446) do
   add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "background"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 20170327165446) do
   add_index "device_tokens", ["token"], name: "index_device_tokens_on_token", using: :btree
 
   create_table "facts", force: :cascade do |t|
-    t.text     "content"
+    t.text     "content",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -240,6 +240,7 @@ ActiveRecord::Schema.define(version: 20170327165446) do
     t.string   "token"
     t.datetime "visited_at"
     t.string   "vk_avatar"
+    t.string   "device_token"
   end
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
@@ -276,7 +277,7 @@ ActiveRecord::Schema.define(version: 20170327165446) do
   add_index "purchases", ["purchase_type_id"], name: "index_purchases_on_purchase_type_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.text     "content"
+    t.text     "content",                   null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.integer  "topic_id"
@@ -288,7 +289,7 @@ ActiveRecord::Schema.define(version: 20170327165446) do
 
   create_table "reports", force: :cascade do |t|
     t.integer  "player_id"
-    t.text     "message"
+    t.text     "message",     null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "question_id"
@@ -436,7 +437,7 @@ ActiveRecord::Schema.define(version: 20170327165446) do
   add_index "topic_results", ["topic_id"], name: "index_topic_results_on_topic_id", using: :btree
 
   create_table "topics", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",                        null: false
     t.boolean  "visible",     default: true
     t.date     "expires_at"
     t.integer  "category_id"
