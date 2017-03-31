@@ -6,7 +6,7 @@ class TopicsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show topic' do
-    get "/api/topics/#{@topic.id}", token: token
+    get "/api/topics/#{@topic.id}", params: { token: token }
     assert_response :success
     assert_equal @topic.name, json_response[:name]
   end

@@ -8,13 +8,13 @@ class PurchasesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get '/api/purchases', token: token
+    get '/api/purchases', params: { token: token }
     assert_response :success
   end
 
   test 'should purchase item' do
     assert_difference 'Purchase.count' do
-      post '/api/purchases', token: token, identifier: @unlocker.identifier
+      post '/api/purchases', params: { token: token, identifier: @unlocker.identifier }
     end
     assert_response :created
     assert @player.purchase_types.include?(@unlocker)

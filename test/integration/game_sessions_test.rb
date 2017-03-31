@@ -6,12 +6,12 @@ class GameSessionsTest < ActionDispatch::IntegrationTest
   end
 
   test 'show' do
-    get "/api/game_sessions/#{@game_session.id}", token: token
+    get "/api/game_sessions/#{@game_session.id}", params: { token: token }
     assert_response :success
   end
 
   test 'close' do
-    patch "/api/game_sessions/#{@game_session.id}/close", token: token
+    patch "/api/game_sessions/#{@game_session.id}/close", params: { token: token }
     assert_response :no_content
     assert @game_session.reload.closed?
   end

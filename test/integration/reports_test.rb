@@ -5,7 +5,7 @@ class ReportsTest < ActionDispatch::IntegrationTest
     question = questions(:uk_capital)
 
     assert_difference 'Report.count' do
-      post '/api/reports/', token: token, message: 'Typo', question_id: question.id
+      post '/api/reports/', params: { token: token, message: 'Typo', question_id: question.id }
       assert_response :created
     end
   end

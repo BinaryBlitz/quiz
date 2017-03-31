@@ -6,12 +6,12 @@ class CategoriesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get '/api/categories', token: token
+    get '/api/categories', params: { token: token }
     assert_response :success
   end
 
   test 'should show category' do
-    get '/api/categories', token: token, id: @category
+    get '/api/categories', params: { token: token, id: @category }
     assert_response :success
   end
 end

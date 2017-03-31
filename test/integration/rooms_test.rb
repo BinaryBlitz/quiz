@@ -13,18 +13,21 @@ class RoomsTest < ActionDispatch::IntegrationTest
   end
 
   test 'list rooms' do
-    get '/api/rooms', token: token
+    get '/api/rooms', params: { token: token }
     assert_response :success
   end
 
   test 'show room' do
-    get "/api/rooms/#{@room.id}", token: token
+    get "/api/rooms/#{@room.id}", params: { token: token }
     assert_response :success
   end
 
   test 'create rooms' do
     assert_difference 'Room.count' do
-      post '/api/rooms', token: token, room: { topic_id: topics(:geography).id }
+      post '/api/rooms', params: {
+        token: token,
+        room: { topic_id: topics(:geography).id }
+      }
       assert_response :created
     end
     room = Room.last
@@ -32,8 +35,9 @@ class RoomsTest < ActionDispatch::IntegrationTest
   end
 
   test 'join room' do
-    post '/api/participations.json', token: @guest.token, participation: {
-      topic_id: @topic.id, room_id: @room.id
+    post '/api/participations.json', params: {
+      token: @guest.token,
+      participation: { topic_id: @topic.id, room_id: @room.id }
     }
     assert_response :created
     assert @guest.rooms.include?(@room)
@@ -41,20 +45,20 @@ class RoomsTest < ActionDispatch::IntegrationTest
 
   test 'leave room' do
     participation = @room.participations.create(player: @guest, topic: @topic)
-    delete "/api/participations/#{participation.id}", token: @guest.token
+    delete "/api/participations/#{participation.id}", params: { token: @guest.token }
     assert_response :no_content
     refute @guest.rooms.include?(@room)
   end
 
   test 'start room' do
-    post "/api/rooms/#{@room.id}/start", token: token
+    post "/api/rooms/#{@room.id}/start", params: { token: token }
     assert_response :created
     assert_not_nil @room.room_session
   end
 
   test 'destroy rooms' do
     assert_difference 'Room.count', -1 do
-      delete "/api/rooms/#{@room.id}", token: token
+      delete "/api/rooms/#{@room.id}", params: { token: token }
     end
     assert_response :no_content
   end
@@ -63,7 +67,10 @@ class RoomsTest < ActionDispatch::IntegrationTest
     invitee = players(:baz)
 
     assert_difference 'Invite.count' do
-      post '/api/invites.json', token: token, invite: { room_id: @room.id, player_id: invitee.id }
+      post '/api/invites.json', params: {
+        token: token,
+        invite: { room_id: @room.id, player_id: invitee.id }
+      }
       assert_response :created
     end
   end
@@ -72,21 +79,25 @@ class RoomsTest < ActionDispatch::IntegrationTest
     random_user = players(:baz)
     participation = @room.participations.create(player: @guest, topic: @topic)
 
-    delete "/api/participations/#{participation.id}.json", token: random_user.token
+    delete "/api/participations/#{participation.id}.json", params: { token: random_user.token }
     assert_response :forbidden
   end
 
   test 'authorize rooms for friends' do
     room = rooms(:friends_only)
-    post '/api/participations.json', token: @guest.token, participation: {
-      topic_id: @topic.id, room_id: room.id
+    post '/api/participations.json', params: {
+      token: @guest.token,
+      participation: { topic_id: @topic.id, room_id: room.id }
     }
     assert_response :forbidden
   end
 
   test 'chat' do
-    post "/api/rooms/#{@room.id}/messages.json",
-         token: @owner.token, content: 'Hello!', room_id: @room.id
+    post "/api/rooms/#{@room.id}/messages.json", params: {
+      token: @owner.token,
+      content: 'Hello!',
+      room_id: @room.id
+    }
     assert_response :success
   end
 end
