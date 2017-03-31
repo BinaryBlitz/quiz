@@ -130,8 +130,8 @@ namespace :db do
   def populate_invites
     puts 'Populating invites'
     Room.visible.each do |room|
-      invitee = random_player.where.not(id: room.players.ids)
-      room.player.outgoing_invites.create!(room: room, player: invitee)
+      invitee = random_player
+      room.player.outgoing_invites.create(room: room, player: invitee)
     end
   end
 
