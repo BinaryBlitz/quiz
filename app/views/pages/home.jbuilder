@@ -13,7 +13,7 @@ json.favorite_topics do
 end
 
 json.random_topics do
-  json.partial! 'home_topics', topics: Topic.random(3)
+  json.partial! 'home_topics', topics: Topic.visible.random(3)
 end
 
 json.recent_topics do

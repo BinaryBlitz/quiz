@@ -26,6 +26,7 @@ class Topic < ApplicationRecord
   validates :name, presence: true
   validates :category, presence: true
 
-  scope :random, -> (number) { where(visible: true).order('RANDOM()').limit(number) }
+  # TODO: rename to hidden
+  scope :visible, -> { where(visible: true) }
   scope :recent, -> (number) { order(created_at: :desc).limit(number) }
 end

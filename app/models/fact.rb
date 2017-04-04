@@ -10,6 +10,4 @@
 
 class Fact < ApplicationRecord
   validates :content, presence: true
-
-  scope :random, -> { order('RANDOM()') }
 end
