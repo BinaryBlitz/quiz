@@ -6,7 +6,9 @@ class LobbiesTest < ActionDispatch::IntegrationTest
     foo = players(:foo)
     baz = players(:baz)
 
-    post "/api/lobbies/challenge", token: foo.token, topic_id: paid_topic.id, opponent_id: baz.id
+    post "/api/lobbies/challenge", params: {
+      token: foo.token, topic_id: paid_topic.id, opponent_id: baz.id
+    }
     assert_response :forbidden
   end
 end

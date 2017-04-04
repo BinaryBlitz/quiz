@@ -9,8 +9,9 @@ class ProposalsTest < ActionDispatch::IntegrationTest
   test 'create' do
     answers = @answers.map(&:content)
     assert_difference 'Proposal.count' do
-      post '/api/proposals.json', token: token, proposal: {
-        content: @question.content, topic_id: @question.topic_id, answers: answers
+      post '/api/proposals.json', params: {
+        token: token,
+        proposal: { content: @question.content, topic_id: @question.topic_id, answers: answers}
       }
       assert_response :created
     end

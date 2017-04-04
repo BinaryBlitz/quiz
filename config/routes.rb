@@ -84,16 +84,7 @@ Rails.application.routes.draw do
     end
     resources :friend_requests, except: [:new, :edit]
     resources :friends, only: [:index, :destroy]
-    resources :messages, only: [:index, :create]
     resources :achievements, only: [:index]
-
-    # Mobile
-    resources :device_tokens, only: [:create] do
-      collection do
-        patch 'replace'
-        delete 'delete'
-      end
-    end
 
     resources :purchases do
       get 'available', on: :collection

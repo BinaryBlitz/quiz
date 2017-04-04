@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  skip_before_filter :restrict_access,
+  skip_before_action :restrict_access,
                      only: [:create, :authenticate, :authenticate_vk, :version]
   before_action :set_player, only: [:update, :destroy, :friends, :report]
 

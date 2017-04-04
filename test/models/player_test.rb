@@ -26,7 +26,7 @@ require 'test_helper'
 class PlayerTest < ActiveSupport::TestCase
   def setup
     @foo = players(:foo)
-    @bar = players(:bar)
+    @bar = players(:baz)
     @vk_player = players(:vk_player)
   end
 

@@ -13,7 +13,7 @@ require 'test_helper'
 
 class FriendshipTest < ActiveSupport::TestCase
   def setup
-    @friendship = Friendship.new(player: players(:foo), friend: players(:bar))
+    @friendship = Friendship.new(player: players(:foo), friend: players(:baz))
   end
 
   test 'self friendships are restricted' do

@@ -1,5 +1,5 @@
 class PasswordResetsController < ApplicationController
-  skip_before_filter :restrict_access
+  skip_before_action :restrict_access
   before_action :set_player, only: [:edit, :update]
   layout 'layouts/password_resets'
 

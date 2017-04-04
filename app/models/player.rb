@@ -51,8 +51,6 @@ class Player < ActiveRecord::Base
   has_many :outgoing_invites, dependent: :destroy, class_name: 'Invite', foreign_key: 'creator_id'
   has_many :invited_rooms, through: :invites, source: :room
 
-  # Device
-  has_many :device_tokens, dependent: :destroy
   has_many :purchases, dependent: :destroy
   has_many :purchase_types, through: :purchases
   has_many :multiplier_purchases, -> { unexpired.multipliers }, class_name: 'Purchase'
@@ -150,7 +148,7 @@ class Player < ActiveRecord::Base
       action: 'ACHIEVEMENT',
       badge: { id: badge.id, name: badge.name, icon_url: Achievement.icon_url_for(badge) }
     }
-    Notifier.new(self, message, options).push
+    Notifier.new(self, message, options)
   end
 
   private

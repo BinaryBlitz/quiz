@@ -119,7 +119,7 @@ class GameSession < ActiveRecord::Base
   def push_challenge_results
     message = "#{opponent} принял ваш вызов"
     options = { action: 'CHALLENGE_FINISHED', game_session: as_json }
-    Notifier.new(host, message, options).push
+    Notifier.new(host, message, options)
   end
 
   def update_stats
