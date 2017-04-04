@@ -13,7 +13,7 @@
 #  finisher_id :integer
 #
 
-class GameSession < ActiveRecord::Base
+class GameSession < ApplicationRecord
   after_create :generate_session
 
   # Associations

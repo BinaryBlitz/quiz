@@ -16,7 +16,7 @@
 #  losses        :integer          default(0)
 #
 
-class TopicResult < ActiveRecord::Base
+class TopicResult < ApplicationRecord
   after_create :assign_category
 
   belongs_to :player

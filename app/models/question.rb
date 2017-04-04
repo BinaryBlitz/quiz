@@ -11,7 +11,7 @@
 #  reports_count :integer          default(0)
 #
 
-class Question < ActiveRecord::Base
+class Question < ApplicationRecord
   belongs_to :topic
   has_many :answers, -> { order(id: :asc) }, dependent: :destroy
   has_many :room_questions, dependent: :destroy

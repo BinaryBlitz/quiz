@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 
-class Fact < ActiveRecord::Base
+class Fact < ApplicationRecord
   validates :content, presence: true
 
   scope :random, -> { order('RANDOM()') }

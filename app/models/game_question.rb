@@ -13,7 +13,7 @@
 #  updated_at         :datetime         not null
 #
 
-class GameQuestion < ActiveRecord::Base
+class GameQuestion < ApplicationRecord
   belongs_to :game_session
   belongs_to :question
 

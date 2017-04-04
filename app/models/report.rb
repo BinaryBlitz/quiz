@@ -10,7 +10,7 @@
 #  question_id :integer
 #
 
-class Report < ActiveRecord::Base
+class Report < ApplicationRecord
   belongs_to :player
   belongs_to :question, counter_cache: true
 

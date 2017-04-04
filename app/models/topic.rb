@@ -13,7 +13,7 @@
 #  paid        :boolean          default(FALSE)
 #
 
-class Topic < ActiveRecord::Base
+class Topic < ApplicationRecord
   belongs_to :category
 
   has_many :questions, dependent: :destroy

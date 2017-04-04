@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 
-class Friendship < ActiveRecord::Base
+class Friendship < ApplicationRecord
   after_create :create_inverse_relationship
   after_destroy :destroy_inverse_relationship
 

@@ -11,7 +11,7 @@
 #  updated_at :datetime         not null
 #
 
-class Proposal < ActiveRecord::Base
+class Proposal < ApplicationRecord
   belongs_to :player
   belongs_to :topic
 

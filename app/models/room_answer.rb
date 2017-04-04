@@ -11,7 +11,7 @@
 #  updated_at       :datetime         not null
 #
 
-class RoomAnswer < ActiveRecord::Base
+class RoomAnswer < ApplicationRecord
   belongs_to :room_question
   belongs_to :player
   belongs_to :answer

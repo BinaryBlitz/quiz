@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 
-class Achievement < ActiveRecord::Base
+class Achievement < ApplicationRecord
   validates :badge_id, uniqueness: true
 
   mount_uploader :icon, IconUploader

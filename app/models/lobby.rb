@@ -13,7 +13,7 @@
 #  challenge       :boolean          default(FALSE)
 #
 
-class Lobby < ActiveRecord::Base
+class Lobby < ApplicationRecord
   belongs_to :topic
   belongs_to :player
   belongs_to :game_session

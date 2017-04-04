@@ -11,7 +11,7 @@
 #  early_wins    :integer          default(0)
 #
 
-class Stats < ActiveRecord::Base
+class Stats < ApplicationRecord
   belongs_to :player
 
   def increment_consecutive_days
