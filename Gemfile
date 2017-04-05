@@ -46,6 +46,7 @@ gem 'merit', '~> 2.4'
 gem 'semantic', '~> 1.6'
 gem 'ffaker', '~> 2.4'
 gem 'rollbar'
+gem 'houston', '~> 2.2'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
