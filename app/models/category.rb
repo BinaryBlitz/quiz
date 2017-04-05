@@ -10,7 +10,7 @@
 #  banner     :string
 #
 
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
   has_many :topics, dependent: :destroy
   has_many :topic_results, dependent: :destroy
 

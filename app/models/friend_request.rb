@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 
-class FriendRequest < ActiveRecord::Base
+class FriendRequest < ApplicationRecord
   after_create :notify
 
   belongs_to :player

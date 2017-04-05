@@ -10,7 +10,7 @@
 #  creator_id :integer
 #
 
-class Invite < ActiveRecord::Base
+class Invite < ApplicationRecord
   after_create :notify
 
   belongs_to :room

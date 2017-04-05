@@ -9,7 +9,7 @@
 #  updated_at      :datetime         not null
 #
 
-class RoomQuestion < ActiveRecord::Base
+class RoomQuestion < ApplicationRecord
   belongs_to :room_session
   belongs_to :question
 

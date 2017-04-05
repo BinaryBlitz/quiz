@@ -21,7 +21,7 @@
 #  device_token           :string
 #
 
-class Player < ActiveRecord::Base
+class Player < ApplicationRecord
   include VkAuthorization
   include Achievements
   include PlayerTopics

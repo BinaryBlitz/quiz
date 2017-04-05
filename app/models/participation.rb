@@ -12,7 +12,7 @@
 #  finished   :boolean          default(FALSE)
 #
 
-class Participation < ActiveRecord::Base
+class Participation < ApplicationRecord
   after_create :notify_new_participant
   after_update :notify_status_changed
   after_destroy :notify_participant_left

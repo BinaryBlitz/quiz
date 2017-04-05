@@ -12,7 +12,7 @@
 #  topic_id     :integer
 #
 
-class Room < ActiveRecord::Base
+class Room < ApplicationRecord
   after_create :add_owner_to_participants
 
   belongs_to :player

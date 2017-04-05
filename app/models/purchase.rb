@@ -9,7 +9,7 @@
 #  updated_at       :datetime         not null
 #
 
-class Purchase < ActiveRecord::Base
+class Purchase < ApplicationRecord
   belongs_to :player
   belongs_to :purchase_type
 

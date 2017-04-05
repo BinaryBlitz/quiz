@@ -10,7 +10,7 @@
 #  topic      :boolean
 #
 
-class PurchaseType < ActiveRecord::Base
+class PurchaseType < ApplicationRecord
   has_many :purchases, dependent: :destroy
 
   validates :identifier, presence: true, uniqueness: true
