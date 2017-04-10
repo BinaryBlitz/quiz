@@ -104,8 +104,6 @@ GEM
     formatador (0.2.5)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    has_secure_token (1.0.0)
-      activerecord (>= 3.0)
     hashie (3.5.5)
     highline (1.7.8)
     houston (2.2.4)
@@ -274,7 +272,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt
+  bcrypt (~> 3.1)
   bootstrap-sass (~> 3.3)
   byebug
   carrierwave (~> 1.0)
@@ -283,7 +281,6 @@ DEPENDENCIES
   devise (~> 4.2)
   ffaker (~> 2.4)
   fog-aws (~> 1.2)
-  has_secure_token
   houston (~> 2.2)
   jbuilder (~> 2.5)
   jquery-rails

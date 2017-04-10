@@ -28,4 +28,12 @@ class Notifier
 
     Rails.logger.debug "#{Time.zone.now} iOS notification: #{@message}, player: #{@player.id}"
   end
+
+  def client
+    if Rails.application.secrets.apn_environment == 'production'
+      Houston::Client.production
+    else
+      Houston::Client.development
+    end
+  end
 end

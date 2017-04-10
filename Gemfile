@@ -30,8 +30,7 @@ gem 'kaminari', '~> 0.17'
 
 # Auth
 gem 'devise', '~> 4.2'
-gem 'bcrypt'
-gem 'has_secure_token'
+gem 'bcrypt', '~> 3.1'
 gem 'pundit', '~> 1.1'
 
 # Image processing
@@ -45,8 +44,10 @@ gem 'vkontakte_api', '~> 1.4'
 gem 'merit', '~> 2.4'
 gem 'semantic', '~> 1.6'
 gem 'ffaker', '~> 2.4'
-gem 'rollbar'
 gem 'houston', '~> 2.2'
+
+# Monitoring
+gem 'rollbar'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
