@@ -11,19 +11,19 @@ gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier'
+gem 'uglifier', '~> 3.1'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails'
+gem 'coffee-rails', '~> 4.2'
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 4.3'
 # Turbolinks makes navigating your web application faster.
-gem 'turbolinks'
+gem 'turbolinks', '~> 5.0'
 # Build JSON APIs with ease.
 gem 'jbuilder', '~> 2.5'
 
 # Front-end
-gem 'slim-rails'
+gem 'slim-rails', '~> 3.1'
 gem 'bootstrap-sass', '~> 3.3'
 gem 'nested_form_fields', '~> 0.8'
 gem 'kaminari', '~> 0.17'
@@ -47,18 +47,18 @@ gem 'ffaker', '~> 2.4'
 gem 'houston', '~> 2.2'
 
 # Monitoring
-gem 'rollbar'
+gem 'rollbar', '~> 2.14'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console'
+  gem 'web-console', '~> 3.5'
   gem 'listen', '~> 3.0.5'
   # Spring speeds up development by keeping your application running in the background.
-  gem 'spring'
+  gem 'spring', '~> 2.0'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Pry
-  gem 'pry-rails'
-  gem 'traceroute'
+  gem 'pry-rails', '~> 0.3'
+  gem 'traceroute', '~> 0.5'
 end
 
 group :development, :test do
