@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'slim-rails', '~> 3.1'
 gem 'bootstrap-sass', '~> 3.3'
 gem 'nested_form_fields', '~> 0.8'
-gem 'kaminari', '~> 0.17'
+gem 'kaminari', '~> 1.0'
 
 # Auth
 gem 'devise', '~> 4.2'
